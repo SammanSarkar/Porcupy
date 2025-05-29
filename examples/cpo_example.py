@@ -1,6 +1,7 @@
 import numpy as np
 from porcupy.cpo import cpo
 from porcupy.functions import sphere, rosenbrock
+from porcupy.utils.plotting import plot_convergence
 
 def run_unconstrained_example():
     """
@@ -19,6 +20,7 @@ def run_unconstrained_example():
     )
     print(f"Best Position: {best_pos}")
     print(f"Best Cost: {best_cost}")
+    plot_convergence(cost_history, title="Sphere Function Convergence")
 
 def run_constrained_example():
     """
@@ -43,6 +45,7 @@ def run_constrained_example():
     print(f"Best Position: {best_pos}")
     print(f"Best Cost: {best_cost}")
     print(f"Constraint Satisfied: {np.all(constraint(best_pos) >= 0)}")
+    plot_convergence(cost_history, title="Rosenbrock Function Convergence")
 
 if __name__ == "__main__":
     run_unconstrained_example()
