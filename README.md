@@ -91,7 +91,9 @@ These mechanisms are combined with a cyclic population reduction strategy to bal
 If you use Porcupy in your research, please cite the original paper:
 
 ```
-Abdel-Basset, Mohamed & Mohamed, Reda & Abouhawwash, Mohamed. (2023). Crested Porcupine Optimizer: A new nature-inspired metaheuristic. Knowledge-Based Systems. 284. 111257. 10.1016/j.knosys.2023.111257. 
+Abdel-Basset, Mohamed & Mohamed, Reda & Abouhawwash, Mohamed. (2023). 
+Crested Porcupine Optimizer: A new nature-inspired metaheuristic. 
+Knowledge-Based Systems. 284. 111257. 10.1016/j.knosys.2023.111257. 
 ```
 
 ## License
