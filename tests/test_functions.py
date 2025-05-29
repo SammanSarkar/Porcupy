@@ -23,3 +23,17 @@ def test_rastrigin():
     """
     assert rastrigin([0, 0]) == 0, "Rastrigin function should be 0 at [0, 0]"
     assert abs(rastrigin([1, 1]) - 2) < 1e-10, "Rastrigin function incorrect for [1, 1]"
+
+def test_cpo_rastrigin():
+    """
+    Test CPO on the Rastrigin function.
+    """
+    from porcupy.cpo import cpo
+    lb = [-5, -5]
+    ub = [5, 5]
+    best_pos, best_cost, cost_history = cpo(rastrigin, lb, ub, pop_size=30, max_iter=100)
+    
+    assert len(best_pos) == 2, "Best position should have dimension 2"
+    assert best_cost < 1.0, "Rastrigin function should converge near 0"
+    assert len(cost_history) == 100, "Cost history should match max_iter"
+    assert np.all(cost_history >= 0), "Cost history should be non-negative"
