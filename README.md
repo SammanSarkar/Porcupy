@@ -100,6 +100,36 @@ Knowledge-Based Systems. 284. 111257. 10.1016/j.knosys.2023.111257.
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
+## Development and Testing
+
+To set up the development environment:
+
+```bash
+# Clone the repository
+git clone https://github.com/SammanSarkar/Porcupy.git
+cd Porcupy
+
+# Install in development mode with all extras
+pip install -e .[all]
+```
+
+### Running Tests
+
+To run the tests, use:
+
+```bash
+# Recommended way to run tests
+python -m pytest tests/
+
+# For verbose output
+python -m pytest tests/ -v
+
+# For test coverage report
+python -m pytest tests/ --cov=porcupy
+```
+
+Note: Using `python -m pytest` is recommended over just `pytest` as it ensures the current directory is in the Python path, which helps with imports.
+
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
