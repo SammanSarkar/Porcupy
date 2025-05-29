@@ -1,0 +1,6 @@
+Metadata-Version: 2.4
+Name: porcupy
+Version: 0.1.0
+Summary: Crested Porcupine Optimizer (CPO) for optimization problems
+Requires-Python: >=3.6
+Requires-Dist: numpy>=1.18.0

@@ -22,7 +22,7 @@ def test_cpo_constraints():
     """
     def constraint(x):
         # Constraint: x[0] + x[1] >= 0
-        return [x[0] + x[1]]
+        return np.array([x[0] + x[1]])
     
     lb = [-5, -5]
     ub = [5, 5]
