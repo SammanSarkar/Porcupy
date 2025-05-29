@@ -122,14 +122,22 @@ def cpo(fobj, lb, ub, pop_size=30, max_iter=100, f_ieqcons=None, verbose=False):
 
                 if np.random.random() < tf:  # Third defense mechanism (odor)
                     # Exponential scaling based on relative fitness
-                    st = np.exp(fitness[i] / (np.sum(fitness[:current_pop_size]) + np.finfo(float).eps))
+                    fitness_sum = np.sum(fitness[:current_pop_size])
+                    if np.isfinite(fitness[i]) and fitness_sum > 0:
+                        st = np.exp(fitness[i] / (fitness_sum + np.finfo(float).eps))
+                    else:
+                        st = 1.0  # Default scaling if fitness is invalid
                     s = s * yt * st
                     # Update with random position and scaled difference
                     rand_diff = positions[np.random.randint(current_pop_size)] - positions[np.random.randint(current_pop_size)]
                     positions[i] = (1 - u1) * positions[i] + u1 * (positions[np.random.randint(current_pop_size)] + st * rand_diff - s)
                 else:  # Fourth defense mechanism (physical attack)
                     # Exponential movement factor
-                    mt = np.exp(fitness[i] / (np.sum(fitness[:current_pop_size]) + np.finfo(float).eps))
+                    fitness_sum = np.sum(fitness[:current_pop_size])
+                    if np.isfinite(fitness[i]) and fitness_sum > 0:
+                        mt = np.exp(fitness[i] / (fitness_sum + np.finfo(float).eps))
+                    else:
+                        mt = 1.0  # Default scaling if fitness is invalid
                     vt = positions[i]
                     vtp = positions[np.random.randint(current_pop_size)]
                     ft = np.random.random(dim) * (mt * (-vt + vtp))
