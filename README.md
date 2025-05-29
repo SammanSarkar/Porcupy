@@ -1,6 +1,7 @@
 # Porcupy: Crested Porcupine Optimizer
 
-![CPO](https://github.com/user-attachments/assets/82fa91b8-f7a5-4d8d-a39d-2e33560386b2)
+![CPO](docs/full_logo.png)
+
 
 [![PyPI version](https://badge.fury.io/py/porcupy.svg)](https://badge.fury.io/py/porcupy)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
