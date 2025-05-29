@@ -5,6 +5,13 @@ description = "Crested Porcupine Optimizer (CPO) for optimization problems"
 requires-python = ">=3.6"
 dependencies = ["numpy>=1.18.0"]
 
+[project.optional-dependencies]
+plotting = ["matplotlib>=3.0.0"]
+
+[project.urls]
+Homepage = "https://github.com/SammanSarkar/porcupy"
+Documentation = ""
+
 [build-system]
 requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
