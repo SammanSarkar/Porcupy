@@ -27,7 +27,7 @@ def run_constrained_example():
     print("\nRunning constrained CPO example (Rosenbrock function)")
     def constraint(x):
         # Constraint: x[0] + x[1] >= 0
-        return [x[0] + x[1]]
+        return np.array([x[0] + x[1]])
     
     lb = [-2, -2]
     ub = [2, 2]

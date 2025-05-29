@@ -21,7 +21,7 @@ def cpo(fobj, lb, ub, pop_size=30, max_iter=100, f_ieqcons=None, verbose=False):
     max_iter : int, optional
         Maximum number of iterations (default: 100).
     f_ieqcons : callable, optional
-        Constraint function returning a list of inequality constraints (g(x) >= 0).
+        Constraint function returning a 1D array of inequality constraints (g(x) >= 0).
         Infeasible solutions are assigned infinite fitness (default: None).
     verbose : bool, optional
         If True, print progress information for each iteration (default: False).
@@ -61,7 +61,7 @@ def cpo(fobj, lb, ub, pop_size=30, max_iter=100, f_ieqcons=None, verbose=False):
         raise ValueError("Constraint function 'f_ieqcons' must be callable")
     
     dim = len(lb)  # Dimension of the search space
-    min_pop_size = 120  # Minimum population size for cyclic reduction (from MATLAB)
+    min_pop_size = max(10, pop_size // 2)  # Minimum population size, adjusted for small populations
     cycles = 2  # Number of cycles for population reduction (from MATLAB)
     alpha = 0.2  # Convergence rate for fourth defense mechanism (from MATLAB)
     tf = 0.8  # Tradeoff threshold between third and fourth mechanisms (from MATLAB)
@@ -79,7 +79,7 @@ def cpo(fobj, lb, ub, pop_size=30, max_iter=100, f_ieqcons=None, verbose=False):
     # Initialize fitness and best solution
     fitness = np.full(pop_size, np.inf)
     for i in range(pop_size):
-        if f_ieqcons is None or np.all(f_ieqcons(positions[i]) >= 0):
+        if f_ieqcons is None or np.all(np.array(f_ieqcons(positions[i])) >= 0):
             fitness[i] = fobj(positions[i])
     best_idx = np.argmin(fitness)
     best_pos = positions[best_idx].copy()
@@ -91,10 +91,13 @@ def cpo(fobj, lb, ub, pop_size=30, max_iter=100, f_ieqcons=None, verbose=False):
     current_pop_size = pop_size
     for t in range(max_iter):
         # Update population size cyclically
-        cycle_progress = t % (max_iter // cycles) / (max_iter // cycles)
-        current_pop_size = int(min_pop_size + (pop_size - min_pop_size) * (1 - cycle_progress))
+        cycle_progress = (t % (max_iter // cycles)) / (max_iter // cycles)
+        current_pop_size = max(1, int(min_pop_size + (pop_size - min_pop_size) * (1 - cycle_progress)))
 
-        for i in range(min(current_pop_size, positions.shape[0])):
+        # Ensure population size does not exceed current array size
+        current_pop_size = min(current_pop_size, positions.shape[0])
+
+        for i in range(current_pop_size):
             # Random binary mask for position updates
             u1 = np.random.random(dim) > np.random.random()
 
@@ -140,7 +143,7 @@ def cpo(fobj, lb, ub, pop_size=30, max_iter=100, f_ieqcons=None, verbose=False):
 
             # Evaluate new fitness
             new_fitness = np.inf
-            if f_ieqcons is None or np.all(f_ieqcons(positions[i]) >= 0):
+            if f_ieqcons is None or np.all(np.array(f_ieqcons(positions[i])) >= 0):
                 new_fitness = fobj(positions[i])
 
             # Update personal and global bests
