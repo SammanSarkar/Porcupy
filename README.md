@@ -1,6 +1,7 @@
 # Porcupy: Crested Porcupine Optimizer
 
-![CPO](docs/full_logo.png)
+![CPO](https://github.com/user-attachments/assets/af843836-1338-4609-bec9-09ea15852294)
+
 
 
 [![PyPI version](https://badge.fury.io/py/porcupy.svg)](https://badge.fury.io/py/porcupy) 
