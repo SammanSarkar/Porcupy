@@ -3,7 +3,6 @@
 ![CPO](https://github.com/user-attachments/assets/af843836-1338-4609-bec9-09ea15852294)
 
 
-
 [![PyPI version](https://badge.fury.io/py/porcupy.svg)](https://badge.fury.io/py/porcupy) 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.7+](https://img.shields.io/badge/python-3.7+-blue.svg)](https://www.python.org/downloads/release/python-370/)
@@ -18,31 +17,37 @@ This library provides both object-oriented and procedural interfaces for the CPO
 ## Features
 
 ### Core Components
-- **Object-oriented implementation** with base `Optimizer` class and `CrestPorcupineOptimizer` class
+- **Object-oriented implementation** with base `Optimizer` class and `CPO` class
 - **Procedural API** (`cpo` function) for backward compatibility and simplicity
-- **Backend components** in `porcupines.py` with `PorcupinePopulation`, `DefenseMechanisms`, and `PopulationManager` classes
+- **Backend components** with `PorcupinePopulation` and `PopulationManager` classes
 
 ### Advanced Capabilities
 - **Parallel processing** support for faster optimization on multi-core systems
-- **Constraint handling** for constrained optimization problems
 - **Convergence criteria** with customizable tolerance and iteration thresholds
 - **History tracking** for detailed analysis of the optimization process
+- **Four defense mechanisms** (sight, sound, odor, physical attack) for exploration/exploitation balance
 
 ### Population Management
-- **Cyclic population reduction** strategies (linear, cosine, exponential)
-- **Selection strategies** for maintaining population diversity
-- **Population initialization** with various distribution options
+- **Cyclic population reduction** strategies (linear, cosine)
+- **Adaptive population size** based on optimization progress
+- **Elitism** to preserve best solutions
 
 ### Visualization and Analysis
-- **2D and 3D visualization** of search spaces and optimization trajectories
+- **2D visualization** of search spaces and optimization trajectories
 - **Convergence plots** for monitoring optimization progress
-- **Interactive dashboards** for real-time monitoring and parameter tuning
-- **Animation capabilities** for visualizing the optimization process
+- **Interactive visualizations** for analyzing optimization behavior
+- **Animation capabilities** for tracking population movement
 
-### Testing and Benchmarking
-- **Extensive benchmark functions** including both unimodal and multimodal test functions
-- **Comprehensive test suite** with high code coverage (80%+)
-- **Parameter sensitivity analysis** tools for algorithm tuning
+### Benchmark Functions
+- **Unimodal functions**: Sphere, Rosenbrock, Schwefel 2.22, Schwefel 1.2, Schwefel 2.21, Step, Quartic
+- **Multimodal functions**: Rastrigin, Ackley, Griewank, Schwefel, Michalewicz
+- **Function utilities**: Easy access to function bounds and optima
+
+### Testing and Documentation
+- **Comprehensive test suite** with high code coverage
+- **API Reference** with detailed docstrings
+- **User Guide** with examples and tutorials
+- **Interactive examples** for quick start
 
 ## Installation
 
@@ -70,11 +75,13 @@ pip install porcupy[dev]
 import numpy as np
 from porcupy import CPO
 from porcupy.functions import sphere, get_function_bounds
-from porcupy.utils.visualization import plot_convergence, plot_2d_search_space
+from porcupy.utils.visualization_manager import CPOVisualizer
 
 # Define the problem
-dimensions = 10
-bounds = get_function_bounds('sphere', dimensions)
+dimensions = 2  # Using 2D for visualization
+lb = [-5.12] * dimensions  # Lower bounds for sphere function
+ub = [5.12] * dimensions   # Upper bounds for sphere function
+bounds = (np.array(lb), np.array(ub))
 
 # Create the optimizer with custom options
 optimizer = CPO(
@@ -95,18 +102,30 @@ optimizer = CPO(
 # Run the optimization with progress tracking
 best_pos, best_cost, cost_history = optimizer.optimize(
     objective_func=sphere,
-    verbose=True
+    verbose=True,
+    track_history=True  # Enable history tracking for visualization
 )
 
 print(f"Best position: {best_pos}")
 print(f"Best cost: {best_cost}")
 
-# Visualize the results
-plot_convergence(cost_history)
+# Create visualizer
+visualizer = CPOVisualizer(objective_func=sphere, bounds=bounds)
 
-# For 2D problems, visualize the search space
+# Visualize the optimization process
 if dimensions == 2:
-    plot_2d_search_space(sphere, bounds, positions=optimizer.positions, best_pos=best_pos)
+    # Create animation of the optimization process
+    visualizer.animate_optimization(
+        position_history=optimizer.positions_history,
+        best_pos_history=optimizer.best_positions_history,
+        save_path='optimization_animation.gif'
+    )
+    
+    # Show convergence plot
+    visualizer.plot_convergence(cost_history)
+    
+    # Show search space with final positions
+    visualizer.plot_search_space(positions=optimizer.positions, best_pos=best_pos)
 ```
 
 ### Procedural Interface
@@ -115,10 +134,12 @@ if dimensions == 2:
 import numpy as np
 from porcupy.cpo import cpo
 from porcupy.functions import rastrigin
+from porcupy.utils.visualization_manager import CPOVisualizer
 
 # Define the problem
-lb = [-5.12] * 2  # Lower bounds
-ub = [5.12] * 2   # Upper bounds
+dimensions = 2  # Using 2D for visualization
+lb = [-5.12] * dimensions  # Lower bounds for Rastrigin function
+ub = [5.12] * dimensions   # Upper bounds for Rastrigin function
 
 # Run the optimization with default parameters
 best_pos, best_cost, cost_history = cpo(
@@ -127,11 +148,30 @@ best_pos, best_cost, cost_history = cpo(
     ub=ub,
     pop_size=30,
     max_iter=100,
-    verbose=True
+    verbose=True,
+    track_history=True  # Enable history tracking for visualization
 )
 
 print(f"Best position: {best_pos}")
 print(f"Best cost: {best_cost}")
+
+# Create visualizer
+visualizer = CPOVisualizer(objective_func=rastrigin, bounds=(np.array(lb), np.array(ub)))
+
+# Visualize the optimization process
+if dimensions == 2:
+    # Create animation of the optimization process
+    visualizer.animate_optimization(
+        position_history=optimizer.positions_history,
+        best_pos_history=optimizer.best_positions_history,
+        save_path='rastrigin_optimization.gif'
+    )
+    
+    # Show convergence plot
+    visualizer.plot_convergence(cost_history)
+    
+    # Show search space with final positions
+    visualizer.plot_search_space(positions=optimizer.positions, best_pos=best_pos)
 ```
 
 ## Documentation
