@@ -131,10 +131,10 @@ def run_population_dynamics_example():
     print("Creating exploration vs exploitation visualization...")
     fig5 = plot_exploration_exploitation_balance(
         positions_history=positions_history,
-        best_positions=[best_pos] * len(positions_history),
+        best_positions_history=[best_pos] * len(positions_history),
         bounds=bounds,
         sample_iterations=[0, 20, 40, 60, 80, 99],  # Sample iterations
-        title="Exploration vs Exploitation Balance"
+        save_path=None
     )
     
     # Create population diversity map
@@ -143,7 +143,7 @@ def run_population_dynamics_example():
         positions_history=positions_history,
         bounds=bounds,
         sample_iterations=[0, 20, 40, 60, 80, 99],  # Sample iterations
-        title="Population Diversity Map"
+        save_path=None
     )
     
     # Create population cycle animation
@@ -160,7 +160,7 @@ def run_population_dynamics_example():
         max_iter=len(indices),
         cycles=5,
         interval=200,
-        title="Population Cycle Animation"
+        save_path=None
     )
     
     # Show all figures

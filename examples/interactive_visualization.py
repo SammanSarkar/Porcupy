@@ -52,7 +52,9 @@ def run_interactive_dashboard_example():
     dashboard = OptimizationDashboard(
         objective_func=func,
         bounds=bounds,
-        title="CPO Optimization Dashboard"
+        dimensions=dimensions,
+        update_interval=0.5,
+        figsize=(15, 10)
     )
     
     # Run the optimization
@@ -120,11 +122,12 @@ def run_parameter_tuning_example():
     }
     
     # Initialize the parameter tuning dashboard
+    # Choose one parameter to tune for this example
     tuning_dashboard = ParameterTuningDashboard(
-        objective_func=func,
-        bounds=bounds,
-        param_ranges=param_ranges,
-        title="CPO Parameter Tuning Dashboard"
+        parameter_name="pop_size",
+        parameter_range=param_ranges['pop_size'],
+        result_metric="Best Cost",
+        figsize=(12, 8)
     )
     
     # For demonstration purposes, we'll simulate the parameter tuning process
@@ -231,13 +234,13 @@ def run_interactive_plot_example():
     
     # Create the interactive optimization plot
     print("Creating interactive optimization plot...")
+    # For interactive plot, we need initial positions
+    initial_positions = positions_history[0] if positions_history else np.random.uniform(lb, ub, (30, dimensions))
+    
     interactive_plot = create_interactive_optimization_plot(
-        positions_history=positions_history,
-        cost_history=cost_history,
-        best_position=best_pos,
-        bounds=bounds,
         objective_func=func,
-        title="Interactive CPO Optimization Plot"
+        bounds=bounds,
+        initial_positions=initial_positions
     )
     
     # Show the interactive plot
