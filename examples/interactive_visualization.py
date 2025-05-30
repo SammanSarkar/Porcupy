@@ -167,12 +167,11 @@ def run_parameter_tuning_example():
                     'cost_history': cost_history
                 }
                 
-                # Update the dashboard
+                # Update the dashboard - only use the parameter we're tuning
                 tuning_dashboard.update(
-                    params={'pop_size': pop_size, 'cycles': cycles, 'alpha': alpha},
-                    best_cost=best_cost,
-                    convergence_rate=np.mean(np.diff(cost_history)),
-                    cost_history=cost_history
+                    parameter_value=pop_size,  # Using pop_size as our parameter
+                    result=best_cost,
+                    convergence_history=cost_history
                 )
     
     # Show the final tuning dashboard (using plt.show() since dashboard doesn't have a show method)

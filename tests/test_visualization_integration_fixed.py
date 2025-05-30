@@ -6,9 +6,6 @@ This module contains tests for integrating visualization components with the CPO
 
 import pytest
 import numpy as np
-import matplotlib
-# Use a non-interactive backend for testing to avoid Tkinter errors
-matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
 

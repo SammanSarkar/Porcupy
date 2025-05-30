@@ -354,18 +354,21 @@ def generate_mock_defense_types(
     return defense_types_history
 
 
-def mock_objective_function(x: np.ndarray) -> float:
+def mock_objective_function(x) -> float:
     """
     A simple mock objective function for testing.
-    
+
     Parameters
     ----------
-    x : ndarray
+    x : ndarray or list
         Position vector.
-    
+
     Returns
     -------
     float
         Function value.
     """
+    # Convert to numpy array if it's a list
+    if isinstance(x, list):
+        x = np.array(x)
     return np.sum(x**2)  # Simple sphere function
