@@ -5,8 +5,8 @@ Welcome to **Porcupy**, a Python implementation of the Crested Porcupine Optimiz
 ## Getting Started
 
 - [Installation](installation.md)
-- [Usage](usage.md)
-- [API Reference](api.md)
+- [Usage](user_guide.md)
+- [API Reference](api_reference.md)
 
 ## About
 
