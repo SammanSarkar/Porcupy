@@ -3,7 +3,7 @@ name = "porcupy"
 version = "0.1.0"
 description = "Crested Porcupine Optimizer (CPO) for optimization problems"
 authors = [
-    {name = "Samman Sarkar", email = ""}
+    {name = "Samman Sarkar", email = "sarkar.samman4231@gmail.com"}
 ]
 readme = "README.md"
 license = {file = "LICENSE"}
@@ -36,9 +36,14 @@ dev = [
     "flake8>=3.8.0",
 ]
 all = [
-    "porcupy[plotting]",
-    "porcupy[dev]",
+    "matplotlib>=3.3.0",
+    "pytest>=6.0.0",
+    "pytest-cov>=2.10.0",
+    "black>=22.0.0",
+    "isort>=5.0.0",
+    "flake8>=3.8.0",
 ]
+
 
 [project.urls]
 Homepage = "https://github.com/SammanSarkar/porcupy"
