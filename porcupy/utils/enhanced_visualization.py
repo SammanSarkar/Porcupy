@@ -1,3 +1,11 @@
+import os
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation
+from matplotlib.patches import FancyArrowPatch
+from mpl_toolkits.mplot3d import Axes3D
+from typing import List, Tuple, Dict, Optional, Callable, Union
+
 """
 Enhanced visualization module for the Crested Porcupine Optimizer (CPO).
 
@@ -332,16 +340,20 @@ def animate_porcupines_2d(
     bounds: Tuple[np.ndarray, np.ndarray],
     defense_history: Optional[List[List[str]]] = None,
     best_pos_history: Optional[List[np.ndarray]] = None,
+    best_cost_history: Optional[List[float]] = None,
     interval: int = 200,
-    figsize: Tuple[int, int] = (10, 8),
+    figsize: Tuple[int, int] = (14, 10),
     cmap: str = 'viridis',
     contour_levels: int = 20,
     quill_length: float = 0.5,
     save_path: Optional[str] = None,
-    dpi: int = 100
+    dpi: int = 100,
+    show_trail: bool = True,
+    max_trail_length: int = 20,
+    show_convergence: bool = True
 ):
     """
-    Create an animation of porcupines moving in 2D search space.
+    Create an enhanced animation of porcupines moving in 2D search space with additional visual feedback.
     
     Parameters
     ----------
@@ -355,10 +367,12 @@ def animate_porcupines_2d(
         List of lists containing defense mechanisms used by each porcupine at each iteration.
     best_pos_history : list, optional
         List of best positions at each iteration, each with shape (2,).
+    best_cost_history : list, optional
+        List of best costs at each iteration.
     interval : int, optional
         Interval between frames in milliseconds (default: 200).
     figsize : tuple, optional
-        Figure size as (width, height) in inches (default: (10, 8)).
+        Figure size as (width, height) in inches (default: (14, 10)).
     cmap : str, optional
         Colormap for the contour plot (default: 'viridis').
     contour_levels : int, optional
@@ -369,6 +383,12 @@ def animate_porcupines_2d(
         Path to save the animation. If None, the animation is not saved (default: None).
     dpi : int, optional
         DPI for the saved animation (default: 100).
+    show_trail : bool, optional
+        Whether to show the trail of best positions (default: True).
+    max_trail_length : int, optional
+        Maximum number of positions to show in the trail (default: 20).
+    show_convergence : bool, optional
+        Whether to show the convergence plot (default: True).
     
     Returns
     -------
@@ -392,12 +412,48 @@ def animate_porcupines_2d(
         for j in range(resolution):
             Z[i, j] = func([X[i, j], Y[i, j]])
     
-    # Create the figure and axes
-    fig, ax = plt.subplots(figsize=figsize)
+    # Create the figure with a grid layout
+    fig = plt.figure(figsize=figsize)
     
-    # Plot the contour
-    contour = ax.contourf(X, Y, Z, contour_levels, cmap=cmap, alpha=0.8)
-    plt.colorbar(contour, ax=ax, label='Cost')
+    # Create main plot for porcupines
+    if show_convergence and best_cost_history is not None:
+        # Create a 2x2 grid with the main plot on the left and convergence plot on top right
+        gs = fig.add_gridspec(2, 2, width_ratios=[3, 1], height_ratios=[1, 3])
+        ax_main = fig.add_subplot(gs[1, 0])
+        ax_conv = fig.add_subplot(gs[0, 0])
+        ax_info = fig.add_subplot(gs[1, 1])
+    else:
+        # Single plot layout if no convergence plot
+        gs = fig.add_gridspec(1, 2, width_ratios=[3, 1])
+        ax_main = fig.add_subplot(gs[0])
+        ax_info = fig.add_subplot(gs[1])
+        ax_conv = None
+    
+    # Adjust layout to prevent overlap
+    plt.tight_layout()
+    
+    # Main contour plot
+    contour = ax_main.contourf(X, Y, Z, contour_levels, cmap=cmap, alpha=0.8)
+    plt.colorbar(contour, ax=ax_main, label='Cost')
+    
+    # Set up convergence plot if enabled
+    if ax_conv is not None:
+        ax_conv.set_title('Convergence')
+        ax_conv.set_xlabel('Iteration')
+        ax_conv.set_ylabel('Best Cost')
+        ax_conv.grid(True, linestyle='--', alpha=0.3)
+        ax_conv.set_yscale('log')
+        convergence_line, = ax_conv.plot([], [], 'b-', linewidth=2)
+        current_point = ax_conv.plot([], [], 'ro', markersize=6)[0]
+    
+    # Set up info panel
+    ax_info.axis('off')
+    info_text = ax_info.text(0.1, 0.9, '', transform=ax_info.transAxes, 
+                           verticalalignment='top', fontsize=10)
+    
+    # Add progress bar
+    progress_bar = ax_info.barh(y=0.8, width=0, height=0.1, color='blue', alpha=0.5, 
+                              left=0.1)[0]
     
     # Define colors for different defense mechanisms
     defense_colors = {
@@ -407,35 +463,46 @@ def animate_porcupines_2d(
         'physical': 'red'
     }
     
-    # Initialize scatter plots and quills
-    scatter_porcupines = ax.scatter([], [], c='white', edgecolors='black', s=80)
+    # Initialize scatter plots and quills for porcupines
+    scatter_porcupines = ax_main.scatter([], [], c='white', edgecolors='black', s=80, zorder=5)
     quills = []
     
     # Create quills for each porcupine (8 directions per porcupine)
-    if position_history:
+    if position_history and len(position_history) > 0:
         n_porcupines = position_history[0].shape[0]
         for i in range(n_porcupines):
             porcupine_quills = []
             for angle in np.linspace(0, 2*np.pi, 8, endpoint=False):
-                quill, = ax.plot([], [], 'k-', lw=1, alpha=0.7)
+                quill, = ax_main.plot([], [], 'k-', lw=1, alpha=0.7, zorder=4)
                 porcupine_quills.append(quill)
             quills.append(porcupine_quills)
     
-    scatter_best = ax.scatter([], [], c='red', s=150, marker='*', label='Best Position')
+    # Initialize best position marker with a star and pulsing effect
+    scatter_best = ax_main.scatter([], [], c='red', s=200, marker='*', 
+                                 label='Best Position', zorder=10)
     
-    # Set labels and title
-    ax.set_xlabel('x1')
-    ax.set_ylabel('x2')
-    ax.set_title('Porcupine Optimization Process')
-    ax.grid(True, linestyle='--', alpha=0.3)
+    # Initialize best position trail
+    if show_trail and best_pos_history:
+        trail_length = min(max_trail_length, len(best_pos_history))
+        trail_alphas = np.linspace(0.2, 0.8, trail_length)
+        trail = ax_main.plot([], [], 'r-', alpha=0.5, linewidth=2, zorder=3)[0]
     
-    # Set axis limits
-    ax.set_xlim(lb[0], ub[0])
-    ax.set_ylim(lb[1], ub[1])
+    # Set labels and title for main plot
+    ax_main.set_xlabel('x1')
+    ax_main.set_ylabel('x2')
+    ax_main.set_title('Porcupine Optimization Process')
+    ax_main.grid(True, linestyle='--', alpha=0.3)
+    
+    # Set axis limits with a small margin
+    margin_x = 0.1 * (ub[0] - lb[0])
+    margin_y = 0.1 * (ub[1] - lb[1])
+    ax_main.set_xlim(lb[0] - margin_x, ub[0] + margin_x)   
+    ax_main.set_ylim(lb[1] - margin_y, ub[1] + margin_y)
     
     # Text for iteration number
-    iteration_text = ax.text(0.02, 0.98, '', transform=ax.transAxes, 
-                           verticalalignment='top', fontsize=10)
+    iteration_text = ax_main.text(0.02, 0.98, '', transform=ax_main.transAxes, 
+                                verticalalignment='top', fontsize=10,
+                                bbox=dict(facecolor='white', alpha=0.7, pad=2))
     
     # Create legend for defense mechanisms
     if defense_history is not None:
@@ -447,19 +514,21 @@ def animate_porcupines_2d(
         legend_elements.append(plt.Line2D([0], [0], marker='*', color='w', 
                                         markerfacecolor='red', markersize=15, 
                                         label='Best Position'))
-        ax.legend(handles=legend_elements)
-    else:
-        ax.legend()
+        ax_main.legend(handles=legend_elements, loc='lower right')
     
     # Animation update function
     def update(frame):
+        artists = []
+        
+        # Get current positions
         positions = position_history[frame]
         
         # Update porcupine positions
         scatter_porcupines.set_offsets(positions)
+        artists.append(scatter_porcupines)
         
         # Update porcupine colors based on defense mechanisms
-        if defense_history is not None:
+        if defense_history is not None and frame < len(defense_history):
             defense_types = defense_history[frame]
             colors = [defense_colors.get(defense, 'white') for defense in defense_types]
             scatter_porcupines.set_color(colors)
@@ -472,23 +541,67 @@ def animate_porcupines_2d(
                 quills[i][j].set_data([pos[0], pos[0] + dx], [pos[1], pos[1] + dy])
                 
                 # Update quill color based on defense mechanism
-                if defense_history is not None:
+                if defense_history is not None and frame < len(defense_history):
                     defense = defense_history[frame][i]
                     color = defense_colors.get(defense, 'black')
                     quills[i][j].set_color(color)
+                
+                artists.append(quills[i][j])
         
-        # Update best position
-        if best_pos_history is not None:
+        # Update best position with pulsing effect
+        if best_pos_history is not None and frame < len(best_pos_history):
             best_pos = best_pos_history[frame]
             scatter_best.set_offsets([best_pos])
+            
+            # Pulsing effect
+            size = 200 + 50 * np.sin(frame * 0.5)
+            scatter_best.set_sizes([size])
+            artists.append(scatter_best)
+            
+            # Update trail
+            if show_trail and frame > 0:
+                start_idx = max(0, frame - max_trail_length + 1)
+                trail_x = [p[0] for p in best_pos_history[start_idx:frame+1]]
+                trail_y = [p[1] for p in best_pos_history[start_idx:frame+1]]
+                trail.set_data(trail_x, trail_y)
+                artists.append(trail)
+        
+        # Update convergence plot
+        if ax_conv is not None and best_cost_history is not None and frame < len(best_cost_history):
+            # Update convergence line
+            iterations = range(frame + 1)
+            convergence_line.set_data(iterations, best_cost_history[:frame+1])
+            
+            # Update current point
+            current_point.set_data([frame], [best_cost_history[frame]])
+            
+            # Adjust axes limits
+            ax_conv.relim()
+            ax_conv.autoscale_view()
+            
+            artists.extend([convergence_line, current_point])
+        
+        # Update info text
+        info = []
+        info.append(f"Iteration: {frame+1}/{len(position_history)}")
+        
+        if best_cost_history is not None and frame < len(best_cost_history):
+            info.append(f"Best Cost: {best_cost_history[frame]:.4e}")
+        
+        if best_pos_history is not None and frame < len(best_pos_history):
+            best_pos = best_pos_history[frame]
+            info.append(f"Best Position: ({best_pos[0]:.6f}, {best_pos[1]:.6f})")
+        
+        info_text.set_text('\n'.join(info))
+        artists.append(info_text)
+        
+        # Update progress bar
+        progress = (frame + 1) / len(position_history)
+        progress_bar.set_width(progress)
         
         # Update iteration text
         iteration_text.set_text(f'Iteration: {frame+1}/{len(position_history)}')
-        
-        # Return all artists that need to be redrawn
-        artists = [scatter_porcupines, scatter_best, iteration_text]
-        for porcupine_quills in quills:
-            artists.extend(porcupine_quills)
+        artists.append(iteration_text)
         
         return artists
     
@@ -498,7 +611,17 @@ def animate_porcupines_2d(
     
     # Save the animation if a path is provided
     if save_path:
-        anim.save(save_path, dpi=dpi, writer='pillow')
+        # Ensure the directory exists
+        os.makedirs(os.path.dirname(os.path.abspath(save_path)), exist_ok=True)
+        # Use 'ffmpeg' for better quality if available, otherwise fall back to 'pillow'
+        try:
+            anim.save(save_path, dpi=dpi, writer='ffmpeg', 
+                     fps=1000/interval, bitrate=1800)
+        except:
+            try:
+                anim.save(save_path, dpi=dpi, writer='pillow')
+            except Exception as e:
+                print(f"Warning: Could not save animation: {e}")
     
     return anim
 
