@@ -1,4 +1,10 @@
 import numpy as np
+import sys
+import os
+
+# Add the parent directory to the path to ensure imports work
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))  
+
 from porcupy.cpo import cpo
 from porcupy.functions import sphere, rosenbrock
 from porcupy.utils.plotting import plot_convergence

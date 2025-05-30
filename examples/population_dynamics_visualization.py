@@ -32,7 +32,7 @@ def run_population_dynamics_example():
     print("========================================")
     
     # Define the objective function
-    def func(x):
+    def func(x, callback=None):
         return rastrigin(x)
     
     # Define bounds for the search space

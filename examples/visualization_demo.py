@@ -181,7 +181,7 @@ def demo_interactive_dashboard():
     print("Demonstrating interactive dashboard...")
     
     # Define a 2D test function
-    def func(x):
+    def func(x, callback=None):
         return ackley(x)
     
     # Define bounds for the search space
@@ -195,8 +195,7 @@ def demo_interactive_dashboard():
         pop_size=30,
         dimensions=dimensions,
         max_iter=100,
-        lb=lb,
-        ub=ub,
+        bounds=bounds,
         cycles=5
     )
     
@@ -253,13 +252,14 @@ def demo_parameter_tuning():
     print("Demonstrating parameter tuning visualization...")
     
     # Define a test function
-    def func(x):
+    def func(x, callback=None):
         return sphere(x)
     
     # Define bounds for the search space
     dimensions = 10
     lb = -100 * np.ones(dimensions)
     ub = 100 * np.ones(dimensions)
+    bounds = (lb, ub)
     
     # Initialize the visualizer
     visualizer = CPOVisualizer()
@@ -278,12 +278,11 @@ def demo_parameter_tuning():
             pop_size=pop_size,
             dimensions=dimensions,
             max_iter=100,
-            lb=lb,
-            ub=ub
+            bounds=bounds
         )
         
         # Run the optimization
-        result = optimizer.optimize(func)
+        best_pos, best_cost, _ = optimizer.optimize(func)
         
         # Get the convergence history
         convergence_history = optimizer.cost_history
@@ -291,7 +290,7 @@ def demo_parameter_tuning():
         # Update the dashboard
         dashboard.update(
             parameter_value=pop_size,
-            result=result['best_cost'],
+            result=best_cost,
             convergence_history=convergence_history
         )
     

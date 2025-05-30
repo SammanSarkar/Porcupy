@@ -6,6 +6,12 @@ for a constrained optimization problem.
 """
 
 import numpy as np
+import sys
+import os
+
+# Add the parent directory to the path to ensure imports work
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))  
+
 from porcupy import CrestPorcupineOptimizer
 from porcupy.functions import sphere
 from porcupy.utils.visualization import plot_2d_search_space, plot_convergence

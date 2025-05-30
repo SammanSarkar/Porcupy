@@ -6,6 +6,12 @@ for the Crested Porcupine Optimizer (CPO).
 """
 
 import numpy as np
+import sys
+import os
+
+# Add the parent directory to the path to ensure imports work
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))  
+
 from porcupy import CrestPorcupineOptimizer
 from porcupy.functions import rastrigin, get_function_bounds
 from porcupy.utils.visualization import plot_parameter_sensitivity, plot_multiple_runs
