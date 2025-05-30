@@ -12,7 +12,7 @@ import os
 # Add the parent directory to the path to ensure imports work
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))  
 
-from porcupy import CrestPorcupineOptimizer
+from porcupy import CPO
 from porcupy.functions import rastrigin, get_function_bounds
 from porcupy.utils.visualization import plot_parameter_sensitivity, plot_multiple_runs
 
@@ -32,7 +32,7 @@ def run_optimization(alpha=0.2, tf=0.8, cycles=2, runs=3):
     cost_histories = []
     
     for _ in range(runs):
-        optimizer = CrestPorcupineOptimizer(
+        optimizer = CPO(
             dimensions=dimensions,
             bounds=bounds,
             pop_size=30,

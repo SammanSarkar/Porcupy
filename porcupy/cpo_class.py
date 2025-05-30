@@ -2,13 +2,14 @@ import numpy as np
 import multiprocessing as mp
 from collections import deque
 from typing import Callable, Tuple, List, Optional, Dict, Any, Union
+import warnings
 
 from .base import Optimizer
 
 
-class CrestPorcupineOptimizer(Optimizer):
+class CPO(Optimizer):
     """
-    Crested Porcupine Optimizer (CPO) for optimization problems.
+    CPO (Crested Porcupine Optimizer) for optimization problems.
     
     This class implements the CPO algorithm, a nature-inspired metaheuristic that mimics
     the defensive behaviors of crested porcupines (sight, sound, odor, physical attack) to
@@ -73,7 +74,7 @@ class CrestPorcupineOptimizer(Optimizer):
         ftol_iter: int = 1,
     ):
         # Initialize base class
-        super(CrestPorcupineOptimizer, self).__init__(
+        super(CPO, self).__init__(
             dimensions=dimensions,
             bounds=bounds,
             pop_size=pop_size,
@@ -391,3 +392,5 @@ class CrestPorcupineOptimizer(Optimizer):
             pool.close()
         
         return self.best_pos, self.best_cost, np.array(self.cost_history)
+
+

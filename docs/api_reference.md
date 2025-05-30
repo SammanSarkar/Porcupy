@@ -37,12 +37,12 @@ class Optimizer(abc.ABC):
 - `optimize(objective_func, n_processes=None, verbose=False, **kwargs)`: Abstract method to optimize the objective function.
 - `reset()`: Reset the attributes of the optimizer.
 
-### CrestPorcupineOptimizer
+### CPO
 
 The main implementation of the Crested Porcupine Optimizer algorithm.
 
 ```python
-class CrestPorcupineOptimizer(Optimizer):
+class CPO(Optimizer):
     def __init__(
         self,
         dimensions: int,

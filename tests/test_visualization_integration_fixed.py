@@ -14,7 +14,7 @@ import sys
 import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))  
 
-from porcupy.cpo_class import CrestPorcupineOptimizer
+from porcupy.cpo_class import CPO
 from porcupy.utils.visualization_manager import CPOVisualizer
 from porcupy.functions import sphere, rastrigin
 
@@ -33,7 +33,7 @@ def test_visualization_with_cpo_optimizer():
     bounds = (lb, ub)
     
     # Initialize the CPO optimizer
-    optimizer = CrestPorcupineOptimizer(
+    optimizer = CPO(
         pop_size=20,
         dimensions=dimensions,
         max_iter=10,  # Use fewer iterations for testing
@@ -105,7 +105,7 @@ def test_visualization_with_complex_function():
     bounds = (lb, ub)
     
     # Initialize the CPO optimizer
-    optimizer = CrestPorcupineOptimizer(
+    optimizer = CPO(
         pop_size=30,
         dimensions=dimensions,
         max_iter=15,  # Use fewer iterations for testing

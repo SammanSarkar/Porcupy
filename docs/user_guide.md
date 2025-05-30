@@ -28,7 +28,7 @@ Here's a simple example of how to use Porcupy to optimize a function:
 
 ```python
 import numpy as np
-from porcupy import CrestPorcupineOptimizer
+from porcupy import CPO
 from porcupy.functions import sphere, get_function_bounds
 
 # Define the problem
@@ -36,7 +36,7 @@ dimensions = 10
 bounds = get_function_bounds('sphere', dimensions)
 
 # Create the optimizer
-optimizer = CrestPorcupineOptimizer(
+optimizer = CPO(
     dimensions=dimensions,
     bounds=bounds,
     pop_size=30,
@@ -92,7 +92,7 @@ You can use parallel processing to speed up the optimization process:
 
 ```python
 import numpy as np
-from porcupy import CrestPorcupineOptimizer
+from porcupy import CPO
 from porcupy.functions import rosenbrock, get_function_bounds
 
 # Define the problem
@@ -100,7 +100,7 @@ dimensions = 20
 bounds = get_function_bounds('rosenbrock', dimensions)
 
 # Create the optimizer
-optimizer = CrestPorcupineOptimizer(
+optimizer = CPO(
     dimensions=dimensions,
     bounds=bounds,
     pop_size=50,
@@ -124,7 +124,7 @@ You can add constraints to your optimization problem:
 
 ```python
 import numpy as np
-from porcupy import CrestPorcupineOptimizer
+from porcupy import CPO
 from porcupy.functions import sphere
 
 # Define the problem
@@ -140,7 +140,7 @@ def constraint(x):
     return [2500 - x[0]**2 - x[1]**2]
 
 # Create the optimizer
-optimizer = CrestPorcupineOptimizer(
+optimizer = CPO(
     dimensions=dimensions,
     bounds=(lb, ub),
     pop_size=30,
@@ -166,7 +166,7 @@ Porcupy provides several visualization tools to help you understand the optimiza
 
 ```python
 import numpy as np
-from porcupy import CrestPorcupineOptimizer
+from porcupy import CPO
 from porcupy.functions import rastrigin, get_function_bounds
 from porcupy.utils.visualization import plot_convergence
 
@@ -175,7 +175,7 @@ dimensions = 10
 bounds = get_function_bounds('rastrigin', dimensions)
 
 # Create the optimizer
-optimizer = CrestPorcupineOptimizer(
+optimizer = CPO(
     dimensions=dimensions,
     bounds=bounds,
     pop_size=30,
@@ -201,7 +201,7 @@ fig.show()
 
 ```python
 import numpy as np
-from porcupy import CrestPorcupineOptimizer
+from porcupy import CPO
 from porcupy.functions import rastrigin, get_function_bounds
 from porcupy.utils.visualization import plot_2d_search_space
 
@@ -210,7 +210,7 @@ dimensions = 2
 bounds = get_function_bounds('rastrigin', dimensions)
 
 # Create the optimizer
-optimizer = CrestPorcupineOptimizer(
+optimizer = CPO(
     dimensions=dimensions,
     bounds=bounds,
     pop_size=30,
@@ -238,7 +238,7 @@ fig.show()
 
 ```python
 import numpy as np
-from porcupy import CrestPorcupineOptimizer
+from porcupy import CPO
 from porcupy.functions import rastrigin, get_function_bounds
 from porcupy.utils.visualization import animate_optimization_2d
 
@@ -247,7 +247,7 @@ dimensions = 2
 bounds = get_function_bounds('rastrigin', dimensions)
 
 # Create the optimizer
-optimizer = CrestPorcupineOptimizer(
+optimizer = CPO(
     dimensions=dimensions,
     bounds=bounds,
     pop_size=30,
@@ -273,7 +273,7 @@ anim = animate_optimization_2d(
 
 ```python
 import numpy as np
-from porcupy import CrestPorcupineOptimizer
+from porcupy import CPO
 from porcupy.functions import ackley, get_function_bounds
 from porcupy.utils.visualization import plot_multiple_runs
 
@@ -286,7 +286,7 @@ cost_histories = []
 labels = []
 
 for pop_size in [20, 50, 100]:
-    optimizer = CrestPorcupineOptimizer(
+    optimizer = CPO(
         dimensions=dimensions,
         bounds=bounds,
         pop_size=pop_size,
@@ -315,7 +315,7 @@ fig.show()
 
 ```python
 import numpy as np
-from porcupy import CrestPorcupineOptimizer
+from porcupy import CPO
 from porcupy.functions import griewank, get_function_bounds
 from porcupy.utils.visualization import plot_parameter_sensitivity
 
@@ -328,7 +328,7 @@ alpha_values = [0.1, 0.2, 0.3, 0.4, 0.5]
 best_costs = []
 
 for alpha in alpha_values:
-    optimizer = CrestPorcupineOptimizer(
+    optimizer = CPO(
         dimensions=dimensions,
         bounds=bounds,
         pop_size=30,
@@ -359,7 +359,7 @@ You can also define your own benchmark functions:
 
 ```python
 import numpy as np
-from porcupy import CrestPorcupineOptimizer
+from porcupy import CPO
 
 # Define a custom function
 def custom_function(x):
@@ -372,7 +372,7 @@ lb = np.full(dimensions, -10)
 ub = np.full(dimensions, 10)
 
 # Create the optimizer
-optimizer = CrestPorcupineOptimizer(
+optimizer = CPO(
     dimensions=dimensions,
     bounds=(lb, ub),
     pop_size=30,
@@ -395,7 +395,7 @@ You can customize the population management strategy:
 
 ```python
 import numpy as np
-from porcupy import CrestPorcupineOptimizer
+from porcupy import CPO
 from porcupy.functions import schwefel, get_function_bounds
 from porcupy.utils.population import PopulationCycle
 
@@ -413,7 +413,7 @@ pop_cycle = PopulationCycle(
 )
 
 # Create the optimizer
-optimizer = CrestPorcupineOptimizer(
+optimizer = CPO(
     dimensions=dimensions,
     bounds=bounds,
     pop_size=50,

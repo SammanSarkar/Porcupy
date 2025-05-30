@@ -14,7 +14,7 @@ import os
 # Add the parent directory to the path to ensure imports work
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))  
 
-from porcupy.cpo_class import CrestPorcupineOptimizer
+from porcupy.cpo_class import CPO
 from porcupy.utils.visualization_manager import CPOVisualizer
 from porcupy.utils.interactive_visualization import (
     OptimizationDashboard,
@@ -40,7 +40,7 @@ def run_interactive_dashboard_example():
     bounds = (lb, ub)
     
     # Initialize the CPO optimizer
-    optimizer = CrestPorcupineOptimizer(
+    optimizer = CPO(
         dimensions=dimensions,
         bounds=(lb, ub),
         pop_size=30,
@@ -148,7 +148,7 @@ def run_parameter_tuning_example():
                 print(f"Testing parameters: {param_key}")
                 
                 # Initialize the optimizer with these parameters
-                optimizer = CrestPorcupineOptimizer(
+                optimizer = CPO(
                     dimensions=dimensions,
                     bounds=bounds,
                     pop_size=pop_size,
@@ -207,7 +207,7 @@ def run_interactive_plot_example():
     bounds = (lb, ub)
     
     # Initialize the CPO optimizer
-    optimizer = CrestPorcupineOptimizer(
+    optimizer = CPO(
         dimensions=dimensions,
         bounds=(lb, ub),
         pop_size=30,

@@ -17,7 +17,7 @@ import time
 # Add the parent directory to the path to ensure imports work
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))  
 
-from porcupy.cpo_class import CrestPorcupineOptimizer
+from porcupy.cpo_class import CPO
 from porcupy.functions import rastrigin, sphere, ackley
 from porcupy.utils.enhanced_visualization import plot_3d_porcupines
 

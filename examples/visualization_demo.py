@@ -15,7 +15,7 @@ import os
 # Add the parent directory to the path to ensure imports work
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))  
 
-from porcupy.cpo_class import CrestPorcupineOptimizer
+from porcupy.cpo_class import CPO
 from porcupy.utils.visualization_manager import CPOVisualizer
 from porcupy.functions import rastrigin, sphere, rosenbrock, ackley
 
@@ -35,7 +35,7 @@ def demo_basic_visualizations():
     bounds = (lb, ub)
     
     # Initialize the CPO optimizer
-    optimizer = CrestPorcupineOptimizer(
+    optimizer = CPO(
         dimensions=dimensions,
         bounds=(lb, ub),
         pop_size=30,
@@ -191,7 +191,7 @@ def demo_interactive_dashboard():
     bounds = (lb, ub)
     
     # Initialize the CPO optimizer
-    optimizer = CrestPorcupineOptimizer(
+    optimizer = CPO(
         pop_size=30,
         dimensions=dimensions,
         max_iter=100,
@@ -274,7 +274,7 @@ def demo_parameter_tuning():
     # Test different population sizes
     for pop_size in [10, 20, 30, 40, 50, 60]:
         # Initialize the CPO optimizer with the current population size
-        optimizer = CrestPorcupineOptimizer(
+        optimizer = CPO(
             pop_size=pop_size,
             dimensions=dimensions,
             max_iter=100,

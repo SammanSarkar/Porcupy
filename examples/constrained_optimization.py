@@ -12,7 +12,7 @@ import os
 # Add the parent directory to the path to ensure imports work
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))  
 
-from porcupy import CrestPorcupineOptimizer
+from porcupy import CPO
 from porcupy.functions import sphere
 from porcupy.utils.visualization import plot_2d_search_space, plot_convergence
 
@@ -31,7 +31,7 @@ def constraint(x):
     return [2500 - x[0]**2 - x[1]**2]
 
 # Create the optimizer
-optimizer = CrestPorcupineOptimizer(
+optimizer = CPO(
     dimensions=dimensions,
     bounds=(lb, ub),
     pop_size=30,

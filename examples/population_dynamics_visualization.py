@@ -14,7 +14,7 @@ import os
 # Add the parent directory to the path to ensure imports work
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))  
 
-from porcupy.cpo_class import CrestPorcupineOptimizer
+from porcupy.cpo_class import CPO
 from porcupy.utils.visualization_manager import CPOVisualizer
 from porcupy.utils.population_visualization import (
     plot_population_reduction_strategies,
@@ -52,7 +52,7 @@ def run_population_dynamics_example():
     
     # Initialize the CPO optimizer
     print("\nRunning optimization with default strategy...")
-    optimizer = CrestPorcupineOptimizer(
+    optimizer = CPO(
         dimensions=dimensions,
         bounds=(lb, ub),
         pop_size=50,

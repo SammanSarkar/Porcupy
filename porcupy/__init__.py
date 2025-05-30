@@ -1,5 +1,5 @@
 from .cpo import cpo
-from .cpo_class import CrestPorcupineOptimizer
+from .cpo_class import CPO
 from .base import Optimizer
 from .porcupines import PorcupinePopulation, DefenseMechanisms, PopulationManager
 from .utils.population import PopulationCycle, SelectionStrategies

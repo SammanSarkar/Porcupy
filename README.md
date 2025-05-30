@@ -46,7 +46,7 @@ pip install porcupy[dev]
 
 ```python
 import numpy as np
-from porcupy import CrestPorcupineOptimizer
+from porcupy import CPO
 from porcupy.functions import sphere, get_function_bounds
 
 # Define the problem
@@ -54,7 +54,7 @@ dimensions = 10
 bounds = get_function_bounds('sphere', dimensions)
 
 # Create the optimizer
-optimizer = CrestPorcupineOptimizer(
+optimizer = CPO(
     dimensions=dimensions,
     bounds=bounds,
     pop_size=30,

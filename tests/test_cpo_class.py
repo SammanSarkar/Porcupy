@@ -1,11 +1,11 @@
 import numpy as np
 import pytest
-from porcupy import CrestPorcupineOptimizer
+from porcupy import CPO
 from porcupy.functions import sphere, rosenbrock, rastrigin
 
 
-class TestCrestPorcupineOptimizer:
-    """Test suite for the CrestPorcupineOptimizer class."""
+class TestCPO:
+    """Test suite for the CPO class."""
     
     def test_initialization(self):
         """Test that the optimizer initializes correctly."""
@@ -13,7 +13,7 @@ class TestCrestPorcupineOptimizer:
         lb = np.full(dimensions, -10)
         ub = np.full(dimensions, 10)
         
-        optimizer = CrestPorcupineOptimizer(
+        optimizer = CPO(
             dimensions=dimensions,
             bounds=(lb, ub),
             pop_size=30,
@@ -38,7 +38,7 @@ class TestCrestPorcupineOptimizer:
         
         # Test invalid dimensions
         with pytest.raises(ValueError):
-            CrestPorcupineOptimizer(
+            CPO(
                 dimensions=0,
                 bounds=(lb, ub),
                 pop_size=30,
@@ -47,7 +47,7 @@ class TestCrestPorcupineOptimizer:
         
         # Test invalid pop_size
         with pytest.raises(ValueError):
-            CrestPorcupineOptimizer(
+            CPO(
                 dimensions=dimensions,
                 bounds=(lb, ub),
                 pop_size=0,
@@ -56,7 +56,7 @@ class TestCrestPorcupineOptimizer:
         
         # Test invalid max_iter
         with pytest.raises(ValueError):
-            CrestPorcupineOptimizer(
+            CPO(
                 dimensions=dimensions,
                 bounds=(lb, ub),
                 pop_size=30,
@@ -65,7 +65,7 @@ class TestCrestPorcupineOptimizer:
         
         # Test invalid ftol_iter
         with pytest.raises(ValueError):
-            CrestPorcupineOptimizer(
+            CPO(
                 dimensions=dimensions,
                 bounds=(lb, ub),
                 pop_size=30,
@@ -79,7 +79,7 @@ class TestCrestPorcupineOptimizer:
         lb = np.full(dimensions, -10)
         ub = np.full(dimensions, 10)
         
-        optimizer = CrestPorcupineOptimizer(
+        optimizer = CPO(
             dimensions=dimensions,
             bounds=(lb, ub),
             pop_size=30,
@@ -111,7 +111,7 @@ class TestCrestPorcupineOptimizer:
         lb = np.full(dimensions, -10)
         ub = np.full(dimensions, 10)
         
-        optimizer = CrestPorcupineOptimizer(
+        optimizer = CPO(
             dimensions=dimensions,
             bounds=(lb, ub),
             pop_size=20,
@@ -134,7 +134,7 @@ class TestCrestPorcupineOptimizer:
         lb = np.full(dimensions, -10)
         ub = np.full(dimensions, 10)
         
-        optimizer = CrestPorcupineOptimizer(
+        optimizer = CPO(
             dimensions=dimensions,
             bounds=(lb, ub),
             pop_size=20,
@@ -157,7 +157,7 @@ class TestCrestPorcupineOptimizer:
         lb = np.full(dimensions, -5.12)
         ub = np.full(dimensions, 5.12)
         
-        optimizer = CrestPorcupineOptimizer(
+        optimizer = CPO(
             dimensions=dimensions,
             bounds=(lb, ub),
             pop_size=20,
@@ -187,7 +187,7 @@ class TestCrestPorcupineOptimizer:
             # Rewritten as: 50^2 - x[0]^2 - x[1]^2 >= 0
             return [2500 - x[0]**2 - x[1]**2]
         
-        optimizer = CrestPorcupineOptimizer(
+        optimizer = CPO(
             dimensions=dimensions,
             bounds=(lb, ub),
             pop_size=20,
@@ -210,7 +210,7 @@ class TestCrestPorcupineOptimizer:
         lb = np.full(dimensions, -10)
         ub = np.full(dimensions, 10)
         
-        optimizer = CrestPorcupineOptimizer(
+        optimizer = CPO(
             dimensions=dimensions,
             bounds=(lb, ub),
             pop_size=30,
@@ -235,7 +235,7 @@ class TestCrestPorcupineOptimizer:
         lb = np.full(dimensions, -10)
         ub = np.full(dimensions, 10)
         
-        optimizer = CrestPorcupineOptimizer(
+        optimizer = CPO(
             dimensions=dimensions,
             bounds=(lb, ub),
             pop_size=20,
