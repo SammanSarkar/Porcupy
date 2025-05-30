@@ -268,14 +268,14 @@ def test_plot_diversity_vs_convergence(test_data_2d):
     )
     assert isinstance(fig, Figure)
     
-    # Test with empty data
-    with pytest.raises(IndexError):
-        plot_diversity_vs_convergence(
-            diversity_history=[],
-            fitness_history=[],
-            cycles=3,
-            max_iter=30
-        )
+    # Test with empty data - should handle gracefully
+    fig = plot_diversity_vs_convergence(
+        diversity_history=[],
+        fitness_history=[],
+        cycles=3,
+        max_iter=30
+    )
+    assert isinstance(fig, Figure)
     
     plt.close('all')
 

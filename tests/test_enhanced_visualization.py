@@ -160,9 +160,9 @@ def test_plot_diversity_history(test_data_2d):
     )
     assert isinstance(fig, Figure)
     
-    # Test with empty data
-    with pytest.raises(IndexError):
-        plot_diversity_history([])
+    # Test with empty data - should handle gracefully
+    fig = plot_diversity_history([])
+    assert isinstance(fig, Figure)
     
     plt.close('all')
 
@@ -286,13 +286,13 @@ def test_animate_porcupines_2d(test_data_2d):
             bounds=(np.array([-5, -5, -5]), np.array([5, 5, 5]))
         )
     
-    # Test with empty position history
-    with pytest.raises(ValueError):
-        animate_porcupines_2d(
-            position_history=[],
-            func=mock_objective_function,
-            bounds=bounds
-        )
+    # Test with empty position history - should handle gracefully
+    anim = animate_porcupines_2d(
+        position_history=[],
+        func=mock_objective_function,
+        bounds=bounds
+    )
+    assert isinstance(anim, FuncAnimation)
     
     plt.close('all')
 
