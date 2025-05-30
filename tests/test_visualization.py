@@ -5,6 +5,9 @@ Tests for the visualization functions in porcupy.utils.visualization module.
 import numpy as np
 import pytest
 import os
+# Use Agg backend for matplotlib to avoid Tkinter issues
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 from porcupy.utils.visualization import (
@@ -17,9 +20,17 @@ from porcupy.utils.visualization import (
 )
 
 
-# Define a simple test function for 2D visualization
-def test_func(x):
-    return np.sum(x**2, axis=1)
+# Define a simple objective function for 2D visualization
+def objective_func_2d(x):
+    # Convert input to numpy array if it's a list
+    if isinstance(x, list):
+        x = np.array(x)
+    
+    # Handle both 1D and 2D inputs
+    if x.ndim == 1:
+        return np.sum(x**2)
+    else:
+        return np.sum(x**2, axis=1)
 
 
 class TestVisualization:
@@ -89,20 +100,20 @@ class TestVisualization:
         best_pos = np.array([0, 0])
         
         # Test without positions and best position
-        fig = plot_2d_search_space(test_func, bounds, resolution=20)
+        fig = plot_2d_search_space(objective_func_2d, bounds, resolution=20)
         assert fig is not None
         
         # Test with positions
-        fig = plot_2d_search_space(test_func, bounds, resolution=20, positions=positions)
+        fig = plot_2d_search_space(objective_func_2d, bounds, resolution=20, positions=positions)
         assert fig is not None
         
         # Test with positions and best position
-        fig = plot_2d_search_space(test_func, bounds, resolution=20, positions=positions, best_pos=best_pos)
+        fig = plot_2d_search_space(objective_func_2d, bounds, resolution=20, positions=positions, best_pos=best_pos)
         assert fig is not None
         
         # Test with saving
         save_path = os.path.join(tmp_path, "test_search_space.png")
-        fig = plot_2d_search_space(test_func, bounds, resolution=20, positions=positions, 
+        fig = plot_2d_search_space(objective_func_2d, bounds, resolution=20, positions=positions, 
                                   best_pos=best_pos, save_path=save_path)
         assert fig is not None
         
@@ -133,11 +144,11 @@ class TestVisualization:
         ]
         
         # Test without best position history
-        anim = animate_optimization_2d(position_history, test_func, bounds, interval=100, contour_levels=10)
+        anim = animate_optimization_2d(position_history, objective_func_2d, bounds, interval=100, contour_levels=10)
         assert isinstance(anim, FuncAnimation)
         
         # Test with best position history
-        anim = animate_optimization_2d(position_history, test_func, bounds, best_pos_history=best_pos_history,
+        anim = animate_optimization_2d(position_history, objective_func_2d, bounds, best_pos_history=best_pos_history,
                                       interval=100, contour_levels=10)
         assert isinstance(anim, FuncAnimation)
         
@@ -145,7 +156,7 @@ class TestVisualization:
         # For simplicity, we'll just check that the function runs without errors
         save_path = os.path.join(tmp_path, "test_animation.gif")
         try:
-            anim = animate_optimization_2d(position_history, test_func, bounds, 
+            anim = animate_optimization_2d(position_history, objective_func_2d, bounds, 
                                           best_pos_history=best_pos_history,
                                           interval=100, contour_levels=10,
                                           save_path=save_path, dpi=50)
