@@ -584,7 +584,24 @@ def plot_diversity_vs_convergence(
     # Create a second y-axis for fitness
     ax2 = ax1.twinx()
     ax2.set_ylabel('Best Fitness', color='red')
-    ax2.plot(iterations, fitness_history, 'r-', linewidth=2, label='Best Fitness')
+    
+    # Extract scalar values from fitness history for plotting
+    scalar_fitness = []
+    for fitness_array in fitness_history:
+        # If fitness is an array, take the minimum value (best fitness)
+        if isinstance(fitness_array, np.ndarray) and fitness_array.size > 0:
+            scalar_fitness.append(float(np.min(fitness_array)))
+        # If it's already a scalar, use it directly
+        elif np.isscalar(fitness_array):
+            scalar_fitness.append(float(fitness_array))
+        # If it's a list, take the minimum value
+        elif isinstance(fitness_array, list) and len(fitness_array) > 0:
+            scalar_fitness.append(float(min(fitness_array)))
+        # Default case
+        else:
+            scalar_fitness.append(0.0)
+    
+    ax2.plot(iterations, scalar_fitness, 'r-', linewidth=2, label='Best Fitness')
     ax2.tick_params(axis='y', labelcolor='red')
     
     # Add cycle boundaries
@@ -612,11 +629,14 @@ def plot_diversity_vs_convergence(
     ax1.grid(True, linestyle='--', alpha=0.7)
     
     # Calculate correlation between diversity and fitness improvement
-    fitness_improvements = np.zeros_like(fitness_history)
-    for i in range(1, len(fitness_history)):
-        fitness_improvements[i] = fitness_history[i-1] - fitness_history[i]
+    # Use the scalar_fitness we calculated earlier
+    fitness_improvements = np.zeros(len(scalar_fitness))
+    for i in range(1, len(scalar_fitness)):
+        fitness_improvements[i] = scalar_fitness[i-1] - scalar_fitness[i]
     
-    correlation = np.corrcoef(diversity_history[1:], fitness_improvements[1:])[0, 1]
+    # Make sure diversity_history and fitness_improvements have the same length
+    min_length = min(len(diversity_history), len(fitness_improvements))
+    correlation = np.corrcoef(diversity_history[1:min_length], fitness_improvements[1:min_length])[0, 1]
     
     # Add correlation information
     correlation_text = f"Correlation between Diversity and Fitness Improvement: {correlation:.4f}"

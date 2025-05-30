@@ -6,6 +6,7 @@ This module provides a unified interface for all visualization tools in the Porc
 
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation
 from typing import List, Tuple, Optional, Union, Dict, Any, Callable
 
 # Import visualization modules
@@ -75,39 +76,50 @@ class CPOVisualizer:
         self.fitness_history = []
         self.pop_size_history = []
         self.defense_history = {}
+        self.defense_types_history = []
         self.diversity_history = []
     
     def record_iteration(
         self,
-        iteration: int,
         positions: np.ndarray,
         best_position: np.ndarray,
-        best_fitness: float,
+        fitness: np.ndarray,
         pop_size: int,
         defense_types: Optional[List[str]] = None
     ):
         """
-        Record data from an iteration for later visualization.
+        Record data from a single iteration for visualization.
         
         Parameters
         ----------
-        iteration : int
-            Current iteration number.
-        positions : ndarray
-            Current positions of the porcupines, shape (pop_size, dimensions).
-        best_position : ndarray
-            Current global best position.
-        best_fitness : float
-            Current best fitness value.
+        positions : numpy.ndarray
+            Positions of all porcupines in the current iteration.
+        best_position : numpy.ndarray
+            Best position found so far.
+        fitness : numpy.ndarray
+            Fitness values of all porcupines in the current iteration.
         pop_size : int
             Current population size.
-        defense_types : list, optional
-            List of defense mechanisms used by each porcupine.
+        defense_types : list of str, optional
+            Types of defense mechanisms used by each porcupine in the current iteration.
         """
         # Store position and fitness data
         self.position_history.append(positions.copy())
         self.best_position_history.append(best_position.copy())
-        self.fitness_history.append(best_fitness)
+        self.fitness_history.append(fitness.copy())
+        
+        # Store defense types if provided
+        if defense_types is not None:
+            # Initialize defense_types_history if it doesn't exist
+            if not hasattr(self, 'defense_types_history'):
+                self.defense_types_history = []
+            self.defense_types_history.append(defense_types)
+            
+            # Also store in defense_history for backward compatibility
+            if 'defense_types' not in self.defense_history:
+                self.defense_history['defense_types'] = []
+            self.defense_history['defense_types'].append(defense_types)
+        
         self.pop_size_history.append(pop_size)
         
         # Calculate and store diversity
@@ -179,16 +191,162 @@ class CPOVisualizer:
         matplotlib.figure.Figure
             The created figure.
         """
-        if not self.defense_history:
-            raise ValueError("No defense mechanism data recorded")
+        if not self.position_history:
+            raise ValueError("No optimization data recorded")
+            
+        # Check if we have defense mechanism data
+        # First check if we have defense_types_history directly (from CPO class)
+        if hasattr(self, 'defense_types_history') and self.defense_types_history:
+            defense_data = self.defense_types_history
+            has_direct_data = True
+        # Then check if we have it in the defense_history dictionary
+        elif self.defense_history and 'defense_types' in self.defense_history and self.defense_history['defense_types']:
+            defense_data = self.defense_history['defense_types']
+            has_direct_data = True
+        else:
+            has_direct_data = False
+            raise ValueError("No defense mechanism data recorded. Make sure to record defense types during optimization.")
+            
+        # Create figure with subplots
+        fig = plt.figure(figsize=figsize)
+        gs = fig.add_gridspec(2, 2, hspace=0.3, wspace=0.3)
         
-        return plot_defense_mechanisms(
-            defense_history=self.defense_history,
-            title=title,
-            figsize=figsize,
-            save_path=save_path
-        )
-    
+        # 1. Defense Mechanism Usage Over Time
+        ax1 = fig.add_subplot(gs[0, 0])
+        
+        # Count defense mechanisms at each iteration
+        iterations = len(defense_data)
+        sight_counts = []
+        sound_counts = []
+        odor_counts = []
+        physical_counts = []
+        
+        for i in range(iterations):
+            defenses = defense_data[i]
+            sight_counts.append(defenses.count('sight'))
+            sound_counts.append(defenses.count('sound'))
+            odor_counts.append(defenses.count('odor'))
+            physical_counts.append(defenses.count('physical'))
+        
+        # Plot usage over time
+        x = range(iterations)
+        ax1.plot(x, sight_counts, 'b-', label='Sight', linewidth=2)
+        ax1.plot(x, sound_counts, 'g-', label='Sound', linewidth=2)
+        ax1.plot(x, odor_counts, 'orange', label='Odor', linewidth=2)
+        ax1.plot(x, physical_counts, 'r-', label='Physical', linewidth=2)
+        
+        ax1.set_title('Defense Mechanism Usage')
+        ax1.set_xlabel('Iteration')
+        ax1.set_ylabel('Count')
+        ax1.legend()
+        ax1.grid(True, alpha=0.3)
+        
+        # 2. Exploration vs Exploitation Balance
+        ax2 = fig.add_subplot(gs[0, 1])
+        
+        exploration = [sight + sound for sight, sound in zip(sight_counts, sound_counts)]
+        exploitation = [odor + physical for odor, physical in zip(odor_counts, physical_counts)]
+        
+        ax2.stackplot(x, exploration, exploitation, 
+                     labels=['Exploration (Sight/Sound)', 'Exploitation (Odor/Physical)'],
+                     colors=['#3498db', '#e74c3c'], alpha=0.7)
+        
+        ax2.set_title('Exploration-Exploitation Balance')
+        ax2.set_xlabel('Iteration')
+        ax2.set_ylabel('Count')
+        ax2.legend()
+        ax2.grid(True, alpha=0.3)
+        
+        # 3. Fitness Improvement by Defense Mechanism
+        ax3 = fig.add_subplot(gs[1, 0])
+        
+        # Calculate fitness improvement for each defense mechanism
+        defense_improvement = {
+            'sight': [],
+            'sound': [],
+            'odor': [],
+            'physical': []
+        }
+        
+        # Use best fitness from each iteration
+        fitness_values = self.fitness_history
+        
+        # Skip first iteration as we can't calculate improvement
+        for i in range(1, iterations):
+            prev_fitness = fitness_values[i-1] if i > 0 else fitness_values[0]
+            current_fitness = fitness_values[i]
+            # Extract scalar values for comparison
+            if isinstance(prev_fitness, np.ndarray) and isinstance(current_fitness, np.ndarray):
+                # Take the minimum (best) fitness from each array
+                prev_best = np.min(prev_fitness)
+                current_best = np.min(current_fitness)
+                improvement = prev_best - current_best
+            else:
+                # Already scalar values
+                improvement = prev_fitness - current_fitness
+            # Count improvements by defense mechanism
+            defenses = defense_data[i-1]
+            for defense in ['sight', 'sound', 'odor', 'physical']:
+                count = defenses.count(defense)
+                if count > 0:
+                    defense_improvement[defense].append(improvement / count if improvement > 0 else 0)
+                else:
+                    defense_improvement[defense].append(0)
+        
+        # Calculate cumulative improvement
+        for defense in defense_improvement:
+            defense_improvement[defense] = np.cumsum(defense_improvement[defense])
+        
+        # Plot cumulative improvement
+        ax3.plot(range(1, iterations), defense_improvement['sight'], 'b-', label='Sight', linewidth=2)
+        ax3.plot(range(1, iterations), defense_improvement['sound'], 'g-', label='Sound', linewidth=2)
+        ax3.plot(range(1, iterations), defense_improvement['odor'], 'orange', label='Odor', linewidth=2)
+        ax3.plot(range(1, iterations), defense_improvement['physical'], 'r-', label='Physical', linewidth=2)
+        
+        ax3.set_title('Cumulative Fitness Improvement')
+        ax3.set_xlabel('Iteration')
+        ax3.set_ylabel('Cumulative Improvement')
+        ax3.legend()
+        ax3.grid(True, alpha=0.3)
+        
+        # 4. Defense Mechanism Effectiveness Pie Chart
+        ax4 = fig.add_subplot(gs[1, 1])
+        
+        # Calculate total improvement by each defense mechanism
+        total_improvement = {}
+        for defense in defense_improvement:
+            if len(defense_improvement[defense]) > 0:
+                total_improvement[defense] = defense_improvement[defense][-1]
+            else:
+                total_improvement[defense] = 0
+        
+        # Create pie chart
+        labels = ['Sight', 'Sound', 'Odor', 'Physical']
+        sizes = [total_improvement['sight'], total_improvement['sound'], 
+                total_improvement['odor'], total_improvement['physical']]
+        colors = ['#3498db', '#2ecc71', '#f39c12', '#e74c3c']
+        
+        # Ensure we don't have negative values for the pie chart
+        sizes = [max(0, size) for size in sizes]
+        
+        # If all sizes are 0, set equal values
+        if sum(sizes) == 0:
+            sizes = [1, 1, 1, 1]
+        
+        ax4.pie(sizes, labels=labels, colors=colors, autopct='%1.1f%%', 
+               shadow=True, startangle=90)
+        ax4.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle
+        ax4.set_title('Overall Defense Mechanism Effectiveness')
+        
+        # Set the main title
+        fig.suptitle(title, fontsize=16)
+        
+        # Save figure if path provided
+        if save_path:
+            plt.savefig(save_path, dpi=300, bbox_inches='tight')
+        
+        return fig
+        
     def visualize_population_cycles(
         self,
         cycles: int,
@@ -399,6 +557,233 @@ class CPOVisualizer:
             dpi=dpi
         )
     
+    def create_animation(
+        self,
+        positions_history: List[np.ndarray],
+        best_position_history: List[np.ndarray],
+        title: str = "CPO Optimization Process",
+        save_path: Optional[str] = None,
+        fps: int = 5,
+        defense_types_history: Optional[List[List[str]]] = None,
+        figsize: Tuple[int, int] = (12, 10),
+        dpi: int = 100,
+        show_exploration_exploitation: bool = True
+    ):
+        """
+        Create an enhanced animation of the optimization process with defense mechanisms.
+        
+        Parameters
+        ----------
+        positions_history : List[np.ndarray]
+            List of position arrays for each iteration.
+        best_position_history : List[np.ndarray]
+            List of best positions for each iteration.
+        title : str, optional
+            Title of the animation (default: "CPO Optimization Process").
+        save_path : str, optional
+            Path to save the animation. If None, the animation is not saved (default: None).
+        fps : int, optional
+            Frames per second for the animation (default: 5).
+        defense_types_history : List[List[str]], optional
+            List of defense types used by each porcupine at each iteration.
+        figsize : tuple, optional
+            Figure size as (width, height) in inches (default: (12, 10)).
+        dpi : int, optional
+            DPI for the saved animation (default: 100).
+        show_exploration_exploitation : bool, optional
+            Whether to show exploration-exploitation balance subplot (default: True).
+            
+        Returns
+        -------
+        matplotlib.animation.FuncAnimation
+            The created animation.
+        """
+        if self.objective_func is None or self.bounds is None:
+            raise ValueError("objective_func and bounds must be provided for this visualization")
+        
+        # Create figure with subplots
+        if show_exploration_exploitation:
+            fig = plt.figure(figsize=figsize)
+            gs = fig.add_gridspec(2, 2, height_ratios=[3, 1], width_ratios=[3, 1], hspace=0.3, wspace=0.3)
+            ax_main = fig.add_subplot(gs[0, :])
+            ax_exp_vs_expl = fig.add_subplot(gs[1, 0])
+            ax_defense_pie = fig.add_subplot(gs[1, 1])
+        else:
+            fig, ax_main = plt.subplots(figsize=figsize)
+        
+        # Generate meshgrid for contour plot
+        lb, ub = self.bounds
+        x = np.linspace(lb[0], ub[0], 100)
+        y = np.linspace(lb[1], ub[1], 100)
+        X, Y = np.meshgrid(x, y)
+        Z = np.zeros_like(X)
+        
+        for i in range(X.shape[0]):
+            for j in range(X.shape[1]):
+                Z[i, j] = self.objective_func(np.array([X[i, j], Y[i, j]]))
+        
+        # Create contour plot on main axis
+        contour = ax_main.contourf(X, Y, Z, 50, cmap='viridis', alpha=0.6)
+        fig.colorbar(contour, ax=ax_main, label='Objective Function Value')
+        
+        # Initialize scatter plots for different defense mechanisms
+        sight_scatter = ax_main.scatter([], [], c='blue', s=80, label='Sight', alpha=0.7)
+        sound_scatter = ax_main.scatter([], [], c='green', s=80, label='Sound', alpha=0.7)
+        odor_scatter = ax_main.scatter([], [], c='orange', s=80, label='Odor', alpha=0.7)
+        physical_scatter = ax_main.scatter([], [], c='red', s=80, label='Physical', alpha=0.7)
+        best_scatter = ax_main.scatter([], [], c='yellow', s=150, marker='*', 
+                                 edgecolors='black', label='Best Position', zorder=10)
+        
+        # Add trajectory line for best position
+        trajectory_line, = ax_main.plot([], [], 'r-', linewidth=1.5, alpha=0.5, label='Best Trajectory')
+        
+        # Set title and labels for main plot
+        ax_main.set_title(title)
+        ax_main.set_xlabel('x1')
+        ax_main.set_ylabel('x2')
+        ax_main.legend(loc='upper right')
+        ax_main.grid(True, alpha=0.3)
+        
+        # Set axis limits
+        ax_main.set_xlim(lb[0], ub[0])
+        ax_main.set_ylim(lb[1], ub[1])
+        
+        # Text for iteration counter and population size
+        iteration_text = ax_main.text(0.02, 0.98, '', transform=ax_main.transAxes, 
+                                 verticalalignment='top', fontsize=10)
+        
+        # Initialize exploration-exploitation subplot if needed
+        if show_exploration_exploitation:
+            # Set up exploration vs exploitation subplot
+            ax_exp_vs_expl.set_title('Exploration-Exploitation Balance')
+            ax_exp_vs_expl.set_xlabel('Iteration')
+            ax_exp_vs_expl.set_ylabel('Count')
+            ax_exp_vs_expl.grid(True, alpha=0.3)
+            
+            # Set up defense pie chart
+            ax_defense_pie.set_title('Defense Mechanisms')
+            ax_defense_pie.axis('equal')
+            
+            # Initialize exploration-exploitation plot data
+            exp_line, = ax_exp_vs_expl.plot([], [], 'b-', label='Exploration (Sight/Sound)')
+            expl_line, = ax_exp_vs_expl.plot([], [], 'r-', label='Exploitation (Odor/Physical)')
+            ax_exp_vs_expl.legend(loc='upper left', fontsize=8)
+            
+            # Set initial limits for exploration-exploitation plot
+            ax_exp_vs_expl.set_xlim(0, len(positions_history))
+            ax_exp_vs_expl.set_ylim(0, max([len(pos) for pos in positions_history]) + 2)
+        
+        # Update function for animation
+        def update(frame):
+            # Clear previous points
+            sight_scatter.set_offsets(np.empty((0, 2)))
+            sound_scatter.set_offsets(np.empty((0, 2)))
+            odor_scatter.set_offsets(np.empty((0, 2)))
+            physical_scatter.set_offsets(np.empty((0, 2)))
+            
+            # Get positions for current frame
+            positions = positions_history[frame]
+            
+            # Update best position and trajectory
+            best_pos = best_position_history[frame]
+            best_scatter.set_offsets([best_pos[0], best_pos[1]])
+            
+            # Update trajectory line
+            if frame > 0:
+                traj_x = [pos[0] for pos in best_position_history[:frame+1]]
+                traj_y = [pos[1] for pos in best_position_history[:frame+1]]
+                trajectory_line.set_data(traj_x, traj_y)
+            
+            # Update iteration text
+            iteration_text.set_text(f'Iteration: {frame+1}/{len(positions_history)}\n'
+                                   f'Population Size: {len(positions)}')
+            
+            # If defense types are provided, color points accordingly
+            if defense_types_history is not None:
+                defenses = defense_types_history[frame]
+                
+                sight_pos = []
+                sound_pos = []
+                odor_pos = []
+                physical_pos = []
+                
+                # Count defenses for exploration-exploitation balance
+                sight_count = 0
+                sound_count = 0
+                odor_count = 0
+                physical_count = 0
+                
+                for i, defense in enumerate(defenses):
+                    if i < len(positions):  # Ensure we don't go out of bounds
+                        if defense == 'sight':
+                            sight_pos.append(positions[i])
+                            sight_count += 1
+                        elif defense == 'sound':
+                            sound_pos.append(positions[i])
+                            sound_count += 1
+                        elif defense == 'odor':
+                            odor_pos.append(positions[i])
+                            odor_count += 1
+                        elif defense == 'physical':
+                            physical_pos.append(positions[i])
+                            physical_count += 1
+                
+                # Update exploration-exploitation plots if enabled
+                if show_exploration_exploitation:
+                    # Update exploration-exploitation balance plot
+                    exploration = [0] * (frame + 1)
+                    exploitation = [0] * (frame + 1)
+                    
+                    # Calculate exploration-exploitation for all frames up to current
+                    for i in range(frame + 1):
+                        curr_defenses = defense_types_history[i]
+                        exp_count = sum(1 for d in curr_defenses if d in ['sight', 'sound'])
+                        expl_count = sum(1 for d in curr_defenses if d in ['odor', 'physical'])
+                        exploration[i] = exp_count
+                        exploitation[i] = expl_count
+                    
+                    # Update lines
+                    exp_line.set_data(range(frame + 1), exploration)
+                    expl_line.set_data(range(frame + 1), exploitation)
+                    
+                    # Update pie chart
+                    ax_defense_pie.clear()
+                    ax_defense_pie.set_title('Defense Mechanisms')
+                    labels = ['Sight', 'Sound', 'Odor', 'Physical']
+                    sizes = [sight_count, sound_count, odor_count, physical_count]
+                    colors = ['#3498db', '#2ecc71', '#f39c12', '#e74c3c']
+                    
+                    # Only create pie if we have non-zero values
+                    if sum(sizes) > 0:
+                        ax_defense_pie.pie(sizes, labels=labels, colors=colors, autopct='%1.1f%%', 
+                                         shadow=True, startangle=90, textprops={'fontsize': 8})
+                        ax_defense_pie.axis('equal')
+                
+                if sight_pos:
+                    sight_scatter.set_offsets(sight_pos)
+                if sound_pos:
+                    sound_scatter.set_offsets(sound_pos)
+                if odor_pos:
+                    odor_scatter.set_offsets(odor_pos)
+                if physical_pos:
+                    physical_scatter.set_offsets(physical_pos)
+            else:
+                # If no defense types, show all points in one color
+                sight_scatter.set_offsets(positions)
+            
+            return sight_scatter, sound_scatter, odor_scatter, physical_scatter, best_scatter, trajectory_line, iteration_text
+        
+        # Create animation
+        anim = FuncAnimation(fig, update, frames=len(positions_history), interval=1000/fps, blit=True)
+        
+        # Save animation if path is provided
+        if save_path:
+            print(f"Generating animation (this may take a moment)...")
+            anim.save(save_path, writer='pillow', fps=fps, dpi=dpi)
+        
+        plt.close(fig)
+        return anim
+    
     def visualize_defense_territories(
         self,
         iteration: int = -1,
@@ -557,23 +942,189 @@ class CPOVisualizer:
             Figure size as (width, height) in inches (default: (12, 8)).
         save_path : str, optional
             Path to save the figure. If None, the figure is not saved (default: None).
-        
+            
         Returns
         -------
         matplotlib.figure.Figure
             The created figure.
         """
-        if not self.defense_history or not self.fitness_history:
-            raise ValueError("No defense mechanism or fitness data recorded")
+        if not self.position_history or not self.fitness_history:
+            raise ValueError("No optimization data recorded")
+            
+        # Check if we have defense mechanism data in the expected format
+        if not self.defense_history:
+            raise ValueError("No defense mechanism data recorded")
+            
+        # Ensure we have defense_types available
+        if 'defense_types' not in self.defense_history:
+            # If we have individual defense counts but not defense_types, we can't proceed
+            # as we need the specific defense type for each porcupine
+            raise ValueError("Defense mechanism types not recorded. This visualization requires defense_types data.")
+            
+        # Ensure defense_types has data
+        if not self.defense_history['defense_types'] or len(self.defense_history['defense_types']) == 0:
+            raise ValueError("Defense mechanism types list is empty")
+            
+        # Create figure with subplots
+        fig = plt.figure(figsize=figsize)
+        gs = fig.add_gridspec(2, 2, hspace=0.3, wspace=0.3)
         
-        return plot_defense_effectiveness(
-            defense_history=self.defense_history,
-            fitness_history=self.fitness_history,
-            title=title,
-            figsize=figsize,
-            save_path=save_path
-        )
-    
+        # 1. Defense Mechanism Usage Over Time
+        ax1 = fig.add_subplot(gs[0, 0])
+        
+        # Count defense mechanisms at each iteration
+        iterations = len(self.defense_history['defense_types'])
+        sight_counts = []
+        sound_counts = []
+        odor_counts = []
+        physical_counts = []
+        
+        for i in range(iterations):
+            defenses = self.defense_history['defense_types'][i]
+            sight_counts.append(defenses.count('sight'))
+            sound_counts.append(defenses.count('sound'))
+            odor_counts.append(defenses.count('odor'))
+            physical_counts.append(defenses.count('physical'))
+        
+        # Plot usage over time
+        x = range(iterations)
+        ax1.plot(x, sight_counts, 'b-', label='Sight', linewidth=2)
+        ax1.plot(x, sound_counts, 'g-', label='Sound', linewidth=2)
+        ax1.plot(x, odor_counts, 'orange', label='Odor', linewidth=2)
+        ax1.plot(x, physical_counts, 'r-', label='Physical', linewidth=2)
+        
+        ax1.set_title('Defense Mechanism Usage')
+        ax1.set_xlabel('Iteration')
+        ax1.set_ylabel('Count')
+        ax1.legend()
+        ax1.grid(True, alpha=0.3)
+        
+        # 2. Exploration vs Exploitation Balance
+        ax2 = fig.add_subplot(gs[0, 1])
+        
+        exploration = [sight + sound for sight, sound in zip(sight_counts, sound_counts)]
+        exploitation = [odor + physical for odor, physical in zip(odor_counts, physical_counts)]
+        
+        ax2.stackplot(x, exploration, exploitation, 
+                     labels=['Exploration (Sight/Sound)', 'Exploitation (Odor/Physical)'],
+                     colors=['#3498db', '#e74c3c'], alpha=0.7)
+        
+        ax2.set_title('Exploration-Exploitation Balance')
+        ax2.set_xlabel('Iteration')
+        ax2.set_ylabel('Count')
+        ax2.legend()
+        ax2.grid(True, alpha=0.3)
+        
+        # 3. Fitness Improvement by Defense Mechanism
+        ax3 = fig.add_subplot(gs[1, 0])
+        
+        # Calculate fitness improvement for each defense mechanism
+        defense_improvement = {
+            'sight': [],
+            'sound': [],
+            'odor': [],
+            'physical': []
+        }
+        
+        # Use best fitness from each iteration - extract scalar values
+        fitness_values = []
+        for fitness_array in self.fitness_history:
+            # If fitness is an array, take the minimum value (best fitness)
+            if isinstance(fitness_array, np.ndarray) and fitness_array.size > 0:
+                fitness_values.append(float(np.min(fitness_array)))
+            # If it's already a scalar, use it directly
+            elif np.isscalar(fitness_array):
+                fitness_values.append(float(fitness_array))
+            # If it's a list, take the minimum value
+            elif isinstance(fitness_array, list) and len(fitness_array) > 0:
+                fitness_values.append(float(min(fitness_array)))
+            # Default case
+            else:
+                fitness_values.append(0.0)
+
+        # Skip first iteration as we can't calculate improvement
+        if len(fitness_values) <= 1:
+            # Not enough data for improvement calculation
+            return fig
+            
+        for i in range(1, min(iterations, len(fitness_values))):
+            prev_fitness = fitness_values[i-1] if i > 0 else fitness_values[0]
+            current_fitness = fitness_values[i]
+            # Extract scalar values for comparison
+            if isinstance(prev_fitness, np.ndarray) and isinstance(current_fitness, np.ndarray):
+                # Take the minimum (best) fitness from each array
+                prev_best = np.min(prev_fitness)
+                current_best = np.min(current_fitness)
+                improvement = prev_best - current_best
+            else:
+                # Already scalar values
+                improvement = prev_fitness - current_fitness
+            
+            # Count improvements by defense mechanism
+            defenses = self.defense_history['defense_types'][i-1]
+            for defense in ['sight', 'sound', 'odor', 'physical']:
+                count = defenses.count(defense)
+                if count > 0:
+                    defense_improvement[defense].append(improvement / count if improvement > 0 else 0)
+                else:
+                    defense_improvement[defense].append(0)
+        
+        # Calculate cumulative improvement
+        for defense in defense_improvement:
+            defense_improvement[defense] = np.cumsum(defense_improvement[defense])
+        
+        # Plot cumulative improvement
+        ax3.plot(range(1, iterations), defense_improvement['sight'], 'b-', label='Sight', linewidth=2)
+        ax3.plot(range(1, iterations), defense_improvement['sound'], 'g-', label='Sound', linewidth=2)
+        ax3.plot(range(1, iterations), defense_improvement['odor'], 'orange', label='Odor', linewidth=2)
+        ax3.plot(range(1, iterations), defense_improvement['physical'], 'r-', label='Physical', linewidth=2)
+        
+        ax3.set_title('Cumulative Fitness Improvement')
+        ax3.set_xlabel('Iteration')
+        ax3.set_ylabel('Cumulative Improvement')
+        ax3.legend()
+        ax3.grid(True, alpha=0.3)
+        
+        # 4. Defense Mechanism Effectiveness Pie Chart
+        ax4 = fig.add_subplot(gs[1, 1])
+        
+        # Calculate total improvement by each defense mechanism
+        total_improvement = {}
+        for defense in defense_improvement:
+            # Check if the array is not empty
+            if len(defense_improvement[defense]) > 0:
+                # Get the last value from the array
+                total_improvement[defense] = defense_improvement[defense][-1]
+            else:
+                total_improvement[defense] = 0
+        
+        # Create pie chart
+        labels = ['Sight', 'Sound', 'Odor', 'Physical']
+        sizes = [total_improvement['sight'], total_improvement['sound'], 
+                total_improvement['odor'], total_improvement['physical']]
+        colors = ['#3498db', '#2ecc71', '#f39c12', '#e74c3c']
+        
+        # Ensure we don't have negative values for the pie chart
+        sizes = [max(0, size) for size in sizes]
+        
+        # If all sizes are 0, set equal values
+        if sum(sizes) == 0:
+            sizes = [1, 1, 1, 1]
+        
+        ax4.pie(sizes, labels=labels, colors=colors, autopct='%1.1f%%', 
+               shadow=True, startangle=90)
+        ax4.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle
+        ax4.set_title('Overall Defense Mechanism Effectiveness')
+        
+        # Set the main title
+        fig.suptitle(title, fontsize=16)
+        
+        # Save figure if path provided
+        if save_path:
+            plt.savefig(save_path, dpi=300, bbox_inches='tight')
+        
+        return fig
+        
     def compare_reduction_strategies(
         self,
         max_iter: int,
@@ -614,6 +1165,39 @@ class CPOVisualizer:
             figsize=figsize,
             save_path=save_path
         )
+    
+    def record_from_optimizer(self, optimizer):
+        """
+        Record data from a CPO optimizer instance.
+        
+        Parameters
+        ----------
+        optimizer : CPO
+            The CPO optimizer instance to record data from.
+        """
+        # Record position history
+        if hasattr(optimizer, 'positions_history') and optimizer.positions_history:
+            self.position_history = optimizer.positions_history
+            
+        # Record best position history
+        if hasattr(optimizer, 'best_positions_history') and optimizer.best_positions_history:
+            self.best_position_history = optimizer.best_positions_history
+            
+        # Record fitness history
+        if hasattr(optimizer, 'fitness_history') and optimizer.fitness_history:
+            self.fitness_history = optimizer.fitness_history
+            
+        # Record population size history
+        if hasattr(optimizer, 'pop_size_history') and optimizer.pop_size_history:
+            self.pop_size_history = optimizer.pop_size_history
+            
+        # Record defense mechanism history
+        if hasattr(optimizer, 'defense_types_history') and optimizer.defense_types_history:
+            # Store in both places for compatibility
+            self.defense_types_history = optimizer.defense_types_history
+            if not self.defense_history:
+                self.defense_history = {}
+            self.defense_history['defense_types'] = optimizer.defense_types_history
     
     def create_parameter_tuning_dashboard(
         self,

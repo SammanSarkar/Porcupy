@@ -55,10 +55,9 @@ def test_visualization_with_cpo_optimizer():
         
         # Record the iteration data
         visualizer.record_iteration(
-            iteration=i,
             positions=positions,
             best_position=best_pos,
-            best_fitness=best_cost,
+            fitness=best_cost,
             pop_size=optimizer.pop_size,
             defense_types=defenses
         )
@@ -127,10 +126,9 @@ def test_visualization_with_complex_function():
         
         # Record the iteration data
         visualizer.record_iteration(
-            iteration=i,
             positions=positions,
             best_position=best_pos,
-            best_fitness=best_cost,
+            fitness=best_cost,
             pop_size=optimizer.pop_size,
             defense_types=defenses
         )

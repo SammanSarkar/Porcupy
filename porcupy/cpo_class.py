@@ -95,6 +95,13 @@ class CPO(Optimizer):
         self.fitness = None
         self.personal_best_pos = None
         
+        # Tracking attributes for visualization
+        self.positions_history = []
+        self.defense_types_history = []
+        self.pop_size_history = []
+        self.best_positions_history = []
+        self.fitness_history = []
+        
         # Initialize the population
         self._init_population()
     
@@ -276,7 +283,8 @@ class CPO(Optimizer):
         objective_func: Callable, 
         f_ieqcons: Optional[Callable] = None,
         n_processes: Optional[int] = None, 
-        verbose: bool = False, 
+        verbose: bool = False,
+        track_history: bool = True,
         **kwargs
     ) -> Tuple[np.ndarray, float, np.ndarray]:
         """Optimize the objective function using Crested Porcupine Optimizer
@@ -303,6 +311,14 @@ class CPO(Optimizer):
         self.reset()
         self._init_population()
         
+        # Reset history tracking
+        if track_history:
+            self.positions_history = []
+            self.defense_types_history = []
+            self.pop_size_history = []
+            self.best_positions_history = []
+            self.fitness_history = []
+        
         # Setup Pool of processes for parallel evaluation
         pool = None if n_processes is None else mp.Pool(n_processes)
         
@@ -319,6 +335,10 @@ class CPO(Optimizer):
             # Calculate current population size
             current_pop_size = self._calculate_current_pop_size(t)
             
+            # Initialize defense types tracking for this iteration
+            if track_history:
+                defense_types = [""] * current_pop_size
+            
             # Update each porcupine
             for i in range(current_pop_size):
                 # Random binary mask for position updates
@@ -327,8 +347,12 @@ class CPO(Optimizer):
                 if np.random.random() < np.random.random():  # Exploration phase
                     if np.random.random() < np.random.random():  # First defense mechanism (sight)
                         self._apply_first_defense(i, current_pop_size)
+                        if track_history:
+                            defense_types[i] = "sight"
                     else:  # Second defense mechanism (sound)
                         self._apply_second_defense(i, current_pop_size, u1)
+                        if track_history:
+                            defense_types[i] = "sound"
                 else:  # Exploitation phase
                     # Time-dependent factor for scaling updates
                     yt = 2 * np.random.random() * (1 - t / self.max_iter) ** (t / self.max_iter)
@@ -338,8 +362,12 @@ class CPO(Optimizer):
                     
                     if np.random.random() < self.tf:  # Third defense mechanism (odor)
                         self._apply_third_defense(i, current_pop_size, u1, yt, s)
+                        if track_history:
+                            defense_types[i] = "odor"
                     else:  # Fourth defense mechanism (physical attack)
                         self._apply_fourth_defense(i, current_pop_size, u2, yt, s)
+                        if track_history:
+                            defense_types[i] = "physical"
                 
                 # Clip positions to bounds
                 lb, ub = self.bounds
@@ -371,6 +399,14 @@ class CPO(Optimizer):
                 population_size=current_pop_size
             )
             self._populate_history(hist)
+            
+            # Store detailed history for visualization
+            if track_history:
+                self.positions_history.append(self.positions[:current_pop_size].copy())
+                self.defense_types_history.append(defense_types)
+                self.pop_size_history.append(current_pop_size)
+                self.best_positions_history.append(self.best_pos.copy())
+                self.fitness_history.append(self.fitness[:current_pop_size].copy())
             
             # Check convergence
             relative_measure = self.ftol * (1 + np.abs(prev_best_cost))

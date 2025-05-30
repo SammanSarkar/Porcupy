@@ -16,7 +16,7 @@ from typing import List, Tuple, Optional, Union, Dict, Any, Callable
 
 
 def plot_defense_mechanisms(
-    defense_history: Dict[str, List[int]],
+    defense_history: Union[Dict[str, List[int]], List[List[str]]],
     title: str = "Defense Mechanism Activation",
     figsize: Tuple[int, int] = (12, 6),
     colors: Dict[str, str] = None,
@@ -27,9 +27,11 @@ def plot_defense_mechanisms(
     
     Parameters
     ----------
-    defense_history : dict
-        Dictionary with keys 'sight', 'sound', 'odor', 'physical' and values
-        as lists of counts for each iteration.
+    defense_history : dict or list
+        Either:
+        1. Dictionary with keys 'sight', 'sound', 'odor', 'physical' and values
+           as lists of counts for each iteration, or
+        2. List of lists containing defense mechanisms used by each porcupine at each iteration.
     title : str, optional
         Title of the plot (default: "Defense Mechanism Activation").
     figsize : tuple, optional
@@ -52,6 +54,25 @@ def plot_defense_mechanisms(
             'odor': 'orange',
             'physical': 'red'
         }
+    
+    # Convert list-based defense history to dictionary format if needed
+    if isinstance(defense_history, list):
+        # This is a list of lists with defense types for each porcupine at each iteration
+        defense_counts = {
+            'sight': [],
+            'sound': [],
+            'odor': [],
+            'physical': []
+        }
+        
+        # Count each defense type for each iteration
+        for defenses in defense_history:
+            defense_counts['sight'].append(defenses.count('sight'))
+            defense_counts['sound'].append(defenses.count('sound'))
+            defense_counts['odor'].append(defenses.count('odor'))
+            defense_counts['physical'].append(defenses.count('physical'))
+            
+        defense_history = defense_counts
     
     plt.figure(figsize=figsize)
     

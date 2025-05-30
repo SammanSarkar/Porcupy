@@ -97,10 +97,9 @@ def run_population_dynamics_example():
         
         # Record the iteration data
         visualizer.record_iteration(
-            iteration=i,
             positions=positions,
             best_position=best_pos,
-            best_fitness=cost_history[i] if i < len(cost_history) else best_cost,
+            fitness=np.array([cost_history[i] if i < len(cost_history) else best_cost]),  # Convert to array as expected by the method
             pop_size=pop_size,
             defense_types=None  # Not needed for population dynamics
         )

@@ -46,45 +46,27 @@ def demo_basic_visualizations():
     # Initialize the visualizer
     visualizer = CPOVisualizer(objective_func=func, bounds=bounds)
     
-    # Track defense mechanisms during optimization
-    defense_types = []
-    
-    # Run the optimization
-    result = optimizer.optimize(func, verbose=True)
+    # Run the optimization with history tracking enabled
+    print("Running optimization with history tracking...")
+    result = optimizer.optimize(func, verbose=True, track_history=True)
     best_pos, best_cost, cost_history = result
     
-    # For demonstration purposes, we'll generate some random data for visualization
-    # In a real implementation, this data would come from the optimizer during the optimization process
-    iterations = 50
-    positions_history = []
-    defense_types_history = []
-    pop_size_history = []
+    # Get the optimization history from the optimizer
+    positions_history = optimizer.positions_history
+    defense_types_history = optimizer.defense_types_history
+    pop_size_history = optimizer.pop_size_history
+    best_positions_history = optimizer.best_positions_history
+    fitness_history = optimizer.fitness_history
     
-    # Generate random positions and defense types for each iteration
-    for i in range(iterations):
-        # Calculate population size for this iteration
-        pop_size = optimizer._calculate_current_pop_size(i)
-        pop_size_history.append(pop_size)
-        
-        # Generate random positions within bounds
-        positions = np.random.uniform(lb, ub, (pop_size, dimensions))
-        positions_history.append(positions)
-        
-        # Generate random defense types
-        defenses = []
-        for _ in range(pop_size):
-            defense = np.random.choice(['sight', 'sound', 'odor', 'physical'])
-            defenses.append(defense)
-        defense_types_history.append(defenses)
-        
+    # Record the optimization data in the visualizer
+    for i in range(len(positions_history)):
         # Record the iteration data
         visualizer.record_iteration(
-            iteration=i,
-            positions=positions,
-            best_position=best_pos,
-            best_fitness=cost_history[i] if i < len(cost_history) else best_cost,
-            pop_size=pop_size,
-            defense_types=defenses
+            positions=positions_history[i],
+            best_position=best_positions_history[i] if i < len(best_positions_history) else best_pos,
+            fitness=fitness_history[i] if i < len(fitness_history) else np.array([best_cost]),
+            pop_size=pop_size_history[i],
+            defense_types=defense_types_history[i]
         )
     
     # Create and display visualizations
@@ -109,12 +91,15 @@ def demo_basic_visualizations():
         save_path="diversity_history.png"
     )
     
-    # 4. 2D porcupine visualization
-    fig4 = visualizer.visualize_porcupines_2d(
+    # Plot the 2D search space with final positions and color-coded defense mechanisms
+    visualizer.visualize_porcupines_2d(
         iteration=-1,  # Last iteration
-        title="Final Porcupine Positions",
-        save_path="porcupines_2d.png"
+        title='Final Positions in 2D Search Space',
+        save_path='2d_search_space.png'
     )
+    
+    # We'll use the enhanced visualization_defense_effectiveness method instead of manual plotting
+    # This provides a more comprehensive view of the exploration-exploitation balance
     
     # 5. Defense territories
     fig5 = visualizer.visualize_defense_territories(
@@ -137,11 +122,27 @@ def demo_basic_visualizations():
         save_path="diversity_vs_convergence.png"
     )
     
-    # 8. Defense effectiveness
+    # 8. Defense effectiveness - Enhanced visualization
+    print("\nGenerating enhanced defense mechanism effectiveness visualization...")
     fig8 = visualizer.visualize_defense_effectiveness(
-        title="Defense Mechanism Effectiveness",
+        title="Defense Mechanism Effectiveness Analysis",
+        figsize=(14, 10),
         save_path="defense_effectiveness.png"
     )
+    
+    print("This visualization provides four key insights:")
+    print("1. Defense Mechanism Usage: Shows how each mechanism is used over iterations")
+    print("2. Exploration-Exploitation Balance: Visualizes the balance between exploration (sight/sound) and exploitation (odor/physical)")
+    print("3. Cumulative Fitness Improvement: Tracks how each defense mechanism contributes to fitness improvement")
+    print("4. Overall Effectiveness: Pie chart showing the relative effectiveness of each mechanism")
+    print("\nThe exploration-exploitation balance is particularly important in understanding the CPO algorithm's behavior.")
+    print("Early iterations typically favor exploration, while later iterations shift toward exploitation.")
+    print("This adaptive behavior helps the algorithm avoid local optima while still converging to good solutions.")
+    
+    # Display the figure for a few seconds to allow viewing
+    plt.figure(fig8.number)
+    plt.draw()
+    plt.pause(2)  # Pause to show the figure
     
     # 9. Compare reduction strategies
     fig9 = visualizer.compare_reduction_strategies(
@@ -161,17 +162,88 @@ def demo_basic_visualizations():
 
 
 def demo_animation():
-    """Demonstrate animation capabilities."""
-    print("Demonstrating animation capabilities...")
+    """
+    Demonstrate animation capabilities with enhanced exploration-exploitation balance visualization.
+    """
+    print("Demonstrating enhanced animation capabilities...")
     
     # Load the visualizer from the previous demo
     visualizer = demo_basic_visualizations()
     
-    # Create an animation of the optimization process
-    anim = visualizer.animate_optimization(
-        interval=200,  # 200ms between frames
-        save_path="optimization_animation.gif"
+    print("\nCreating enhanced animation with exploration-exploitation balance visualization...")
+    print("This animation will show:")
+    print("1. The main optimization process with color-coded defense mechanisms")
+    print("2. A real-time plot of exploration vs. exploitation balance over iterations")
+    print("3. A pie chart showing the current distribution of defense mechanisms")
+    
+    # Create an enhanced animation of the optimization process with defense mechanisms
+    animation = visualizer.create_animation(
+        positions_history=visualizer.position_history,
+        best_position_history=visualizer.best_position_history,
+        title='CPO Optimization Process with Defense Mechanisms',
+        save_path='enhanced_optimization_animation.gif',
+        fps=3,
+        defense_types_history=visualizer.defense_history.get('defense_types', []),
+        figsize=(14, 10),
+        show_exploration_exploitation=True
     )
+    
+    print("\nAnimation saved to 'enhanced_optimization_animation.gif'")
+    print("This visualization clearly shows how the algorithm balances exploration and exploitation:")
+    print("- Blue/green points (sight/sound) represent exploration mechanisms")
+    print("- Orange/red points (odor/physical) represent exploitation mechanisms")
+    print("- The bottom-left chart shows how this balance changes over iterations")
+    print("- The bottom-right pie chart shows the current distribution of mechanisms")
+    
+    # Create a standard animation without the exploration-exploitation balance for comparison
+    print("\nCreating standard animation for comparison...")
+    standard_animation = visualizer.create_animation(
+        positions_history=visualizer.position_history,
+        best_position_history=visualizer.best_position_history,
+        title='Standard CPO Optimization Process',
+        save_path='standard_optimization_animation.gif',
+        fps=3,
+        defense_types_history=visualizer.defense_history.get('defense_types', []),
+        show_exploration_exploitation=False
+    )
+    
+    print("\nStandard animation saved to 'standard_optimization_animation.gif'")
+    
+    # Create a trajectory visualization showing how the best solution evolves
+    plt.figure(figsize=(10, 8))
+    
+    # Plot the objective function contour
+    x = np.linspace(-5.12, 5.12, 100)
+    y = np.linspace(-5.12, 5.12, 100)
+    X, Y = np.meshgrid(x, y)
+    Z = np.zeros_like(X)
+    
+    for i in range(X.shape[0]):
+        for j in range(X.shape[1]):
+            Z[i, j] = rastrigin(np.array([X[i, j], Y[i, j]]))
+    
+    plt.contourf(X, Y, Z, 50, cmap='viridis', alpha=0.6)
+    plt.colorbar(label='Objective Function Value')
+    
+    # Plot the best position trajectory
+    best_x = [pos[0] for pos in visualizer.best_position_history]
+    best_y = [pos[1] for pos in visualizer.best_position_history]
+    
+    plt.plot(best_x, best_y, 'r-', linewidth=2, alpha=0.7, label='Best Position Trajectory')
+    plt.scatter(best_x, best_y, c=range(len(best_x)), cmap='plasma', 
+                s=50, zorder=5, label='Best Positions')
+    
+    # Mark the final best position
+    plt.scatter(visualizer.best_position_history[-1][0], visualizer.best_position_history[-1][1], c='red', s=200, marker='*', 
+                edgecolors='black', zorder=10, label='Final Best Position')
+    
+    plt.title('Best Position Trajectory During Optimization')
+    plt.xlabel('x1')
+    plt.ylabel('x2')
+    plt.legend()
+    plt.grid(True, alpha=0.3)
+    plt.savefig('best_position_trajectory.png')
+    plt.close()
     
     print("Animation created and saved as 'optimization_animation.gif'")
 

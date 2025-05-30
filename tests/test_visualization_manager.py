@@ -81,10 +81,9 @@ def visualizer_with_data(test_data_2d):
     # Record data for each iteration
     for i in range(test_data_2d['iterations']):
         visualizer.record_iteration(
-            iteration=i,
             positions=test_data_2d['position_history'][i],
             best_position=test_data_2d['best_position_history'][i],
-            best_fitness=test_data_2d['fitness_history'][i],
+            fitness=test_data_2d['fitness_history'][i],
             pop_size=test_data_2d['pop_size_history'][i],
             defense_types=test_data_2d['defense_types_history'][i]
         )
@@ -143,10 +142,9 @@ def test_record_iteration(test_data_2d):
     defense_types = test_data_2d['defense_types_history'][iteration]
     
     visualizer.record_iteration(
-        iteration=iteration,
         positions=positions,
         best_position=best_position,
-        best_fitness=best_fitness,
+        fitness=best_fitness,
         pop_size=pop_size,
         defense_types=defense_types
     )
@@ -165,10 +163,9 @@ def test_record_iteration(test_data_2d):
     
     # Record without defense types
     visualizer.record_iteration(
-        iteration=iteration + 1,
         positions=positions,
         best_position=best_position,
-        best_fitness=best_fitness,
+        fitness=best_fitness,
         pop_size=pop_size
     )
     
