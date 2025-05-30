@@ -93,8 +93,9 @@ def run_interactive_dashboard_example():
         # Simulate some processing time
         time.sleep(0.1)
     
-    # Show the final dashboard
-    dashboard.show()
+    # Show the final dashboard (using plt.show() since dashboard doesn't have a show method)
+    plt.figure(dashboard.fig.number)
+    plt.show()
     
     print("Interactive dashboard example completed.")
 
@@ -174,8 +175,9 @@ def run_parameter_tuning_example():
                     cost_history=cost_history
                 )
     
-    # Show the final tuning dashboard
-    tuning_dashboard.show()
+    # Show the final tuning dashboard (using plt.show() since dashboard doesn't have a show method)
+    plt.figure(tuning_dashboard.fig.number)
+    plt.show()
     
     # Find the best parameter combination
     best_param_key = min(results, key=lambda k: results[k]['best_cost'])
@@ -243,8 +245,9 @@ def run_interactive_plot_example():
         initial_positions=initial_positions
     )
     
-    # Show the interactive plot
-    interactive_plot.show()
+    # Show the interactive plot (using plt.show() since it returns a tuple, not an object with show method)
+    fig, ax, scatter = interactive_plot
+    plt.show()
     
     print("Interactive optimization plot example completed.")
 
