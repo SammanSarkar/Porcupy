@@ -49,29 +49,43 @@ def demo_basic_visualizations():
     # Track defense mechanisms during optimization
     defense_types = []
     
-    # Run the optimization with visualization tracking
-    def callback(iteration, positions, best_pos, best_cost, pop_size):
-        # Generate random defense types for demonstration
-        # In a real implementation, these would come from the optimizer
+    # Run the optimization
+    result = optimizer.optimize(func, verbose=True)
+    best_pos, best_cost, cost_history = result
+    
+    # For demonstration purposes, we'll generate some random data for visualization
+    # In a real implementation, this data would come from the optimizer during the optimization process
+    iterations = 50
+    positions_history = []
+    defense_types_history = []
+    pop_size_history = []
+    
+    # Generate random positions and defense types for each iteration
+    for i in range(iterations):
+        # Calculate population size for this iteration
+        pop_size = optimizer._calculate_current_pop_size(i)
+        pop_size_history.append(pop_size)
+        
+        # Generate random positions within bounds
+        positions = np.random.uniform(lb, ub, (pop_size, dimensions))
+        positions_history.append(positions)
+        
+        # Generate random defense types
         defenses = []
-        for _ in range(len(positions)):
+        for _ in range(pop_size):
             defense = np.random.choice(['sight', 'sound', 'odor', 'physical'])
             defenses.append(defense)
+        defense_types_history.append(defenses)
         
         # Record the iteration data
         visualizer.record_iteration(
-            iteration=iteration,
+            iteration=i,
             positions=positions,
             best_position=best_pos,
-            best_fitness=best_cost,
+            best_fitness=cost_history[i] if i < len(cost_history) else best_cost,
             pop_size=pop_size,
             defense_types=defenses
         )
-        
-        return False  # Continue optimization
-    
-    # Run the optimization
-    result = optimizer.optimize(func, callback=callback)
     
     # Create and display visualizations
     
