@@ -9,6 +9,7 @@ examples/3d_visualization_example.py
 examples/constrained_optimization.py
 examples/cpo_example.py
 examples/defense_visualization_test.py
+examples/enhanced_visualization_demo.py
 examples/interactive_visualization.py
 examples/parameter_sensitivity.py
 examples/population_dynamics_visualization.py
