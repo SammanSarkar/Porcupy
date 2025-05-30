@@ -432,6 +432,51 @@ print(f"Best position: {best_pos}")
 print(f"Best cost: {best_cost}")
 ```
 
+## Testing and Quality Assurance
+
+Porcupy has a comprehensive test suite with over 80% code coverage. The tests ensure that all components of the library work correctly and reliably.
+
+### Running Tests
+
+To run the tests, you'll need to install the development dependencies:
+
+```bash
+pip install -e .[dev]
+```
+
+Then you can run the tests using pytest:
+
+```bash
+python -m pytest tests/
+```
+
+To see a coverage report, use:
+
+```bash
+python -m pytest tests/ --cov=porcupy
+```
+
+For a detailed HTML coverage report:
+
+```bash
+python -m pytest tests/ --cov=porcupy --cov-report=html
+```
+
+### Test Structure
+
+The test suite is organized by module, with each module having its own test file:
+
+- `test_porcupines.py`: Tests for the core algorithm components
+- `test_functions.py`: Tests for benchmark functions
+- `test_helpers.py`: Tests for helper functions
+- `test_plotting.py`: Tests for plotting utilities
+- `test_visualization.py`: Tests for visualization tools
+- `test_interactive_visualization.py`: Tests for interactive dashboards
+
+### Continuous Integration
+
+All pull requests are automatically tested to ensure they don't introduce regressions. This helps maintain the high quality of the codebase.
+
 ## Conclusion
 
 This guide covered the basic and advanced usage of the Porcupy library. For more details, refer to the [API Reference](api_reference.md) or check out the examples in the `examples` directory.
