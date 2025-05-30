@@ -98,7 +98,7 @@ def test_plot_defense_mechanisms(test_data_2d):
     )
     assert isinstance(fig, Figure)
     
-    # Test with empty data
+    # Test with empty data - should handle gracefully
     empty_defense_history = {
         'sight': [],
         'sound': [],
@@ -106,8 +106,8 @@ def test_plot_defense_mechanisms(test_data_2d):
         'physical': []
     }
     
-    with pytest.raises(IndexError):
-        plot_defense_mechanisms(empty_defense_history)
+    fig = plot_defense_mechanisms(empty_defense_history)
+    assert isinstance(fig, Figure)
     
     plt.close('all')
 
@@ -136,9 +136,9 @@ def test_plot_population_cycles(test_data_2d):
     )
     assert isinstance(fig, Figure)
     
-    # Test with empty data
-    with pytest.raises(IndexError):
-        plot_population_cycles([], cycles=3, max_iter=iterations)
+    # Test with empty data - should handle gracefully
+    fig = plot_population_cycles([], cycles=3, max_iter=iterations)
+    assert isinstance(fig, Figure)
     
     plt.close('all')
 

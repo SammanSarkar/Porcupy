@@ -240,17 +240,18 @@ def test_plot_defense_effectiveness(test_data_2d):
     )
     assert isinstance(fig, Figure)
     
-    # Test with empty data
-    with pytest.raises(IndexError):
-        plot_defense_effectiveness(
-            defense_history={
-                'sight': [],
-                'sound': [],
-                'odor': [],
-                'physical': []
-            },
-            fitness_history=[]
-        )
+    # Test with empty data - should handle gracefully
+    empty_defense_history = {
+        'sight': [],
+        'sound': [],
+        'odor': [],
+        'physical': []
+    }
+    fig = plot_defense_effectiveness(
+        defense_history=empty_defense_history,
+        fitness_history=[]
+    )
+    assert isinstance(fig, Figure)
     
     plt.close('all')
 
