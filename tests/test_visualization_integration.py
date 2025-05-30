@@ -9,6 +9,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
 
+# Add the parent directory to the path to ensure imports work
+import sys
+import os
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))  
+
 from porcupy.cpo_class import CrestPorcupineOptimizer
 from porcupy.utils.visualization_manager import CPOVisualizer
 from porcupy.functions import sphere, rastrigin
