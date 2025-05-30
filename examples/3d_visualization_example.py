@@ -94,7 +94,7 @@ def create_3d_visualization(func, func_name, bounds):
     ax = fig.add_subplot(111, projection='3d')
     
     # Plot the surface with transparency
-    surface = ax.plot_surface(X, Y, Z, cmap='viridis', alpha=0.6)
+    surface = ax.plot_surface(X, Y, Z, cmap='viridis', alpha=0.1)
     fig.colorbar(surface, ax=ax, shrink=0.5, aspect=5, label='Cost')
     
     # Define colors for different defense mechanisms
@@ -230,7 +230,7 @@ def create_optimization_animation(func, func_name, bounds):
     ax = fig.add_subplot(111, projection='3d')
     
     # Plot the surface with transparency
-    surface = ax.plot_surface(X, Y, Z, cmap='viridis', alpha=0.6)
+    surface = ax.plot_surface(X, Y, Z, cmap='viridis', alpha=0.1)
     fig.colorbar(surface, ax=ax, shrink=0.5, aspect=5, label='Cost')
     
     # Set axis labels and title
@@ -266,7 +266,7 @@ def create_optimization_animation(func, func_name, bounds):
     ax = fig.add_subplot(111, projection='3d')
     
     # Plot the surface once (doesn't change during animation)
-    surface = ax.plot_surface(X, Y, Z, cmap='viridis', alpha=0.6)
+    surface = ax.plot_surface(X, Y, Z, cmap='viridis', alpha=0.1)
     fig.colorbar(surface, ax=ax, shrink=0.5, aspect=5, label='Cost')
     
     # Set axis labels
@@ -285,7 +285,7 @@ def create_optimization_animation(func, func_name, bounds):
         ax.clear()
         
         # Re-plot the surface
-        surface = ax.plot_surface(X, Y, Z, cmap='viridis', alpha=0.6)
+        surface = ax.plot_surface(X, Y, Z, cmap='viridis', alpha=0.1)
         
         # Set axis labels
         ax.set_xlabel('x1')
@@ -330,7 +330,7 @@ def create_optimization_animation(func, func_name, bounds):
         frame_ax = frame_fig.add_subplot(111, projection='3d')
         
         # Plot the surface
-        frame_surface = frame_ax.plot_surface(X, Y, Z, cmap='viridis', alpha=0.6)
+        frame_surface = frame_ax.plot_surface(X, Y, Z, cmap='viridis', alpha=0.1)
         
         # Set axis labels and title
         frame_ax.set_xlabel('x1')

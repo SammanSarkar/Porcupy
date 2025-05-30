@@ -2,5 +2,317 @@ Metadata-Version: 2.4
 Name: porcupy
 Version: 0.1.0
 Summary: Crested Porcupine Optimizer (CPO) for optimization problems
-Requires-Python: >=3.6
+Author-email: Samman Sarkar <sarkar.samman4231@gmail.com>
+License: MIT License
+        
+        Copyright (c) 2025 Samman Sarkar
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+        
+Project-URL: Homepage, https://github.com/SammanSarkar/porcupy
+Project-URL: Documentation, https://github.com/SammanSarkar/porcupy/tree/main/docs
+Project-URL: Issues, https://github.com/SammanSarkar/porcupy/issues
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Topic :: Scientific/Engineering
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Classifier: Topic :: Scientific/Engineering :: Mathematics
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+License-File: LICENSE
 Requires-Dist: numpy>=1.18.0
+Requires-Dist: scipy>=1.4.0
+Provides-Extra: plotting
+Requires-Dist: matplotlib>=3.3.0; extra == "plotting"
+Provides-Extra: dev
+Requires-Dist: pytest>=6.0.0; extra == "dev"
+Requires-Dist: pytest-cov>=2.10.0; extra == "dev"
+Requires-Dist: black>=22.0.0; extra == "dev"
+Requires-Dist: isort>=5.0.0; extra == "dev"
+Requires-Dist: flake8>=3.8.0; extra == "dev"
+Provides-Extra: all
+Requires-Dist: matplotlib>=3.3.0; extra == "all"
+Requires-Dist: pytest>=6.0.0; extra == "all"
+Requires-Dist: pytest-cov>=2.10.0; extra == "all"
+Requires-Dist: black>=22.0.0; extra == "all"
+Requires-Dist: isort>=5.0.0; extra == "all"
+Requires-Dist: flake8>=3.8.0; extra == "all"
+Dynamic: license-file
+
+# Porcupy: Crested Porcupine Optimizer
+
+![CPO](docs/full_logo.png)
+
+
+[![PyPI version](https://badge.fury.io/py/porcupy.svg)](https://badge.fury.io/py/porcupy)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python 3.7+](https://img.shields.io/badge/python-3.7+-blue.svg)](https://www.python.org/downloads/release/python-370/)
+[![Code Coverage](https://img.shields.io/badge/coverage-88%25-brightgreen.svg)](https://github.com/SammanSarkar/Porcupy)
+
+## Overview
+
+Porcupy is a Python library that implements the Crested Porcupine Optimizer (CPO) algorithm, a nature-inspired metaheuristic optimization technique. The algorithm mimics the defensive behaviors of crested porcupines (sight, sound, odor, and physical attack) to balance exploration and exploitation, with cyclic population reduction for convergence.
+
+This library provides both object-oriented and procedural interfaces for the CPO algorithm, along with visualization tools, benchmark functions, and population management utilities. The implementation is thoroughly tested with extensive test coverage across all components.
+
+## Features
+
+### Core Components
+- **Object-oriented implementation** with base `Optimizer` class and `CrestPorcupineOptimizer` class
+- **Procedural API** (`cpo` function) for backward compatibility and simplicity
+- **Backend components** in `porcupines.py` with `PorcupinePopulation`, `DefenseMechanisms`, and `PopulationManager` classes
+
+### Advanced Capabilities
+- **Parallel processing** support for faster optimization on multi-core systems
+- **Constraint handling** for constrained optimization problems
+- **Convergence criteria** with customizable tolerance and iteration thresholds
+- **History tracking** for detailed analysis of the optimization process
+
+### Population Management
+- **Cyclic population reduction** strategies (linear, cosine, exponential)
+- **Selection strategies** for maintaining population diversity
+- **Population initialization** with various distribution options
+
+### Visualization and Analysis
+- **2D and 3D visualization** of search spaces and optimization trajectories
+- **Convergence plots** for monitoring optimization progress
+- **Interactive dashboards** for real-time monitoring and parameter tuning
+- **Animation capabilities** for visualizing the optimization process
+
+### Testing and Benchmarking
+- **Extensive benchmark functions** including both unimodal and multimodal test functions
+- **Comprehensive test suite** with high code coverage (80%+)
+- **Parameter sensitivity analysis** tools for algorithm tuning
+
+## Installation
+
+```bash
+pip install porcupy
+```
+
+For visualization support, install with the plotting extras:
+
+```bash
+pip install porcupy[plotting]
+```
+
+For development, install with the dev extras:
+
+```bash
+pip install porcupy[dev]
+```
+
+## Quick Start
+
+### Object-Oriented Interface
+
+```python
+import numpy as np
+from porcupy import CPO
+from porcupy.functions import sphere, get_function_bounds
+from porcupy.utils.visualization import plot_convergence, plot_2d_search_space
+
+# Define the problem
+dimensions = 10
+bounds = get_function_bounds('sphere', dimensions)
+
+# Create the optimizer with custom options
+optimizer = CPO(
+    dimensions=dimensions,
+    bounds=bounds,
+    pop_size=30,
+    max_iter=100,
+    options={
+        'reduction_strategy': 'cosine',  # Population reduction strategy
+        'min_pop_size': 10,              # Minimum population size
+        'parallel': True,                # Enable parallel processing
+        'defense_weights': [0.3, 0.3, 0.2, 0.2]  # Custom defense mechanism weights
+    },
+    ftol=1e-6,  # Convergence tolerance
+    ftol_iter=5  # Number of iterations for convergence check
+)
+
+# Run the optimization with progress tracking
+best_pos, best_cost, cost_history = optimizer.optimize(
+    objective_func=sphere,
+    verbose=True
+)
+
+print(f"Best position: {best_pos}")
+print(f"Best cost: {best_cost}")
+
+# Visualize the results
+plot_convergence(cost_history)
+
+# For 2D problems, visualize the search space
+if dimensions == 2:
+    plot_2d_search_space(sphere, bounds, positions=optimizer.positions, best_pos=best_pos)
+```
+
+### Procedural Interface
+
+```python
+import numpy as np
+from porcupy.cpo import cpo
+from porcupy.functions import rastrigin
+
+# Define the problem
+lb = [-5.12] * 2  # Lower bounds
+ub = [5.12] * 2   # Upper bounds
+
+# Run the optimization with default parameters
+best_pos, best_cost, cost_history = cpo(
+    objective_func=rastrigin,
+    lb=lb,
+    ub=ub,
+    pop_size=30,
+    max_iter=100,
+    verbose=True
+)
+
+print(f"Best position: {best_pos}")
+print(f"Best cost: {best_cost}")
+```
+
+## Documentation
+
+Porcupy comes with comprehensive documentation to help you get started and make the most of the library:
+
+- [**User Guide**](docs/user_guide.md): A step-by-step guide to using Porcupy, including installation, basic usage, advanced features, and examples.
+- [**API Reference**](docs/api_reference.md): Detailed documentation of all classes, methods, and functions in the library.
+- [**Examples**](examples/): A collection of example scripts demonstrating various features of the library.
+
+The documentation covers:
+
+- Core optimization algorithms and their parameters
+- Population management strategies
+- Visualization tools and techniques
+- Benchmark functions and their characteristics
+- Advanced usage patterns and customization options
+
+## Algorithm
+
+The Crested Porcupine Optimizer (CPO) algorithm is inspired by the defensive behaviors of crested porcupines, which use four distinct mechanisms to protect themselves from predators:
+
+1. **Sight Defense**: An exploration mechanism that simulates how porcupines use visual cues to detect threats from a distance. This mechanism helps the algorithm explore new regions of the search space by moving search agents toward random positions.
+
+2. **Sound Defense**: Another exploration mechanism that mimics how porcupines use auditory signals to warn others of danger. This mechanism enhances exploration by moving search agents toward positions that combine information from multiple sources.
+
+3. **Odor Defense**: An exploitation mechanism inspired by how porcupines use olfactory signals to communicate. This mechanism focuses on refining solutions by moving search agents toward the current best position with controlled randomness.
+
+4. **Physical Attack**: The most aggressive exploitation mechanism, representing the porcupine's quill defense. This mechanism intensifies local search around promising solutions by moving search agents directly toward the best position with minimal randomness.
+
+What makes CPO unique is its cyclic population reduction strategy, which periodically reduces the population size to focus computational resources on the most promising solutions. This strategy helps balance exploration and exploitation throughout the optimization process, leading to faster convergence and better solutions for complex problems.
+
+The algorithm dynamically adjusts the influence of each defense mechanism based on the current iteration, gradually shifting from exploration-focused strategies (sight and sound) to exploitation-focused strategies (odor and physical attack) as the optimization progresses.
+
+## Citing
+
+If you use Porcupy in your research, please cite the original paper:
+
+```
+@article{article,
+author = {Abdel-Basset, Mohamed and Mohamed, Reda and Abouhawwash, Mohamed},
+year = {2023},
+month = {12},
+pages = {111257},
+title = {Crested Porcupine Optimizer: A new nature-inspired metaheuristic},
+volume = {284},
+journal = {Knowledge-Based Systems},
+doi = {10.1016/j.knosys.2023.111257}
+}
+```
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Development and Testing
+
+### Setting Up the Development Environment
+
+To set up the development environment for contributing to Porcupy:
+
+```bash
+# Clone the repository
+git clone https://github.com/SammanSarkar/Porcupy.git
+cd Porcupy
+
+# Install in development mode with all extras
+pip install -e .[all]
+```
+
+### Code Structure
+
+The Porcupy codebase is organized as follows:
+
+```
+porcupy/
+├── __init__.py           # Package initialization
+├── cpo.py                # Procedural interface
+├── functions.py          # Benchmark functions
+├── porcupines.py         # Core algorithm components
+├── optimizer.py          # Base optimizer class and CPO implementation
+└── utils/                # Utility modules
+    ├── helpers.py        # Helper functions
+    ├── plotting.py       # Basic plotting utilities
+    ├── population.py     # Population management utilities
+    ├── visualization.py  # Advanced visualization tools
+    └── interactive_visualization.py  # Interactive dashboards
+tests/                    # Test suite
+docs/                     # Documentation
+examples/                 # Example scripts
+```
+
+### Running Tests
+
+Porcupy has a comprehensive test suite with over 80% code coverage. To run the tests:
+
+```bash
+# Run all tests
+python -m pytest tests/
+
+# Run tests for a specific module
+python -m pytest tests/test_porcupines.py
+
+# Run tests with verbose output
+python -m pytest tests/ -v
+
+# Generate test coverage report
+python -m pytest tests/ --cov=porcupy
+
+# Generate detailed HTML coverage report
+python -m pytest tests/ --cov=porcupy --cov-report=html
+```
+
+> **Note**: Using `python -m pytest` is recommended over just `pytest` as it ensures the current directory is in the Python path, which helps with imports.
+
+### Continuous Integration
+
+The codebase is continuously tested to ensure high quality and reliability. All pull requests must pass the test suite before being merged.
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
