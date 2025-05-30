@@ -3,7 +3,7 @@
 ![CPO](docs/full_logo.png)
 
 
-[![PyPI version](https://badge.fury.io/py/porcupy.svg)](https://badge.fury.io/py/porcupy)
+[![PyPI version](https://badge.fury.io/py/porcupy.svg)](https://badge.fury.io/py/porcupy) 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.7+](https://img.shields.io/badge/python-3.7+-blue.svg)](https://www.python.org/downloads/release/python-370/)
 [![Code Coverage](https://img.shields.io/badge/coverage-88%25-brightgreen.svg)](https://github.com/SammanSarkar/Porcupy)
