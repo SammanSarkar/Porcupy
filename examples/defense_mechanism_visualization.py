@@ -101,14 +101,35 @@ def run_defense_mechanism_example():
     
     # Create defense effectiveness visualization
     print("Creating defense effectiveness visualization...")
-    fig3 = visualizer.plot_defense_effectiveness(
+    fig3 = visualizer.visualize_defense_effectiveness(
         title="Effectiveness of Different Defense Mechanisms"
     )
     
     # Create animated visualization of defense mechanisms
     print("Creating animated visualization of defense mechanisms...")
-    anim = visualizer.animate_defense_mechanisms(
-        title="Defense Mechanism Animation"
+    from porcupy.utils.defense_visualization import animate_defense_mechanisms
+    
+    # Use a subset of iterations for the animation to keep it manageable
+    indices = np.arange(0, len(visualizer.position_history), 5)
+    position_subset = [visualizer.position_history[i] for i in indices if i < len(visualizer.position_history)]
+    
+    # Generate random defense types for each iteration
+    defense_history = []
+    for i in range(len(position_subset)):
+        defenses = []
+        for _ in range(len(position_subset[i])):
+            defense = np.random.choice(['sight', 'sound', 'odor', 'physical'])
+            defenses.append(defense)
+        defense_history.append(defenses)
+    
+    # Create the animation
+    anim = animate_defense_mechanisms(
+        position_history=position_subset,
+        defense_history=defense_history,
+        bounds=bounds,
+        best_position_history=[best_pos] * len(position_subset),
+        interval=200,
+        save_path=None
     )
     
     # Show all figures

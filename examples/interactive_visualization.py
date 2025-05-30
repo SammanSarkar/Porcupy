@@ -1,8 +1,8 @@
 """
 Interactive Visualization Example for the Crested Porcupine Optimizer
 
-This example demonstrates the interactive visualization capabilities of the
-Porcupy library, including real-time dashboards and parameter tuning visualizations.
+This example demonstrates the interactive visualization capabilities of the Porcupy library,
+including real-time dashboards for monitoring optimization progress and parameter tuning.
 """
 
 import numpy as np
@@ -16,15 +16,20 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')
 
 from porcupy.cpo_class import CrestPorcupineOptimizer
 from porcupy.utils.visualization_manager import CPOVisualizer
+from porcupy.utils.interactive_visualization import (
+    OptimizationDashboard,
+    ParameterTuningDashboard,
+    create_interactive_optimization_plot
+)
 from porcupy.functions import rastrigin, sphere, rosenbrock, ackley
 
 
-def run_dashboard_example():
+def run_interactive_dashboard_example():
     """Run the interactive dashboard example."""
     print("Interactive Dashboard Example")
     print("============================")
     
-    # Define a 2D test function
+    # Define the objective function
     def func(x):
         return rastrigin(x)
     
@@ -43,181 +48,205 @@ def run_dashboard_example():
         cycles=5
     )
     
-    # Initialize the visualizer
-    visualizer = CPOVisualizer(objective_func=func, bounds=bounds)
+    # Initialize the dashboard
+    dashboard = OptimizationDashboard(
+        objective_func=func,
+        bounds=bounds,
+        title="CPO Optimization Dashboard"
+    )
     
-    # Create the dashboard
-    print("Creating interactive dashboard...")
-    dashboard = visualizer.create_dashboard(update_interval=0.2)
+    # Run the optimization
+    print("Running optimization with dashboard visualization...")
+    best_pos, best_cost, cost_history = optimizer.optimize(func, verbose=True)
+    print(f"Optimization completed. Best cost: {best_cost:.6f}")
     
-    # Start the dashboard monitoring
-    dashboard.start_monitoring()
+    # For demonstration purposes, we'll simulate the dashboard updates
+    # In a real implementation, these updates would happen during optimization
+    print("\nSimulating dashboard updates...")
     
-    print("Running optimization with real-time dashboard updates...")
-    print("(Note: This may take a moment to initialize the dashboard)")
-    
-    # Run the optimization with real-time dashboard updates
-    def callback(iteration, positions, best_pos, best_cost, pop_size):
-        # Generate random defense types for demonstration
+    # Generate random positions and defense types for each iteration
+    for i in range(50):
+        # Calculate population size for this iteration
+        pop_size = optimizer._calculate_current_pop_size(i)
+        
+        # Generate random positions within bounds
+        positions = np.random.uniform(lb, ub, (pop_size, dimensions))
+        
+        # Generate random defense types
         defenses = []
-        for _ in range(len(positions)):
+        for _ in range(pop_size):
             defense = np.random.choice(['sight', 'sound', 'odor', 'physical'])
             defenses.append(defense)
         
         # Update the dashboard
         dashboard.update(
-            iteration=iteration,
-            best_cost=best_cost,
+            iteration=i,
+            best_cost=cost_history[i] if i < len(cost_history) else best_cost,
             pop_size=pop_size,
             positions=positions,
             best_position=best_pos,
             defense_types=defenses
         )
         
-        # Add a small delay to see the dashboard updates
+        # Simulate some processing time
         time.sleep(0.1)
-        
-        return False  # Continue optimization
     
-    # Run the optimization
-    result = optimizer.optimize(func, callback=callback)
+    # Show the final dashboard
+    dashboard.show()
     
-    print(f"Optimization completed. Best cost: {result['best_cost']:.6f}")
-    
-    # Stop the dashboard monitoring
-    dashboard.stop_monitoring()
-    
-    # Save the final dashboard state
-    dashboard.save_dashboard("final_dashboard.png")
-    
-    print("Dashboard monitoring stopped. Final state saved as 'final_dashboard.png'")
-    print("Close the dashboard window to continue...")
-    
-    # Keep the dashboard open for a while to allow user interaction
-    plt.show()
-    
-    # Close the dashboard
-    dashboard.close()
+    print("Interactive dashboard example completed.")
 
 
 def run_parameter_tuning_example():
-    """Run the parameter tuning visualization example."""
-    print("\nParameter Tuning Visualization Example")
-    print("====================================")
+    """Run the parameter tuning dashboard example."""
+    print("\nParameter Tuning Dashboard Example")
+    print("=================================")
     
-    # Define a test function
+    # Define the objective function
     def func(x):
-        return sphere(x)
-    
-    # Define bounds for the search space
-    dimensions = 10
-    lb = -100 * np.ones(dimensions)
-    ub = 100 * np.ones(dimensions)
-    
-    # Initialize the visualizer
-    visualizer = CPOVisualizer()
-    
-    # Create a parameter tuning dashboard
-    print("Creating parameter tuning dashboard...")
-    dashboard = visualizer.create_parameter_tuning_dashboard(
-        parameter_name="Population Size",
-        parameter_range=[10, 20, 30, 40, 50, 60],
-        result_metric="Best Cost"
-    )
-    
-    # Test different population sizes
-    print("Testing different population sizes...")
-    for pop_size in [10, 20, 30, 40, 50, 60]:
-        print(f"  Testing population size: {pop_size}")
-        
-        # Initialize the CPO optimizer with the current population size
-        optimizer = CrestPorcupineOptimizer(
-            pop_size=pop_size,
-            dimensions=dimensions,
-            max_iter=100,
-            lb=lb,
-            ub=ub
-        )
-        
-        # Run the optimization
-        result = optimizer.optimize(func)
-        
-        # Get the convergence history
-        convergence_history = optimizer.cost_history
-        
-        # Update the dashboard
-        dashboard.update(
-            parameter_value=pop_size,
-            result=result['best_cost'],
-            convergence_history=convergence_history
-        )
-    
-    # Save the dashboard
-    dashboard.save_dashboard("parameter_tuning.png")
-    
-    print("Parameter tuning completed. Dashboard saved as 'parameter_tuning.png'")
-    print("Close the dashboard window to continue...")
-    
-    # Keep the dashboard open for a while to allow user interaction
-    plt.show()
-    
-    # Close the dashboard
-    dashboard.close()
-
-
-def run_interactive_exploration_example():
-    """Run the interactive exploration example."""
-    print("\nInteractive Exploration Example")
-    print("==============================")
-    
-    # Define a 2D test function
-    def func(x):
-        return ackley(x)
+        return rastrigin(x)
     
     # Define bounds for the search space
     dimensions = 2
-    lb = -32.768 * np.ones(dimensions)
-    ub = 32.768 * np.ones(dimensions)
+    lb = -5.12 * np.ones(dimensions)
+    ub = 5.12 * np.ones(dimensions)
+    bounds = (lb, ub)
+    
+    # Define parameter ranges for tuning
+    param_ranges = {
+        'pop_size': [10, 20, 30, 40, 50],
+        'cycles': [1, 2, 3, 4, 5],
+        'alpha': [0.1, 0.2, 0.3, 0.4, 0.5]
+    }
+    
+    # Initialize the parameter tuning dashboard
+    tuning_dashboard = ParameterTuningDashboard(
+        objective_func=func,
+        bounds=bounds,
+        param_ranges=param_ranges,
+        title="CPO Parameter Tuning Dashboard"
+    )
+    
+    # For demonstration purposes, we'll simulate the parameter tuning process
+    # In a real implementation, this would involve running multiple optimizations
+    print("Simulating parameter tuning process...")
+    
+    # Generate results for each parameter combination
+    results = {}
+    
+    for pop_size in param_ranges['pop_size']:
+        for cycles in param_ranges['cycles']:
+            for alpha in param_ranges['alpha']:
+                # Create a parameter key
+                param_key = f"pop_size={pop_size},cycles={cycles},alpha={alpha}"
+                
+                # Simulate running the optimization
+                print(f"Testing parameters: {param_key}")
+                
+                # Initialize the optimizer with these parameters
+                optimizer = CrestPorcupineOptimizer(
+                    dimensions=dimensions,
+                    bounds=bounds,
+                    pop_size=pop_size,
+                    cycles=cycles,
+                    alpha=alpha,
+                    max_iter=50
+                )
+                
+                # Run a quick optimization
+                best_pos, best_cost, cost_history = optimizer.optimize(func, verbose=False)
+                
+                # Store the results
+                results[param_key] = {
+                    'best_cost': best_cost,
+                    'convergence_rate': np.mean(np.diff(cost_history)),
+                    'cost_history': cost_history
+                }
+                
+                # Update the dashboard
+                tuning_dashboard.update(
+                    params={'pop_size': pop_size, 'cycles': cycles, 'alpha': alpha},
+                    best_cost=best_cost,
+                    convergence_rate=np.mean(np.diff(cost_history)),
+                    cost_history=cost_history
+                )
+    
+    # Show the final tuning dashboard
+    tuning_dashboard.show()
+    
+    # Find the best parameter combination
+    best_param_key = min(results, key=lambda k: results[k]['best_cost'])
+    best_params = {
+        param: float(value) for param, value in 
+        [pair.split('=') for pair in best_param_key.split(',')]
+    }
+    
+    print(f"\nBest parameter combination: {best_param_key}")
+    print(f"Best cost achieved: {results[best_param_key]['best_cost']:.6f}")
+    
+    print("Parameter tuning example completed.")
+
+
+def run_interactive_plot_example():
+    """Run the interactive optimization plot example."""
+    print("\nInteractive Optimization Plot Example")
+    print("===================================")
+    
+    # Define the objective function
+    def func(x):
+        return rastrigin(x)
+    
+    # Define bounds for the search space
+    dimensions = 2
+    lb = -5.12 * np.ones(dimensions)
+    ub = 5.12 * np.ones(dimensions)
     bounds = (lb, ub)
     
     # Initialize the CPO optimizer
     optimizer = CrestPorcupineOptimizer(
-        pop_size=30,
         dimensions=dimensions,
-        max_iter=1,  # Just need initial positions
-        lb=lb,
-        ub=ub
+        bounds=(lb, ub),
+        pop_size=30,
+        max_iter=50,
+        cycles=5
     )
     
-    # Generate initial positions
-    initial_positions = optimizer._init_population()
+    # Run the optimization
+    print("Running optimization...")
+    best_pos, best_cost, cost_history = optimizer.optimize(func, verbose=True)
+    print(f"Optimization completed. Best cost: {best_cost:.6f}")
     
-    # Create an interactive plot
-    print("Creating interactive exploration plot...")
-    print("(Click on the plot to evaluate the function at specific points)")
+    # For demonstration purposes, we'll generate some random data for visualization
+    # In a real implementation, this data would come from the optimizer during the optimization process
+    positions_history = []
     
-    from porcupy.utils.interactive_visualization import create_interactive_optimization_plot
+    # Generate random positions for each iteration
+    for i in range(50):
+        # Calculate population size for this iteration
+        pop_size = optimizer._calculate_current_pop_size(i)
+        
+        # Generate random positions within bounds
+        positions = np.random.uniform(lb, ub, (pop_size, dimensions))
+        positions_history.append(positions)
     
-    fig, ax, scatter = create_interactive_optimization_plot(
-        objective_func=func,
+    # Create the interactive optimization plot
+    print("Creating interactive optimization plot...")
+    interactive_plot = create_interactive_optimization_plot(
+        positions_history=positions_history,
+        cost_history=cost_history,
+        best_position=best_pos,
         bounds=bounds,
-        initial_positions=initial_positions,
-        figsize=(10, 8)
+        objective_func=func,
+        title="Interactive CPO Optimization Plot"
     )
     
-    # Save the initial plot
-    plt.savefig("interactive_exploration.png")
+    # Show the interactive plot
+    interactive_plot.show()
     
-    print("Interactive plot created. Click on the plot to explore the function.")
-    print("Close the plot window to continue...")
-    
-    # Keep the plot open for user interaction
-    plt.show()
+    print("Interactive optimization plot example completed.")
 
 
 if __name__ == "__main__":
-    run_dashboard_example()
+    run_interactive_dashboard_example()
     run_parameter_tuning_example()
-    run_interactive_exploration_example()
-    
-    print("\nAll interactive visualization examples completed.")
+    run_interactive_plot_example()
