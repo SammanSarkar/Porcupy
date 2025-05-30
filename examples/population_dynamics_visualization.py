@@ -44,13 +44,13 @@ def run_population_dynamics_example():
         
         # Initialize the optimizer
         optimizer = CrestPorcupineOptimizer(
-            pop_size=50,
             dimensions=dimensions,
+            bounds=(lb, ub),
+            pop_size=50,
             max_iter=100,
-            lb=lb,
-            ub=ub,
-            cycles=5,
-            pop_reduction_strategy=strategy
+            cycles=5
+            # Note: pop_reduction_strategy is not a parameter in the current implementation
+            # We'll need to modify the code to handle different strategies
         )
         
         # Initialize the visualizer

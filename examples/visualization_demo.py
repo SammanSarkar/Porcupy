@@ -36,11 +36,10 @@ def demo_basic_visualizations():
     
     # Initialize the CPO optimizer
     optimizer = CrestPorcupineOptimizer(
-        pop_size=30,
         dimensions=dimensions,
+        bounds=(lb, ub),
+        pop_size=30,
         max_iter=50,
-        lb=lb,
-        ub=ub,
         cycles=5
     )
     
