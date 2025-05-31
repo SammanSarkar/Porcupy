@@ -33,10 +33,16 @@ This library provides both object-oriented and procedural interfaces for the CPO
 - **Elitism** to preserve best solutions
 
 ### Visualization and Analysis
-- **2D visualization** of search spaces and optimization trajectories
-- **Convergence plots** for monitoring optimization progress
-- **Interactive visualizations** for analyzing optimization behavior
-- **Animation capabilities** for tracking population movement
+- **2D/3D Visualization**
+  - Contour and surface plots
+  - Real-time population tracking
+  - Defense mechanism visualization
+- **Convergence Analysis**
+  - Cost vs iteration plots
+  - Population diversity metrics
+- **Export Options**
+  - Save as GIF/MP4/PNG/PDF
+  - Customizable figure sizes
 
 ### Benchmark Functions
 - **Unimodal functions**: Sphere, Rosenbrock, Schwefel 2.22, Schwefel 1.2, Schwefel 2.21, Step, Quartic
