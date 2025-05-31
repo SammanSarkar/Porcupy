@@ -10,6 +10,7 @@ examples/constrained_optimization.py
 examples/cpo_example.py
 examples/defense_visualization_test.py
 examples/enhanced_visualization_demo.py
+examples/gpu_acceleration_demo.py
 examples/interactive_visualization.py
 examples/parameter_sensitivity.py
 examples/population_dynamics_visualization.py
@@ -20,6 +21,7 @@ porcupy/base.py
 porcupy/cpo.py
 porcupy/cpo_class.py
 porcupy/functions.py
+porcupy/gpu_cpo.py
 porcupy/porcupines.py
 porcupy.egg-info/PKG-INFO
 porcupy.egg-info/SOURCES.txt
@@ -41,6 +43,7 @@ tests/test_cpo_class.py
 tests/test_defense_visualization.py
 tests/test_enhanced_visualization.py
 tests/test_functions.py
+tests/test_gpu_cpo.py
 tests/test_helpers.py
 tests/test_interactive_visualization.py
 tests/test_plotting.py

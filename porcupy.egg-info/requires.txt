@@ -1,4 +1,4 @@
-numpy>=1.18.0
+numpy>=1.19.0
 scipy>=1.4.0
 
 [all]
@@ -9,7 +9,24 @@ black>=22.0.0
 isort>=5.0.0
 flake8>=3.8.0
 
+[cuda]
+cupy-cuda11x
+
+[cuda11x]
+cupy-cuda11x
+
+[cuda12x]
+cupy-cuda12x
+
 [dev]
+pytest>=6.0.0
+pytest-cov>=2.10.0
+black>=22.0.0
+isort>=5.0.0
+flake8>=3.8.0
+
+[gpu-dev]
+cupy-cuda11x
 pytest>=6.0.0
 pytest-cov>=2.10.0
 black>=22.0.0

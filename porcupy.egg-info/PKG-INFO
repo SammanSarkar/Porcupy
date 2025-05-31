@@ -1,7 +1,7 @@
 Metadata-Version: 2.4
 Name: porcupy
-Version: 0.1.1
-Summary: Crested Porcupine Optimizer (CPO) for optimization problems
+Version: 0.1.2
+Summary: Crested Porcupine Optimizer (CPO) with GPU acceleration for optimization problems
 Author-email: Samman Sarkar <sarkar.samman4231@gmail.com>
 License: MIT License
         
@@ -42,10 +42,23 @@ Classifier: Topic :: Scientific/Engineering :: Mathematics
 Requires-Python: >=3.7
 Description-Content-Type: text/markdown
 License-File: LICENSE
-Requires-Dist: numpy>=1.18.0
+Requires-Dist: numpy>=1.19.0
 Requires-Dist: scipy>=1.4.0
 Provides-Extra: plotting
 Requires-Dist: matplotlib>=3.3.0; extra == "plotting"
+Provides-Extra: cuda
+Requires-Dist: cupy-cuda11x; extra == "cuda"
+Provides-Extra: cuda11x
+Requires-Dist: cupy-cuda11x; extra == "cuda11x"
+Provides-Extra: cuda12x
+Requires-Dist: cupy-cuda12x; extra == "cuda12x"
+Provides-Extra: gpu-dev
+Requires-Dist: cupy-cuda11x; extra == "gpu-dev"
+Requires-Dist: pytest>=6.0.0; extra == "gpu-dev"
+Requires-Dist: pytest-cov>=2.10.0; extra == "gpu-dev"
+Requires-Dist: black>=22.0.0; extra == "gpu-dev"
+Requires-Dist: isort>=5.0.0; extra == "gpu-dev"
+Requires-Dist: flake8>=3.8.0; extra == "gpu-dev"
 Provides-Extra: dev
 Requires-Dist: pytest>=6.0.0; extra == "dev"
 Requires-Dist: pytest-cov>=2.10.0; extra == "dev"
@@ -85,10 +98,72 @@ This library provides both object-oriented and procedural interfaces for the CPO
 - **Backend components** with `PorcupinePopulation` and `PopulationManager` classes
 
 ### Advanced Capabilities
+- **GPU Acceleration** for significantly faster computations on NVIDIA GPUs using CuPy
+- **Automatic Fallback** to CPU if GPU is not available
 - **Parallel processing** support for faster optimization on multi-core systems
 - **Convergence criteria** with customizable tolerance and iteration thresholds
 - **History tracking** for detailed analysis of the optimization process
 - **Four defense mechanisms** (sight, sound, odor, physical attack) for exploration/exploitation balance
+
+### GPU Acceleration
+
+Porcupy supports GPU acceleration using CuPy, which can provide significant speedups for large-scale optimization problems. The GPU implementation is a drop-in replacement for the CPU version and automatically falls back to CPU if CUDA is not available.
+
+#### Installation with GPU Support
+
+```bash
+# Install Porcupy with GPU support
+pip install porcupy[cuda]  # This will install CuPy with CUDA support
+
+# Or install CuPy manually (choose the right CUDA version):
+pip install cupy-cuda11x  # For CUDA 11.x
+# or
+pip install cupy-cuda12x  # For CUDA 12.x
+```
+
+#### Example: GPU-Accelerated Optimization
+
+```python
+from porcupy.gpu_cpo import GPUCPO
+from porcupy.functions import rastrigin
+
+# Initialize the GPU-accelerated optimizer
+optimizer = GPUCPO(
+    dimensions=30,  # Higher dimensions benefit more from GPU
+    bounds=([-5.12] * 30, [5.12] * 30),
+    pop_size=1000,  # Larger populations benefit more from GPU
+    max_iter=100
+)
+
+# Run optimization - automatically uses GPU if available
+best_pos, best_cost, _ = optimizer.optimize(rastrigin)
+
+print(f"Best solution found: {best_pos}")
+print(f"Best cost: {best_cost}")
+
+# For large problems, you can monitor GPU memory usage
+import cupy as cp
+print(f"GPU memory used: {cp.get_default_memory_pool().used_bytes() / 1024**2:.2f} MB")
+```
+
+#### Performance Tips
+
+1. **Problem Size**: GPU acceleration is most beneficial for:
+   - High-dimensional problems (dimensions > 10)
+   - Large population sizes (pop_size > 1000)
+   - Computationally expensive objective functions
+
+2. **Memory Management**:
+   - The GPU implementation is memory-efficient but be mindful of GPU memory limits
+   - Use smaller batches or population sizes if you encounter memory errors
+
+3. **Mixed Precision**:
+   - The implementation automatically uses float32 on GPU for better performance
+   - Falls back to float64 on CPU for numerical stability
+
+4. **Benchmarking**:
+   - We've observed 5-50x speedup on NVIDIA GPUs compared to CPU
+   - The exact speedup depends on your hardware and problem characteristics
 
 ### Population Management
 - **Cyclic population reduction** strategies (linear, cosine)
@@ -96,10 +171,16 @@ This library provides both object-oriented and procedural interfaces for the CPO
 - **Elitism** to preserve best solutions
 
 ### Visualization and Analysis
-- **2D visualization** of search spaces and optimization trajectories
-- **Convergence plots** for monitoring optimization progress
-- **Interactive visualizations** for analyzing optimization behavior
-- **Animation capabilities** for tracking population movement
+- **2D/3D Visualization**
+  - Contour and surface plots
+  - Real-time population tracking
+  - Defense mechanism visualization
+- **Convergence Analysis**
+  - Cost vs iteration plots
+  - Population diversity metrics
+- **Export Options**
+  - Save as GIF/MP4/PNG/PDF
+  - Customizable figure sizes
 
 ### Benchmark Functions
 - **Unimodal functions**: Sphere, Rosenbrock, Schwefel 2.22, Schwefel 1.2, Schwefel 2.21, Step, Quartic

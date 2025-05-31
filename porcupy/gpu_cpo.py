@@ -2,7 +2,31 @@
 GPU-accelerated Crested Porcupine Optimizer (CPO).
 
 This module provides a GPU-accelerated implementation of the CPO algorithm
-using CuPy for numerical computations on NVIDIA GPUs.
+using CuPy for numerical computations on NVIDIA GPUs. It's designed to
+automatically fall back to CPU computation if CUDA is not available.
+
+Example:
+    >>> from porcupy.gpu_cpo import GPUCPO
+    >>> from porcupy.functions import sphere
+    >>>
+    >>> # Initialize the optimizer
+    >>> optimizer = GPUCPO(
+    ...     dimensions=10,
+    ...     bounds=([-5.12] * 10, [5.12] * 10),
+    ...     pop_size=100,
+    ...     max_iter=50
+    ... )
+    >>>
+    >>> # Run optimization
+    >>> best_pos, best_cost, _ = optimizer.optimize(sphere)
+    >>> print(f"Best solution: {best_pos}")
+    >>> print(f"Best cost: {best_cost}")
+
+Note:
+    For optimal performance, install CuPy with CUDA support:
+    ```bash
+    pip install cupy-cuda11x  # Choose the right CUDA version
+    ```
 """
 
 import numpy as np
@@ -29,7 +53,24 @@ class GPUCPO(CPO):
     """GPU-accelerated Crested Porcupine Optimizer.
     
     This class extends the standard CPO with GPU acceleration using CuPy.
-    It's a drop-in replacement for CPO with the same interface.
+    It's a drop-in replacement for CPO with the same interface but runs
+    computations on GPU when available.
+    
+    Args:
+        dimensions (int): Number of dimensions of the search space.
+        bounds (tuple): Tuple of (lower_bounds, upper_bounds) for each dimension.
+        pop_size (int): Initial population size.
+        max_iter (int): Maximum number of iterations.
+        min_pop_size (int, optional): Minimum population size. Defaults to 5.
+        cycles (int, optional): Number of cycles for population reduction. Defaults to 5.
+        alpha (float, optional): Reduction rate. Defaults to 0.95.
+        tf (float, optional): Transfer factor. Defaults to 0.8.
+        ftol (float, optional): Absolute error for convergence. Defaults to 1e-10.
+        ftol_iter (int, optional): Number of iterations to check for convergence. Defaults to 10.
+    
+    Note:
+        The optimizer will automatically detect and use GPU if CuPy with CUDA support
+        is installed. Otherwise, it will fall back to CPU computation.
     """
     
     def __init__(self, *args, **kwargs):
