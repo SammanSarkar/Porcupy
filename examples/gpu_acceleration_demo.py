@@ -10,7 +10,11 @@ import numpy as np
 import time
 import matplotlib.pyplot as plt
 from porcupy import CPO
-from porcupy.gpu_cpo import GPUCPO
+try:
+    from porcupy.gpu_cpo import GPUCPO
+except ImportError:
+    GPUCPO = None
+    print("GPU acceleration not available. Install CuPy for GPU support.")
 from porcupy.functions import rastrigin
 
 def run_optimization(optimizer_class, objective_func, dimensions=10, pop_size=100, max_iter=100):
