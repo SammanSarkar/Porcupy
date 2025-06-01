@@ -6,7 +6,7 @@
 [![PyPI version](https://img.shields.io/pypi/v/porcupy.svg)](https://pypi.org/project/porcupy/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.7+](https://img.shields.io/badge/python-3.7+-blue.svg)](https://www.python.org/downloads/release/python-370/)
-[![Code Coverage](https://img.shields.io/badge/coverage-88%25-brightgreen.svg)](https://github.com/SammanSarkar/Porcupy)
+[![codecov](https://codecov.io/gh/SammanSarkar/Porcupy/graph/badge.svg?token=W0VM41CPL2)](https://codecov.io/gh/SammanSarkar/Porcupy)
 [![PyPI Downloads](https://static.pepy.tech/badge/porcupy)](https://pepy.tech/projects/porcupy)
 
 
