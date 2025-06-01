@@ -7,7 +7,8 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.7+](https://img.shields.io/badge/python-3.7+-blue.svg)](https://www.python.org/downloads/release/python-370/)
 [![Code Coverage](https://img.shields.io/badge/coverage-88%25-brightgreen.svg)](https://github.com/SammanSarkar/Porcupy)
-![Downloads](https://static.pepy.tech/personalized-badge/porcupy?period=total&units=international_system&left_color=black&right_color=orange&left_text=Downloads)
+[![Downloads](https://static.pepy.tech/personalized-badge/porcupy?period=total&units=international_system&left_color=black&right_color=orange&left_text=Downloads)](https://pepy.tech/project/porcupy)
+
 
 
 ## Overview
