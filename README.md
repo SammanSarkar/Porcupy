@@ -344,7 +344,7 @@ pip install -e .[all]
    - Unit tests for all components
    - Integration tests
    - Performance benchmarks
-```
+
 
 ### Running Tests
 
