@@ -1,28 +1,20 @@
-name: Test and Coverage
+name: Test with Codecov
 
 on:
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
-  schedule:
-    - cron: '0 0 * * 0'  # Weekly on Sunday at midnight UTC
-
-defaults:
-  run:
-    shell: bash
 
 jobs:
   test:
-    name: Python ${{ matrix.python-version }}
     runs-on: ubuntu-latest
     strategy:
-      fail-fast: false
       matrix:
         python-version: ['3.7', '3.8', '3.9', '3.10', '3.11']
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v4
@@ -40,16 +32,8 @@ jobs:
         python -m pytest tests/ --cov=porcupy --cov-report=xml --cov-report=term
     
     - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v3
+      uses: codecov/codecov-action@v4
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
-        file: ./coverage.xml
+        files: ./coverage.xml
         fail_ci_if_error: false
-        verbose: true
-    
-    - name: Upload coverage report as artifact
-      uses: actions/upload-artifact@v3
-      with:
-        name: coverage-report
-        path: ./coverage.xml
-        retention-days: 30
