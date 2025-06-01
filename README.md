@@ -310,26 +310,37 @@ cd Porcupy
 pip install -e .[all]
 ```
 
-### Code Structure
+### Core Components
 
-The Porcupy codebase is organized as follows:
+1. **Optimization Algorithms**
+   - `cpo.py`: Main implementation of the Crested Porcupine Optimizer
+   - `gpu_cpo.py`: GPU-accelerated version using CuPy
+   - `base.py`: Base optimizer class with common functionality
 
-```
-porcupy/
-├── __init__.py           # Package initialization
-├── cpo.py                # Procedural interface
-├── functions.py          # Benchmark functions
-├── porcupines.py         # Core algorithm components
-├── optimizer.py          # Base optimizer class and CPO implementation
-└── utils/                # Utility modules
-    ├── helpers.py        # Helper functions
-    ├── plotting.py       # Basic plotting utilities
-    ├── population.py     # Population management utilities
-    ├── visualization.py  # Advanced visualization tools
-    └── interactive_visualization.py  # Interactive dashboards
-tests/                    # Test suite
-docs/                     # Documentation
-examples/                 # Example scripts
+2. **Algorithm Components**
+   - `porcupines.py`: Core implementation of porcupine behaviors and population management
+   - Defense mechanisms (sight, sound, odor, physical attack)
+   - Population management and selection strategies
+
+3. **Benchmark Functions**
+   - Built-in test functions for optimization
+   - Both unimodal and multimodal functions
+   - Easy integration with custom objective functions
+
+4. **Utilities**
+   - Visualization tools for optimization progress
+   - Parallel processing support
+   - Input validation and helper functions
+
+5. **Documentation**
+   - User guides and tutorials
+   - API reference
+   - Example scripts
+
+6. **Tests**
+   - Unit tests for all components
+   - Integration tests
+   - Performance benchmarks
 ```
 
 ### Running Tests
