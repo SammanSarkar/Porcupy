@@ -12,18 +12,48 @@ dependencies = [
     "numpy>=1.19.0",  # Increased minimum version for better GPU compatibility
     "scipy>=1.4.0"
 ]
+keywords = [
+    "optimization",
+    "optimization algorithm",
+    "crested porcupine optimizer",
+    "metaheuristic",
+    "nature-inspired",
+    "machine learning",
+    "artificial intelligence",
+    "evolutionary algorithms",
+    "global optimization",
+    "mathematical optimization",
+    "parameter tuning",
+    "hyperparameter optimization",
+    "gpu-accelerated",
+    "parallel computing",
+    "scientific computing",
+    "benchmark functions",
+    "black-box optimization",
+    "constrained optimization",
+    "mathematical programming",
+    "computational intelligence",
+    "swarm intelligence",
+    "bio-inspired computing",
+]
+
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Science/Research",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Education",
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
     "Topic :: Scientific/Engineering",
     "Topic :: Scientific/Engineering :: Artificial Intelligence",
     "Topic :: Scientific/Engineering :: Mathematics",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+    "Topic :: Software Development :: Libraries :: Python Modules",
 ]
 
 [project.optional-dependencies]
