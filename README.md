@@ -2,103 +2,78 @@
 
 ![CPO](https://github.com/user-attachments/assets/af843836-1338-4609-bec9-09ea15852294)
 
-
 [![PyPI version](https://img.shields.io/pypi/v/porcupy.svg)](https://pypi.org/project/porcupy/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.7+](https://img.shields.io/badge/python-3.7+-blue.svg)](https://www.python.org/downloads/release/python-370/)
 [![codecov](https://codecov.io/gh/SammanSarkar/Porcupy/graph/badge.svg?token=W0VM41CPL2)](https://codecov.io/gh/SammanSarkar/Porcupy)
 [![PyPI Downloads](https://static.pepy.tech/badge/porcupy)](https://pepy.tech/projects/porcupy)
 
-
-
 ## Overview
 
-Porcupy is a Python library that implements the Crested Porcupine Optimizer (CPO) algorithm, a nature-inspired metaheuristic optimization technique. The algorithm mimics the defensive behaviors of crested porcupines (sight, sound, odor, and physical attack) to balance exploration and exploitation, with cyclic population reduction for convergence.
+Porcupy implements the Crested Porcupine Optimizer (CPO), a nature-inspired metaheuristic that mimics porcupine defense mechanisms for optimization. It offers both object-oriented and procedural interfaces with comprehensive testing and documentation.
 
-This library provides both object-oriented and procedural interfaces for the CPO algorithm, along with visualization tools, benchmark functions, and population management utilities. The implementation is thoroughly tested with extensive test coverage across all components.
+## Installation
+
+```bash
+pip install porcupy
+```
+
+## Quick Start
+
+```python
+from porcupy import CPO
+from porcupy.functions import sphere
+
+# Define search space
+dim = 10
+bounds = [(-5.12, 5.12)] * dim
+
+# Initialize and run optimizer
+optimizer = CPO(dimensions=dim, bounds=bounds, max_iter=100)
+best_solution, best_fitness, _ = optimizer.optimize(sphere)
+
+print(f"Best solution: {best_solution}")
+print(f"Fitness: {best_fitness}")
+```
 
 ## Features
 
-### Core Components
-- **Object-oriented implementation** with base `Optimizer` class and `CPO` class
-- **Procedural API** (`cpo` function) for backward compatibility and simplicity
-- **Backend components** with `PorcupinePopulation` and `PopulationManager` classes
+- **Multiple Interfaces**: Object-oriented (`CPO` class) and procedural (`cpo` function)
+- **GPU Acceleration**: Optional CUDA support for large-scale problems
+- **Visualization**: Built-in plotting for 2D/3D optimization landscapes
+- **Benchmark Functions**: 20+ test functions included
+- **Population Management**: Adaptive population sizing and reduction strategies
 
-### Advanced Capabilities
-- **GPU Acceleration** for significantly faster computations on NVIDIA GPUs using CuPy
-- **Automatic Fallback** to CPU if GPU is not available
-- **Parallel processing** support for faster optimization on multi-core systems
-- **Convergence criteria** with customizable tolerance and iteration thresholds
-- **History tracking** for detailed analysis of the optimization process
-- **Four defense mechanisms** (sight, sound, odor, physical attack) for exploration/exploitation balance
+## GPU Support
 
-### GPU Acceleration
-
-Porcupy supports GPU acceleration using CuPy, which can provide significant speedups for large-scale optimization problems. The GPU implementation is a drop-in replacement for the CPU version and automatically falls back to CPU if CUDA is not available.
-
-#### Installation with GPU Support
+For GPU acceleration, install with CUDA support:
 
 ```bash
-# Install Porcupy with GPU support
-pip install porcupy[cuda]  # This will install CuPy with CUDA support
-
-# Or install CuPy manually (choose the right CUDA version):
-pip install cupy-cuda11x  # For CUDA 11.x
-# or
-pip install cupy-cuda12x  # For CUDA 12.x
+pip install "porcupy[cuda]"
+# Or for specific CUDA version
+# pip install "porcupy[cuda]" cupy-cuda11x
 ```
 
-#### Example: GPU-Accelerated Optimization
+Example usage:
 
 ```python
-from porcupy.gpu_cpo import GPUCPO
-from porcupy.functions import rastrigin
+from porcupy import GPUCPO
 
-# Initialize the GPU-accelerated optimizer
-optimizer = GPUCPO(
-    dimensions=30,  # Higher dimensions benefit more from GPU
-    bounds=([-5.12] * 30, [5.12] * 30),
-    pop_size=1000,  # Larger populations benefit more from GPU
-    max_iter=100
-)
-
-# Run optimization - automatically uses GPU if available
-best_pos, best_cost, _ = optimizer.optimize(rastrigin)
-
-print(f"Best solution found: {best_pos}")
-print(f"Best cost: {best_cost}")
-
-# For large problems, you can monitor GPU memory usage
-import cupy as cp
-print(f"GPU memory used: {cp.get_default_memory_pool().used_bytes() / 1024**2:.2f} MB")
+optimizer = GPUCPO(dimensions=30, bounds=([-5.12]*30, [5.12]*30))
+best_pos, best_cost, _ = optimizer.optimize(sphere)
 ```
 
-#### Performance Tips
+## Documentation
 
-1. **Problem Size**: GPU acceleration is most beneficial for:
-   - High-dimensional problems (dimensions > 10)
-   - Large population sizes (pop_size > 1000)
-   - Computationally expensive objective functions
+Full documentation is available at [porcupy.readthedocs.io](https://porcupy.readthedocs.io/).
 
-2. **Memory Management**:
-   - The GPU implementation is memory-efficient but be mindful of GPU memory limits
-   - Use smaller batches or population sizes if you encounter memory errors
+## Contributing
 
-3. **Mixed Precision**:
-   - The implementation automatically uses float32 on GPU for better performance
-   - Falls back to float64 on CPU for numerical stability
+Contributions are welcome! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
 
-4. **Benchmarking**:
-   - We've observed 5-50x speedup on NVIDIA GPUs compared to CPU
-   - The exact speedup depends on your hardware and problem characteristics
+## License
 
-### Population Management
-- **Cyclic population reduction** strategies (linear, cosine)
-- **Adaptive population size** based on optimization progress
-- **Elitism** to preserve best solutions
-
-### Visualization and Analysis
-- **2D/3D Visualization**
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
   - Contour and surface plots
   - Real-time population tracking
   - Defense mechanism visualization
