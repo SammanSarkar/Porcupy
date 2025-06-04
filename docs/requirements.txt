@@ -1,21 +1,15 @@
 # Core documentation
-docutils<0.21.0  # Required for myst-parser compatibility
-sphinx>=4.0,<8.0.0
+sphinx>=4.0,<7.0.0
 sphinx-rtd-theme>=1.0.0
-myst-parser>=0.18.0
+myst-parser>=0.18.0,<0.20.0
 
-# Extensions
+# Essential extensions
 sphinx-copybutton>=0.5.0
 sphinx-autodoc-typehints>=1.12.0
-sphinxcontrib-mermaid>=0.7.1
-sphinx-automodapi>=0.13
 sphinx-tabs>=3.2.0
-sphinx-panels>=0.6.0
-nbsphinx>=0.8.7
-ipython>=7.0.0
 
-# For API docs
-sphinx-autoapi>=2.0.0
+# For API documentation
+autoapi>=2.0.0
 
 # For better code highlighting
 Pygments>=2.10.0
@@ -23,16 +17,5 @@ Pygments>=2.10.0
 # For math support
 sphinxcontrib-katex>=0.8.6
 
-# For better type hints support
+# For type hints support
 typing-extensions>=4.0.0
-
-# For testing the docs
-pytest>=6.0.0
-pytest-cov>=2.12.0
-
-# For building the package locally
-setuptools>=42.0.0
-wheel>=0.37.0
-
-# For PDF generation
-sphinxcontrib-svg2pdfconverter>=1.2.1

@@ -23,17 +23,31 @@ release = '0.2.0'
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
 extensions = [
+    # Core extensions
     'sphinx.ext.autodoc',
     'sphinx.ext.napoleon',
     'sphinx.ext.viewcode',
     'sphinx.ext.mathjax',
     'sphinx.ext.intersphinx',
+    # Third-party extensions
     'myst_parser',
     'sphinx_copybutton',
-    'sphinx.ext.autosummary',
-    'sphinx.ext.doctest',
-    'sphinx.ext.coverage',
+    'sphinx_tabs.tabs',
+    'autoapi.extension',
 ]
+
+# AutoAPI configuration
+autoapi_type = 'python'
+autoapi_dirs = ['../../porcupy']
+autoapi_options = [
+    'members',
+    'undoc-members',
+    'show-inheritance',
+    'show-module-summary',
+    'special-members',
+    'imported-members',
+]
+autoapi_ignore = ['*test*', '*setup*']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
