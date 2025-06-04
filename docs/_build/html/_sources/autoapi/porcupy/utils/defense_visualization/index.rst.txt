@@ -1,0 +1,143 @@
+porcupy.utils.defense_visualization
+===================================
+
+.. py:module:: porcupy.utils.defense_visualization
+
+.. autoapi-nested-parse::
+
+   Defense mechanism visualization module for the Crested Porcupine Optimizer (CPO).
+
+   This module provides specialized visualization tools for the unique defense mechanisms
+   of the CPO algorithm, including sight, sound, odor, and physical defense visualizations.
+
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   porcupy.utils.defense_visualization.visualize_defense_territories
+   porcupy.utils.defense_visualization.visualize_defense_mechanisms
+   porcupy.utils.defense_visualization.animate_defense_mechanisms
+   porcupy.utils.defense_visualization.plot_defense_effectiveness
+   porcupy.utils.defense_visualization.visualize_quill_directions
+
+
+Module Contents
+---------------
+
+.. py:function:: visualize_defense_territories(positions: numpy.ndarray, defense_types: List[str], bounds: Tuple[numpy.ndarray, numpy.ndarray], territory_sizes: Optional[numpy.ndarray] = None, title: str = 'Defense Territories', figsize: Tuple[int, int] = (10, 8), save_path: Optional[str] = None)
+
+   Visualize the defense territories of porcupines based on their defense mechanisms.
+
+   :param positions: Positions of the porcupines, shape (pop_size, 2).
+   :type positions: ndarray
+   :param defense_types: List of defense mechanisms used by each porcupine.
+   :type defense_types: list
+   :param bounds: A tuple (lb, ub) containing the lower and upper bounds.
+   :type bounds: tuple
+   :param territory_sizes: Sizes of the territories for each porcupine, shape (pop_size,).
+                           If None, territories are sized based on defense mechanism.
+   :type territory_sizes: ndarray, optional
+   :param title: Title of the plot (default: "Defense Territories").
+   :type title: str, optional
+   :param figsize: Figure size as (width, height) in inches (default: (10, 8)).
+   :type figsize: tuple, optional
+   :param save_path: Path to save the figure. If None, the figure is not saved (default: None).
+   :type save_path: str, optional
+
+   :returns: The created figure.
+   :rtype: matplotlib.figure.Figure
+
+
+.. py:function:: visualize_defense_mechanisms(positions: numpy.ndarray, prev_positions: numpy.ndarray, defense_types: List[str], bounds: Tuple[numpy.ndarray, numpy.ndarray], best_position: Optional[numpy.ndarray] = None, title: str = 'Defense Mechanisms Visualization', figsize: Tuple[int, int] = (12, 10), save_path: Optional[str] = None)
+
+   Visualize the specific defense mechanisms of porcupines with directional indicators.
+
+   :param positions: Current positions of the porcupines, shape (pop_size, 2).
+   :type positions: ndarray
+   :param prev_positions: Previous positions of the porcupines, shape (pop_size, 2).
+   :type prev_positions: ndarray
+   :param defense_types: List of defense mechanisms used by each porcupine.
+   :type defense_types: list
+   :param bounds: A tuple (lb, ub) containing the lower and upper bounds.
+   :type bounds: tuple
+   :param best_position: Global best position, shape (2,).
+   :type best_position: ndarray, optional
+   :param title: Title of the plot (default: "Defense Mechanisms Visualization").
+   :type title: str, optional
+   :param figsize: Figure size as (width, height) in inches (default: (12, 10)).
+   :type figsize: tuple, optional
+   :param save_path: Path to save the figure. If None, the figure is not saved (default: None).
+   :type save_path: str, optional
+
+   :returns: The created figure.
+   :rtype: matplotlib.figure.Figure
+
+
+.. py:function:: animate_defense_mechanisms(position_history: List[numpy.ndarray], defense_history: List[List[str]], bounds: Tuple[numpy.ndarray, numpy.ndarray], best_position_history: Optional[List[numpy.ndarray]] = None, interval: int = 200, figsize: Tuple[int, int] = (12, 10), save_path: Optional[str] = None, dpi: int = 100)
+
+   Create an animation of porcupines using different defense mechanisms over time.
+
+   :param position_history: List of position arrays at each iteration, each with shape (pop_size, 2).
+   :type position_history: list
+   :param defense_history: List of lists containing defense mechanisms used by each porcupine at each iteration.
+   :type defense_history: list
+   :param bounds: A tuple (lb, ub) containing the lower and upper bounds.
+   :type bounds: tuple
+   :param best_position_history: List of best positions at each iteration, each with shape (2,).
+   :type best_position_history: list, optional
+   :param interval: Interval between frames in milliseconds (default: 200).
+   :type interval: int, optional
+   :param figsize: Figure size as (width, height) in inches (default: (12, 10)).
+   :type figsize: tuple, optional
+   :param save_path: Path to save the animation. If None, the animation is not saved (default: None).
+   :type save_path: str, optional
+   :param dpi: DPI for the saved animation (default: 100).
+   :type dpi: int, optional
+
+   :returns: The created animation.
+   :rtype: matplotlib.animation.FuncAnimation
+
+
+.. py:function:: plot_defense_effectiveness(defense_history: Dict[str, List[int]], fitness_history: List[float], title: str = 'Defense Mechanism Effectiveness', figsize: Tuple[int, int] = (12, 8), save_path: Optional[str] = None)
+
+   Plot the effectiveness of each defense mechanism in relation to fitness improvement.
+
+   :param defense_history: Dictionary with keys as defense mechanisms and values as lists of activation counts.
+   :type defense_history: dict
+   :param fitness_history: List of best fitness values at each iteration.
+   :type fitness_history: list
+   :param title: Title of the plot (default: "Defense Mechanism Effectiveness").
+   :type title: str, optional
+   :param figsize: Figure size as (width, height) in inches (default: (12, 8)).
+   :type figsize: tuple, optional
+   :param save_path: Path to save the figure. If None, the figure is not saved (default: None).
+   :type save_path: str, optional
+
+   :returns: The created figure.
+   :rtype: matplotlib.figure.Figure
+
+
+.. py:function:: visualize_quill_directions(positions: numpy.ndarray, velocities: numpy.ndarray, bounds: Tuple[numpy.ndarray, numpy.ndarray], title: str = 'Porcupine Quill Directions', figsize: Tuple[int, int] = (10, 8), save_path: Optional[str] = None)
+
+   Visualize porcupines with quills pointing in the direction of their movement.
+
+   :param positions: Positions of the porcupines, shape (pop_size, 2).
+   :type positions: ndarray
+   :param velocities: Velocities of the porcupines, shape (pop_size, 2).
+   :type velocities: ndarray
+   :param bounds: A tuple (lb, ub) containing the lower and upper bounds.
+   :type bounds: tuple
+   :param title: Title of the plot (default: "Porcupine Quill Directions").
+   :type title: str, optional
+   :param figsize: Figure size as (width, height) in inches (default: (10, 8)).
+   :type figsize: tuple, optional
+   :param save_path: Path to save the figure. If None, the figure is not saved (default: None).
+   :type save_path: str, optional
+
+   :returns: The created figure.
+   :rtype: matplotlib.figure.Figure
+
+

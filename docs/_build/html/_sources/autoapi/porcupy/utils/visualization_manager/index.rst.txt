@@ -1,0 +1,353 @@
+porcupy.utils.visualization_manager
+===================================
+
+.. py:module:: porcupy.utils.visualization_manager
+
+.. autoapi-nested-parse::
+
+   Visualization manager for the Crested Porcupine Optimizer (CPO).
+
+   This module provides a unified interface for all visualization tools in the Porcupy library.
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   porcupy.utils.visualization_manager.CPOVisualizer
+
+
+Module Contents
+---------------
+
+.. py:class:: CPOVisualizer(objective_func: Optional[Callable] = None, bounds: Optional[Tuple[numpy.ndarray, numpy.ndarray]] = None)
+
+   Unified interface for all CPO visualization tools.
+
+   This class provides access to all visualization capabilities for the
+   Crested Porcupine Optimizer algorithm.
+
+
+   .. py:attribute:: objective_func
+      :value: None
+
+
+
+   .. py:attribute:: bounds
+      :value: None
+
+
+
+   .. py:attribute:: position_history
+      :value: []
+
+
+
+   .. py:attribute:: best_position_history
+      :value: []
+
+
+
+   .. py:attribute:: fitness_history
+      :value: []
+
+
+
+   .. py:attribute:: pop_size_history
+      :value: []
+
+
+
+   .. py:attribute:: defense_history
+
+
+   .. py:attribute:: defense_types_history
+      :value: []
+
+
+
+   .. py:attribute:: diversity_history
+      :value: []
+
+
+
+   .. py:method:: record_iteration(positions: numpy.ndarray, best_position: numpy.ndarray, fitness: numpy.ndarray, pop_size: int, defense_types: Optional[List[str]] = None)
+
+      Record data from a single iteration for visualization.
+
+      :param positions: Positions of all porcupines in the current iteration.
+      :type positions: numpy.ndarray
+      :param best_position: Best position found so far.
+      :type best_position: numpy.ndarray
+      :param fitness: Fitness values of all porcupines in the current iteration.
+      :type fitness: numpy.ndarray
+      :param pop_size: Current population size.
+      :type pop_size: int
+      :param defense_types: Types of defense mechanisms used by each porcupine in the current iteration.
+      :type defense_types: list of str, optional
+
+
+
+   .. py:method:: create_dashboard(update_interval: float = 0.5, figsize: Tuple[int, int] = (15, 10)) -> porcupy.utils.interactive_visualization.OptimizationDashboard
+
+      Create an interactive dashboard for monitoring optimization.
+
+      :param update_interval: Time interval between dashboard updates in seconds (default: 0.5).
+      :type update_interval: float, optional
+      :param figsize: Figure size as (width, height) in inches (default: (15, 10)).
+      :type figsize: tuple, optional
+
+      :returns: The created dashboard.
+      :rtype: OptimizationDashboard
+
+
+
+   .. py:method:: visualize_defense_mechanisms(title: str = 'Defense Mechanism Activation', figsize: Tuple[int, int] = (12, 6), save_path: Optional[str] = None)
+
+      Visualize the activation of different defense mechanisms over iterations.
+
+      :param title: Title of the plot (default: "Defense Mechanism Activation").
+      :type title: str, optional
+      :param figsize: Figure size as (width, height) in inches (default: (12, 6)).
+      :type figsize: tuple, optional
+      :param save_path: Path to save the figure. If None, the figure is not saved (default: None).
+      :type save_path: str, optional
+
+      :returns: The created figure.
+      :rtype: matplotlib.figure.Figure
+
+
+
+   .. py:method:: visualize_population_cycles(cycles: int, max_iter: int, title: str = 'Population Size Cycles', figsize: Tuple[int, int] = (12, 6), save_path: Optional[str] = None)
+
+      Visualize the population size changes over cycles.
+
+      :param cycles: Number of cycles used in the optimization.
+      :type cycles: int
+      :param max_iter: Maximum number of iterations.
+      :type max_iter: int
+      :param title: Title of the plot (default: "Population Size Cycles").
+      :type title: str, optional
+      :param figsize: Figure size as (width, height) in inches (default: (12, 6)).
+      :type figsize: tuple, optional
+      :param save_path: Path to save the figure. If None, the figure is not saved (default: None).
+      :type save_path: str, optional
+
+      :returns: The created figure.
+      :rtype: matplotlib.figure.Figure
+
+
+
+   .. py:method:: visualize_diversity_history(title: str = 'Population Diversity History', figsize: Tuple[int, int] = (10, 6), save_path: Optional[str] = None)
+
+      Visualize the diversity history of the population.
+
+      :param title: Title of the plot (default: "Population Diversity History").
+      :type title: str, optional
+      :param figsize: Figure size as (width, height) in inches (default: (10, 6)).
+      :type figsize: tuple, optional
+      :param save_path: Path to save the figure. If None, the figure is not saved (default: None).
+      :type save_path: str, optional
+
+      :returns: The created figure.
+      :rtype: matplotlib.figure.Figure
+
+
+
+   .. py:method:: visualize_porcupines_2d(iteration: int = -1, title: str = 'Porcupine Positions', figsize: Tuple[int, int] = (10, 8), cmap: str = 'viridis', contour_levels: int = 20, quill_length: float = 0.5, save_path: Optional[str] = None)
+
+      Visualize porcupines in 2D search space at a specific iteration.
+
+      :param iteration: Iteration to visualize. Default is -1 (last iteration).
+      :type iteration: int, optional
+      :param title: Title of the plot (default: "Porcupine Positions").
+      :type title: str, optional
+      :param figsize: Figure size as (width, height) in inches (default: (10, 8)).
+      :type figsize: tuple, optional
+      :param cmap: Colormap for the contour plot (default: 'viridis').
+      :type cmap: str, optional
+      :param contour_levels: Number of contour levels (default: 20).
+      :type contour_levels: int, optional
+      :param quill_length: Length of the directional quills (default: 0.5).
+      :type quill_length: float, optional
+      :param save_path: Path to save the figure. If None, the figure is not saved (default: None).
+      :type save_path: str, optional
+
+      :returns: The created figure.
+      :rtype: matplotlib.figure.Figure
+
+
+
+   .. py:method:: animate_optimization(interval: int = 200, figsize: Tuple[int, int] = (10, 8), cmap: str = 'viridis', contour_levels: int = 20, quill_length: float = 0.5, save_path: Optional[str] = None, dpi: int = 100)
+
+      Create an animation of the optimization process in 2D.
+
+      :param interval: Interval between frames in milliseconds (default: 200).
+      :type interval: int, optional
+      :param figsize: Figure size as (width, height) in inches (default: (10, 8)).
+      :type figsize: tuple, optional
+      :param cmap: Colormap for the contour plot (default: 'viridis').
+      :type cmap: str, optional
+      :param contour_levels: Number of contour levels (default: 20).
+      :type contour_levels: int, optional
+      :param quill_length: Length of the directional quills (default: 0.5).
+      :type quill_length: float, optional
+      :param save_path: Path to save the animation. If None, the animation is not saved (default: None).
+      :type save_path: str, optional
+      :param dpi: DPI for the saved animation (default: 100).
+      :type dpi: int, optional
+
+      :returns: The created animation.
+      :rtype: matplotlib.animation.FuncAnimation
+
+
+
+   .. py:method:: create_animation(positions_history: List[numpy.ndarray], best_position_history: List[numpy.ndarray], title: str = 'CPO Optimization Process', save_path: Optional[str] = None, fps: int = 5, defense_types_history: Optional[List[List[str]]] = None, figsize: Tuple[int, int] = (12, 10), dpi: int = 100, show_exploration_exploitation: bool = True)
+
+      Create an enhanced animation of the optimization process with defense mechanisms.
+
+      :param positions_history: List of position arrays for each iteration.
+      :type positions_history: List[np.ndarray]
+      :param best_position_history: List of best positions for each iteration.
+      :type best_position_history: List[np.ndarray]
+      :param title: Title of the animation (default: "CPO Optimization Process").
+      :type title: str, optional
+      :param save_path: Path to save the animation. If None, the animation is not saved (default: None).
+      :type save_path: str, optional
+      :param fps: Frames per second for the animation (default: 5).
+      :type fps: int, optional
+      :param defense_types_history: List of defense types used by each porcupine at each iteration.
+      :type defense_types_history: List[List[str]], optional
+      :param figsize: Figure size as (width, height) in inches (default: (12, 10)).
+      :type figsize: tuple, optional
+      :param dpi: DPI for the saved animation (default: 100).
+      :type dpi: int, optional
+      :param show_exploration_exploitation: Whether to show exploration-exploitation balance subplot (default: True).
+      :type show_exploration_exploitation: bool, optional
+
+      :returns: The created animation.
+      :rtype: matplotlib.animation.FuncAnimation
+
+
+
+   .. py:method:: visualize_defense_territories(iteration: int = -1, title: str = 'Defense Territories', figsize: Tuple[int, int] = (10, 8), save_path: Optional[str] = None)
+
+      Visualize the defense territories of porcupines.
+
+      :param iteration: Iteration to visualize. Default is -1 (last iteration).
+      :type iteration: int, optional
+      :param title: Title of the plot (default: "Defense Territories").
+      :type title: str, optional
+      :param figsize: Figure size as (width, height) in inches (default: (10, 8)).
+      :type figsize: tuple, optional
+      :param save_path: Path to save the figure. If None, the figure is not saved (default: None).
+      :type save_path: str, optional
+
+      :returns: The created figure.
+      :rtype: matplotlib.figure.Figure
+
+
+
+   .. py:method:: visualize_exploration_exploitation(sample_iterations: Optional[List[int]] = None, figsize: Tuple[int, int] = (15, 10), save_path: Optional[str] = None)
+
+      Visualize the balance between exploration and exploitation.
+
+      :param sample_iterations: List of iteration indices to visualize. If None, evenly spaced iterations are selected.
+      :type sample_iterations: list, optional
+      :param figsize: Figure size as (width, height) in inches (default: (15, 10)).
+      :type figsize: tuple, optional
+      :param save_path: Path to save the figure. If None, the figure is not saved (default: None).
+      :type save_path: str, optional
+
+      :returns: The created figure.
+      :rtype: matplotlib.figure.Figure
+
+
+
+   .. py:method:: visualize_diversity_vs_convergence(cycles: int, max_iter: int, title: str = 'Diversity vs Convergence', figsize: Tuple[int, int] = (12, 6), save_path: Optional[str] = None)
+
+      Visualize the relationship between population diversity and convergence.
+
+      :param cycles: Number of cycles used in the optimization.
+      :type cycles: int
+      :param max_iter: Maximum number of iterations.
+      :type max_iter: int
+      :param title: Title of the plot (default: "Diversity vs Convergence").
+      :type title: str, optional
+      :param figsize: Figure size as (width, height) in inches (default: (12, 6)).
+      :type figsize: tuple, optional
+      :param save_path: Path to save the figure. If None, the figure is not saved (default: None).
+      :type save_path: str, optional
+
+      :returns: The created figure.
+      :rtype: matplotlib.figure.Figure
+
+
+
+   .. py:method:: visualize_defense_effectiveness(title: str = 'Defense Mechanism Effectiveness', figsize: Tuple[int, int] = (12, 8), save_path: Optional[str] = None)
+
+      Visualize the effectiveness of each defense mechanism.
+
+      :param title: Title of the plot (default: "Defense Mechanism Effectiveness").
+      :type title: str, optional
+      :param figsize: Figure size as (width, height) in inches (default: (12, 8)).
+      :type figsize: tuple, optional
+      :param save_path: Path to save the figure. If None, the figure is not saved (default: None).
+      :type save_path: str, optional
+
+      :returns: The created figure.
+      :rtype: matplotlib.figure.Figure
+
+
+
+   .. py:method:: compare_reduction_strategies(max_iter: int, pop_size: int, cycles: int, strategies: List[str] = ['linear', 'cosine', 'exponential'], figsize: Tuple[int, int] = (12, 6), save_path: Optional[str] = None)
+
+      Compare different population reduction strategies.
+
+      :param max_iter: Maximum number of iterations.
+      :type max_iter: int
+      :param pop_size: Initial population size.
+      :type pop_size: int
+      :param cycles: Number of cycles.
+      :type cycles: int
+      :param strategies: List of reduction strategies to compare (default: ['linear', 'cosine', 'exponential']).
+      :type strategies: list, optional
+      :param figsize: Figure size as (width, height) in inches (default: (12, 6)).
+      :type figsize: tuple, optional
+      :param save_path: Path to save the figure. If None, the figure is not saved (default: None).
+      :type save_path: str, optional
+
+      :returns: The created figure.
+      :rtype: matplotlib.figure.Figure
+
+
+
+   .. py:method:: record_from_optimizer(optimizer)
+
+      Record data from a CPO optimizer instance.
+
+      :param optimizer: The CPO optimizer instance to record data from.
+      :type optimizer: CPO
+
+
+
+   .. py:method:: create_parameter_tuning_dashboard(parameter_name: str, parameter_range: List[float], result_metric: str = 'Best Cost', figsize: Tuple[int, int] = (12, 8)) -> porcupy.utils.interactive_visualization.ParameterTuningDashboard
+
+      Create a dashboard for parameter tuning and sensitivity analysis.
+
+      :param parameter_name: Name of the parameter being tuned.
+      :type parameter_name: str
+      :param parameter_range: List of parameter values to test.
+      :type parameter_range: list
+      :param result_metric: Name of the result metric (default: "Best Cost").
+      :type result_metric: str, optional
+      :param figsize: Figure size as (width, height) in inches (default: (12, 8)).
+      :type figsize: tuple, optional
+
+      :returns: The created dashboard.
+      :rtype: ParameterTuningDashboard
+
+
+

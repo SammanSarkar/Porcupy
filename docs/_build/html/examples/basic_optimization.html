@@ -1,0 +1,640 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Basic Optimization Examples &mdash; Porcupy 0.2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+
+  
+      <script src="../_static/jquery.js"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+      <script src="../_static/doctools.js"></script>
+      <script src="../_static/sphinx_highlight.js"></script>
+      <script src="../_static/clipboard.min.js"></script>
+      <script src="../_static/copybutton.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Advanced Optimization Examples" href="advanced_optimization.html" />
+    <link rel="prev" title="Configuration Guide" href="../getting_started/configuration.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Porcupy
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/quickstart.html">Quick Start Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started/quickstart.html#your-first-optimization">Your First Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started/quickstart.html#understanding-the-output">Understanding the Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started/quickstart.html#visualizing-the-results">Visualizing the Results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started/quickstart.html#using-gpu-acceleration">Using GPU Acceleration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started/quickstart.html#next-steps">Next Steps</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/installation.html">Installation Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started/installation.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started/installation.html#installing-porcupy">Installing Porcupy</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../getting_started/installation.html#basic-installation-cpu-only">Basic Installation (CPU only)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting_started/installation.html#installation-with-gpu-support">Installation with GPU Support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting_started/installation.html#development-installation">Development Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started/installation.html#verifying-installation">Verifying Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started/installation.html#troubleshooting">Troubleshooting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../getting_started/installation.html#common-issues">Common Issues</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/configuration.html">Configuration Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started/configuration.html#basic-configuration">Basic Configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../getting_started/configuration.html#algorithm-parameters">Algorithm Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting_started/configuration.html#defense-mechanism-parameters">Defense Mechanism Parameters</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started/configuration.html#advanced-configuration">Advanced Configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../getting_started/configuration.html#parallel-processing">Parallel Processing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting_started/configuration.html#custom-stopping-criteria">Custom Stopping Criteria</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started/configuration.html#gpu-configuration">GPU Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started/configuration.html#environment-variables">Environment Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started/configuration.html#performance-tuning">Performance Tuning</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../getting_started/configuration.html#for-cpu-optimization">For CPU Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting_started/configuration.html#for-gpu-optimization">For GPU Optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started/configuration.html#configuration-examples">Configuration Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../getting_started/configuration.html#constrained-optimization">Constrained Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting_started/configuration.html#custom-initial-population">Custom Initial Population</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Basic Optimization Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#table-of-contents">Table of Contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#minimizing-a-simple-function">Minimizing a Simple Function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#optimizing-with-constraints">Optimizing with Constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#using-different-benchmark-functions">Using Different Benchmark Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#visualizing-the-optimization-process">Visualizing the Optimization Process</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#saving-and-loading-results">Saving and Loading Results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#real-world-example-hyperparameter-tuning">Real-world Example: Hyperparameter Tuning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tips-for-better-performance">Tips for Better Performance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#next-steps">Next Steps</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="advanced_optimization.html">Advanced Optimization Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="advanced_optimization.html#table-of-contents">Table of Contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="advanced_optimization.html#multi-objective-optimization">Multi-Objective Optimization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="advanced_optimization.html#weighted-sum-approach">Weighted Sum Approach</a></li>
+<li class="toctree-l3"><a class="reference internal" href="advanced_optimization.html#constraint-based-multi-objective">Constraint-Based Multi-Objective</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="advanced_optimization.html#dynamic-optimization">Dynamic Optimization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="advanced_optimization.html#time-varying-objective">Time-Varying Objective</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="advanced_optimization.html#hybrid-optimization">Hybrid Optimization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="advanced_optimization.html#cpo-with-local-search">CPO with Local Search</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="advanced_optimization.html#surrogate-assisted-optimization">Surrogate-Assisted Optimization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="advanced_optimization.html#using-gaussian-process-surrogate">Using Gaussian Process Surrogate</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="advanced_optimization.html#distributed-optimization">Distributed Optimization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="advanced_optimization.html#parallel-evaluation-with-dask">Parallel Evaluation with Dask</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="advanced_optimization.html#custom-optimization-loop">Custom Optimization Loop</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="advanced_optimization.html#manual-iteration-control">Manual Iteration Control</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="advanced_optimization.html#advanced-constraint-handling">Advanced Constraint Handling</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="advanced_optimization.html#adaptive-constraint-handling">Adaptive Constraint Handling</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="advanced_optimization.html#performance-tips-for-advanced-usage">Performance Tips for Advanced Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="real_world_applications.html">Real-World Applications</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="real_world_applications.html#table-of-contents">Table of Contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="real_world_applications.html#hyperparameter-tuning-for-machine-learning">Hyperparameter Tuning for Machine Learning</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="real_world_applications.html#tuning-a-random-forest-classifier">Tuning a Random Forest Classifier</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="real_world_applications.html#neural-network-architecture-search">Neural Network Architecture Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="real_world_applications.html#portfolio-optimization">Portfolio Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="real_world_applications.html#engineering-design-optimization">Engineering Design Optimization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="real_world_applications.html#truss-structure-optimization">Truss Structure Optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="real_world_applications.html#supply-chain-optimization">Supply Chain Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="real_world_applications.html#energy-system-optimization">Energy System Optimization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="real_world_applications.html#microgrid-design-and-operation">Microgrid Design and Operation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="real_world_applications.html#tips-for-real-world-applications">Tips for Real-World Applications</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference/api_reference.html">Porcupy API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../api_reference/api_reference.html#core-classes">Core Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api_reference/api_reference.html#optimizer">Optimizer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api_reference/api_reference.html#cpo">CPO</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api_reference/api_reference.html#backend-components">Backend Components</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api_reference/api_reference.html#porcupinepopulation">PorcupinePopulation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api_reference/api_reference.html#defensemechanisms">DefenseMechanisms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api_reference/api_reference.html#populationmanager">PopulationManager</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api_reference/api_reference.html#population-management">Population Management</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api_reference/api_reference.html#populationcycle">PopulationCycle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api_reference/api_reference.html#selectionstrategies">SelectionStrategies</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api_reference/api_reference.html#visualization">Visualization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api_reference/api_reference.html#functions">Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api_reference/api_reference.html#benchmark-functions">Benchmark Functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api_reference/api_reference.html#unimodal-functions">Unimodal Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api_reference/api_reference.html#multimodal-functions">Multimodal Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api_reference/api_reference.html#utility-functions">Utility Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api_reference/api_reference.html#legacy-api">Legacy API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api_reference/api_reference.html#id1">cpo</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api_reference/api_reference.html#utility-modules">Utility Modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api_reference/api_reference.html#helpers-module-porcupy-utils-helpers">Helpers Module (<code class="docutils literal notranslate"><span class="pre">porcupy.utils.helpers</span></code>)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api_reference/api_reference.html#initialize-population-pop-size-dim-lb-ub"><code class="docutils literal notranslate"><span class="pre">initialize_population(pop_size,</span> <span class="pre">dim,</span> <span class="pre">lb,</span> <span class="pre">ub)</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api_reference/api_reference.html#clip-to-bounds-positions-lb-ub"><code class="docutils literal notranslate"><span class="pre">clip_to_bounds(positions,</span> <span class="pre">lb,</span> <span class="pre">ub)</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api_reference/api_reference.html#plotting-module-porcupy-utils-plotting">Plotting Module (<code class="docutils literal notranslate"><span class="pre">porcupy.utils.plotting</span></code>)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api_reference/api_reference.html#plot-convergence-cost-history-title-convergence-curve-save-path-none"><code class="docutils literal notranslate"><span class="pre">plot_convergence(cost_history,</span> <span class="pre">title='Convergence</span> <span class="pre">Curve',</span> <span class="pre">save_path=None)</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api_reference/api_reference.html#visualization-module-porcupy-utils-visualization">Visualization Module (<code class="docutils literal notranslate"><span class="pre">porcupy.utils.visualization</span></code>)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api_reference/api_reference.html#plot-2d-search-space-func-bounds-resolution-100-positions-none-best-pos-none-save-path-none"><code class="docutils literal notranslate"><span class="pre">plot_2d_search_space(func,</span> <span class="pre">bounds,</span> <span class="pre">resolution=100,</span> <span class="pre">positions=None,</span> <span class="pre">best_pos=None,</span> <span class="pre">save_path=None)</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api_reference/api_reference.html#animate-optimization-2d-position-history-func-bounds-best-pos-history-none-interval-100-contour-levels-20-save-path-none-dpi-100"><code class="docutils literal notranslate"><span class="pre">animate_optimization_2d(position_history,</span> <span class="pre">func,</span> <span class="pre">bounds,</span> <span class="pre">best_pos_history=None,</span> <span class="pre">interval=100,</span> <span class="pre">contour_levels=20,</span> <span class="pre">save_path=None,</span> <span class="pre">dpi=100)</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api_reference/api_reference.html#interactive-visualization-module-porcupy-utils-interactive-visualization">Interactive Visualization Module (<code class="docutils literal notranslate"><span class="pre">porcupy.utils.interactive_visualization</span></code>)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api_reference/api_reference.html#optimizationdashboard"><code class="docutils literal notranslate"><span class="pre">OptimizationDashboard</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api_reference/api_reference.html#parametertuningdashboard"><code class="docutils literal notranslate"><span class="pre">ParameterTuningDashboard</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api_reference/api_reference.html#benchmark-functions-module-porcupy-functions">Benchmark Functions Module (<code class="docutils literal notranslate"><span class="pre">porcupy.functions</span></code>)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api_reference/api_reference.html#id2">Unimodal Functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api_reference/api_reference.html#id3">Multimodal Functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api_reference/api_reference.html#id4">Utility Functions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../autoapi/index.html">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../autoapi/porcupy/index.html">porcupy</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../autoapi/porcupy/index.html#submodules">Submodules</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/porcupy/base/index.html">porcupy.base</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/porcupy/cpo/index.html">porcupy.cpo</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/porcupy/cpo_class/index.html">porcupy.cpo_class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/porcupy/functions/index.html">porcupy.functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/porcupy/gpu_cpo/index.html">porcupy.gpu_cpo</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/porcupy/porcupines/index.html">porcupy.porcupines</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/porcupy/utils/index.html">porcupy.utils</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../autoapi/porcupy/index.html#attributes">Attributes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../autoapi/porcupy/index.html#classes">Classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../autoapi/porcupy/index.html#functions">Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../autoapi/porcupy/index.html#package-contents">Package Contents</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/porcupy/index.html#porcupy.cpo"><code class="docutils literal notranslate"><span class="pre">cpo()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/porcupy/index.html#porcupy.CPO"><code class="docutils literal notranslate"><span class="pre">CPO</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/porcupy/index.html#porcupy.Optimizer"><code class="docutils literal notranslate"><span class="pre">Optimizer</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/porcupy/index.html#porcupy.PorcupinePopulation"><code class="docutils literal notranslate"><span class="pre">PorcupinePopulation</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/porcupy/index.html#porcupy.DefenseMechanisms"><code class="docutils literal notranslate"><span class="pre">DefenseMechanisms</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/porcupy/index.html#porcupy.PopulationManager"><code class="docutils literal notranslate"><span class="pre">PopulationManager</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/porcupy/index.html#porcupy.PopulationCycle"><code class="docutils literal notranslate"><span class="pre">PopulationCycle</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/porcupy/index.html#porcupy.SelectionStrategies"><code class="docutils literal notranslate"><span class="pre">SelectionStrategies</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/porcupy/index.html#porcupy.sphere"><code class="docutils literal notranslate"><span class="pre">sphere()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/porcupy/index.html#porcupy.rosenbrock"><code class="docutils literal notranslate"><span class="pre">rosenbrock()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/porcupy/index.html#porcupy.schwefel_2_22"><code class="docutils literal notranslate"><span class="pre">schwefel_2_22()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/porcupy/index.html#porcupy.schwefel_1_2"><code class="docutils literal notranslate"><span class="pre">schwefel_1_2()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/porcupy/index.html#porcupy.schwefel_2_21"><code class="docutils literal notranslate"><span class="pre">schwefel_2_21()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/porcupy/index.html#porcupy.step"><code class="docutils literal notranslate"><span class="pre">step()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/porcupy/index.html#porcupy.quartic"><code class="docutils literal notranslate"><span class="pre">quartic()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/porcupy/index.html#porcupy.rastrigin"><code class="docutils literal notranslate"><span class="pre">rastrigin()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/porcupy/index.html#porcupy.ackley"><code class="docutils literal notranslate"><span class="pre">ackley()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/porcupy/index.html#porcupy.griewank"><code class="docutils literal notranslate"><span class="pre">griewank()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/porcupy/index.html#porcupy.schwefel"><code class="docutils literal notranslate"><span class="pre">schwefel()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/porcupy/index.html#porcupy.michalewicz"><code class="docutils literal notranslate"><span class="pre">michalewicz()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/porcupy/index.html#porcupy.get_function_by_name"><code class="docutils literal notranslate"><span class="pre">get_function_by_name()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/porcupy/index.html#porcupy.get_function_bounds"><code class="docutils literal notranslate"><span class="pre">get_function_bounds()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/porcupy/index.html#porcupy.get_function_optimum"><code class="docutils literal notranslate"><span class="pre">get_function_optimum()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/porcupy/index.html#porcupy.GPU_AVAILABLE"><code class="docutils literal notranslate"><span class="pre">GPU_AVAILABLE</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Porcupy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Basic Optimization Examples</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/examples/basic_optimization.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="basic-optimization-examples">
+<h1>Basic Optimization Examples<a class="headerlink" href="#basic-optimization-examples" title="Permalink to this heading"></a></h1>
+<p>This guide provides practical examples of using Porcupy for various optimization problems.</p>
+<section id="table-of-contents">
+<h2>Table of Contents<a class="headerlink" href="#table-of-contents" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="#minimizing-a-simple-function"><span class="xref myst">Minimizing a Simple Function</span></a></p></li>
+<li><p><a class="reference internal" href="#optimizing-with-constraints"><span class="xref myst">Optimizing with Constraints</span></a></p></li>
+<li><p><a class="reference internal" href="#using-different-benchmark-functions"><span class="xref myst">Using Different Benchmark Functions</span></a></p></li>
+<li><p><a class="reference internal" href="#visualizing-the-optimization-process"><span class="xref myst">Visualizing the Optimization Process</span></a></p></li>
+<li><p><a class="reference internal" href="#saving-and-loading-results"><span class="xref myst">Saving and Loading Results</span></a></p></li>
+</ul>
+</section>
+<section id="minimizing-a-simple-function">
+<h2>Minimizing a Simple Function<a class="headerlink" href="#minimizing-a-simple-function" title="Permalink to this heading"></a></h2>
+<p>Let’s start with a basic example of minimizing the Sphere function:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">porcupy</span><span class="w"> </span><span class="kn">import</span> <span class="n">CPO</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">porcupy.functions</span><span class="w"> </span><span class="kn">import</span> <span class="n">sphere</span>
+
+<span class="c1"># Initialize the optimizer</span>
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">CPO</span><span class="p">(</span>
+    <span class="n">dimensions</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>  <span class="c1"># 5-dimensional problem</span>
+    <span class="n">bounds</span><span class="o">=</span><span class="p">([</span><span class="o">-</span><span class="mf">5.12</span><span class="p">]</span> <span class="o">*</span> <span class="mi">5</span><span class="p">,</span> <span class="p">[</span><span class="mf">5.12</span><span class="p">]</span> <span class="o">*</span> <span class="mi">5</span><span class="p">),</span>  <span class="c1"># Search space bounds</span>
+    <span class="n">pop_size</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>    <span class="c1"># Number of candidate solutions</span>
+    <span class="n">max_iter</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>   <span class="c1"># Maximum number of iterations</span>
+    <span class="n">ftol</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">,</span>      <span class="c1"># Function tolerance for early stopping</span>
+    <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span>    <span class="c1"># Print progress</span>
+<span class="p">)</span>
+
+<span class="c1"># Run optimization</span>
+<span class="n">best_solution</span><span class="p">,</span> <span class="n">best_fitness</span><span class="p">,</span> <span class="n">history</span> <span class="o">=</span> <span class="n">optimizer</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">sphere</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Best solution: </span><span class="si">{</span><span class="n">best_solution</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Best fitness: </span><span class="si">{</span><span class="n">best_fitness</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="optimizing-with-constraints">
+<h2>Optimizing with Constraints<a class="headerlink" href="#optimizing-with-constraints" title="Permalink to this heading"></a></h2>
+<p>Porcupy supports both equality and inequality constraints. Here’s an example with an inequality constraint:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">constrained_optimization</span><span class="p">():</span>
+    <span class="c1"># Define the objective function (Rosenbrock function)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">rosenbrock</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="mf">100.0</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mf">2.0</span><span class="p">)</span><span class="o">**</span><span class="mf">2.0</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">x</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">**</span><span class="mf">2.0</span><span class="p">)</span>
+    
+    <span class="c1"># Define constraint: sum of variables must be &gt;= 1</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">constraint</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>  <span class="c1"># sum(x) &gt;= 1</span>
+    
+    <span class="c1"># Initialize optimizer</span>
+    <span class="n">optimizer</span> <span class="o">=</span> <span class="n">CPO</span><span class="p">(</span>
+        <span class="n">dimensions</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+        <span class="n">bounds</span><span class="o">=</span><span class="p">([</span><span class="o">-</span><span class="mi">5</span><span class="p">]</span> <span class="o">*</span> <span class="mi">5</span><span class="p">,</span> <span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">*</span> <span class="mi">5</span><span class="p">),</span>
+        <span class="n">pop_size</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+        <span class="n">max_iter</span><span class="o">=</span><span class="mi">200</span>
+    <span class="p">)</span>
+    
+    <span class="c1"># Run optimization with constraint</span>
+    <span class="n">best_solution</span><span class="p">,</span> <span class="n">best_fitness</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">optimizer</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span>
+        <span class="n">objective_func</span><span class="o">=</span><span class="n">rosenbrock</span><span class="p">,</span>
+        <span class="n">f_ieqcons</span><span class="o">=</span><span class="n">constraint</span>  <span class="c1"># Inequality constraint (must be &gt;= 0)</span>
+    <span class="p">)</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Best solution: </span><span class="si">{</span><span class="n">best_solution</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Best fitness: </span><span class="si">{</span><span class="n">best_fitness</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Constraint value: </span><span class="si">{</span><span class="n">constraint</span><span class="p">(</span><span class="n">best_solution</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>  <span class="c1"># Should be &gt;= 1</span>
+    
+    <span class="k">return</span> <span class="n">best_solution</span><span class="p">,</span> <span class="n">best_fitness</span>
+</pre></div>
+</div>
+</section>
+<section id="using-different-benchmark-functions">
+<h2>Using Different Benchmark Functions<a class="headerlink" href="#using-different-benchmark-functions" title="Permalink to this heading"></a></h2>
+<p>Porcupy provides several benchmark functions in the <code class="docutils literal notranslate"><span class="pre">porcupy.functions</span></code> module:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">porcupy.functions</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">ackley</span><span class="p">,</span>        <span class="c1"># Ackley function</span>
+    <span class="n">rastrigin</span><span class="p">,</span>     <span class="c1"># Rastrigin function</span>
+    <span class="n">rosenbrock</span><span class="p">,</span>    <span class="c1"># Rosenbrock function</span>
+    <span class="n">schwefel</span><span class="p">,</span>      <span class="c1"># Schwefel function</span>
+    <span class="n">griewank</span><span class="p">,</span>      <span class="c1"># Griewank function</span>
+    <span class="n">michalewicz</span><span class="p">,</span>   <span class="c1"># Michalewicz function</span>
+    <span class="n">sphere</span><span class="p">,</span>        <span class="c1"># Sphere function</span>
+    <span class="n">schwefel_1_2</span><span class="p">,</span>  <span class="c1"># Schwefel 1.2 function</span>
+    <span class="n">schwefel_2_21</span><span class="p">,</span> <span class="c1"># Schwefel 2.21 function</span>
+    <span class="n">schwefel_2_22</span><span class="p">,</span> <span class="c1"># Schwefel 2.22 function</span>
+    <span class="n">step</span><span class="p">,</span>          <span class="c1"># Step function</span>
+    <span class="n">quartic</span>        <span class="c1"># Quartic function with noise</span>
+<span class="p">)</span>
+
+<span class="c1"># Example using the Ackley function</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">optimize_ackley</span><span class="p">():</span>
+    <span class="n">optimizer</span> <span class="o">=</span> <span class="n">CPO</span><span class="p">(</span>
+        <span class="n">dimensions</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+        <span class="n">bounds</span><span class="o">=</span><span class="p">([</span><span class="o">-</span><span class="mf">32.768</span><span class="p">]</span> <span class="o">*</span> <span class="mi">10</span><span class="p">,</span> <span class="p">[</span><span class="mf">32.768</span><span class="p">]</span> <span class="o">*</span> <span class="mi">10</span><span class="p">),</span>  <span class="c1"># Standard bounds for Ackley</span>
+        <span class="n">pop_size</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+        <span class="n">max_iter</span><span class="o">=</span><span class="mi">200</span>
+    <span class="p">)</span>
+    
+    <span class="n">best_solution</span><span class="p">,</span> <span class="n">best_fitness</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">optimizer</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">ackley</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Best solution: </span><span class="si">{</span><span class="n">best_solution</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Best fitness: </span><span class="si">{</span><span class="n">best_fitness</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">best_solution</span><span class="p">,</span> <span class="n">best_fitness</span>
+</pre></div>
+</div>
+</section>
+<section id="visualizing-the-optimization-process">
+<h2>Visualizing the Optimization Process<a class="headerlink" href="#visualizing-the-optimization-process" title="Permalink to this heading"></a></h2>
+<p>Visualization is crucial for understanding how the optimization progresses:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">visualize_optimization</span><span class="p">():</span>
+    <span class="c1"># Run optimization with history tracking</span>
+    <span class="n">optimizer</span> <span class="o">=</span> <span class="n">CPO</span><span class="p">(</span><span class="n">dimensions</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">bounds</span><span class="o">=</span><span class="p">([</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">]),</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+    <span class="n">best_solution</span><span class="p">,</span> <span class="n">best_fitness</span><span class="p">,</span> <span class="n">history</span> <span class="o">=</span> <span class="n">optimizer</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">ackley</span><span class="p">)</span>
+    
+    <span class="c1"># Create a figure with two subplots</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+    
+    <span class="c1"># Plot convergence</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">history</span><span class="p">[</span><span class="s1">&#39;best_fitness&#39;</span><span class="p">])</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Convergence&#39;</span><span class="p">)</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Iteration&#39;</span><span class="p">)</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Best Fitness&#39;</span><span class="p">)</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    
+    <span class="c1"># Plot search space exploration</span>
+    <span class="n">all_positions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span><span class="n">history</span><span class="p">[</span><span class="s1">&#39;population&#39;</span><span class="p">])</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">hist2d</span><span class="p">(</span><span class="n">all_positions</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">all_positions</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> 
+               <span class="n">bins</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="nb">range</span><span class="o">=</span><span class="p">[[</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">]],</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">)</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Search Space Exploration&#39;</span><span class="p">)</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;X&#39;</span><span class="p">)</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Y&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">ax2</span><span class="o">.</span><span class="n">collections</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Visit Count&#39;</span><span class="p">)</span>
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    
+    <span class="k">return</span> <span class="n">best_solution</span><span class="p">,</span> <span class="n">best_fitness</span>
+</pre></div>
+</div>
+</section>
+<section id="saving-and-loading-results">
+<h2>Saving and Loading Results<a class="headerlink" href="#saving-and-loading-results" title="Permalink to this heading"></a></h2>
+<p>For long-running optimizations, it’s important to save your results:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pickle</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">save_optimization_results</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;optimization_results.pkl&#39;</span><span class="p">):</span>
+    <span class="c1"># Run optimization</span>
+    <span class="n">optimizer</span> <span class="o">=</span> <span class="n">CPO</span><span class="p">(</span><span class="n">dimensions</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">bounds</span><span class="o">=</span><span class="p">([</span><span class="o">-</span><span class="mi">5</span><span class="p">]</span><span class="o">*</span><span class="mi">5</span><span class="p">,</span> <span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="o">*</span><span class="mi">5</span><span class="p">),</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">best_solution</span><span class="p">,</span> <span class="n">best_fitness</span><span class="p">,</span> <span class="n">history</span> <span class="o">=</span> <span class="n">optimizer</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">rosenbrock</span><span class="p">)</span>
+    
+    <span class="c1"># Save results using pickle</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;best_solution&#39;</span><span class="p">:</span> <span class="n">best_solution</span><span class="p">,</span>
+        <span class="s1">&#39;best_fitness&#39;</span><span class="p">:</span> <span class="n">best_fitness</span><span class="p">,</span>
+        <span class="s1">&#39;history&#39;</span><span class="p">:</span> <span class="n">history</span><span class="p">,</span>
+        <span class="s1">&#39;parameters&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;dimensions&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+            <span class="s1">&#39;bounds&#39;</span><span class="p">:</span> <span class="p">([</span><span class="o">-</span><span class="mi">5</span><span class="p">]</span><span class="o">*</span><span class="mi">5</span><span class="p">,</span> <span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="o">*</span><span class="mi">5</span><span class="p">),</span>
+            <span class="s1">&#39;max_iter&#39;</span><span class="p">:</span> <span class="mi">100</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+    
+    <span class="c1"># Also save a human-readable version</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;optimization_results.json&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="c1"># Convert numpy arrays to lists for JSON serialization</span>
+        <span class="n">json_results</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;best_solution&#39;</span><span class="p">:</span> <span class="n">best_solution</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span>
+            <span class="s1">&#39;best_fitness&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">best_fitness</span><span class="p">),</span>
+            <span class="s1">&#39;parameters&#39;</span><span class="p">:</span> <span class="n">results</span><span class="p">[</span><span class="s1">&#39;parameters&#39;</span><span class="p">]</span>
+        <span class="p">}</span>
+        <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">json_results</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">results</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">load_optimization_results</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;optimization_results.pkl&#39;</span><span class="p">):</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">results</span>
+</pre></div>
+</div>
+</section>
+<section id="real-world-example-hyperparameter-tuning">
+<h2>Real-world Example: Hyperparameter Tuning<a class="headerlink" href="#real-world-example-hyperparameter-tuning" title="Permalink to this heading"></a></h2>
+<p>Here’s an example of using Porcupy for hyperparameter tuning of a machine learning model:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_classification</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.ensemble</span><span class="w"> </span><span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">cross_val_score</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">accuracy_score</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">tune_hyperparameters</span><span class="p">():</span>
+    <span class="c1"># Generate synthetic dataset</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_classification</span><span class="p">(</span>
+        <span class="n">n_samples</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> 
+        <span class="n">n_features</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> 
+        <span class="n">n_informative</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> 
+        <span class="n">n_classes</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+        <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+    <span class="p">)</span>
+    
+    <span class="c1"># Define the objective function</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">objective</span><span class="p">(</span><span class="n">params</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Objective function to minimize (1 - accuracy)&quot;&quot;&quot;</span>
+        <span class="n">n_estimators</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">max_depth</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="k">if</span> <span class="n">params</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="n">min_samples_split</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+        <span class="n">min_samples_leaf</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+        
+        <span class="n">model</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span>
+            <span class="n">n_estimators</span><span class="o">=</span><span class="n">n_estimators</span><span class="p">,</span>
+            <span class="n">max_depth</span><span class="o">=</span><span class="n">max_depth</span><span class="p">,</span>
+            <span class="n">min_samples_split</span><span class="o">=</span><span class="n">min_samples_split</span><span class="p">,</span>
+            <span class="n">min_samples_leaf</span><span class="o">=</span><span class="n">min_samples_leaf</span><span class="p">,</span>
+            <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span>
+            <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span>
+        <span class="p">)</span>
+        
+        <span class="c1"># Use cross-validation for robust evaluation</span>
+        <span class="n">scores</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s1">&#39;accuracy&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span>  <span class="c1"># Minimize (1 - accuracy)</span>
+    
+    <span class="c1"># Define parameter bounds</span>
+    <span class="n">bounds</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">200</span><span class="p">),</span>      <span class="c1"># n_estimators</span>
+        <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span>        <span class="c1"># max_depth</span>
+        <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span>        <span class="c1"># min_samples_split</span>
+        <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>         <span class="c1"># min_samples_leaf</span>
+    <span class="p">]</span>
+    
+    <span class="c1"># Initialize and run optimizer</span>
+    <span class="n">optimizer</span> <span class="o">=</span> <span class="n">CPO</span><span class="p">(</span>
+        <span class="n">dimensions</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">bounds</span><span class="p">),</span>
+        <span class="n">bounds</span><span class="o">=</span><span class="n">bounds</span><span class="p">,</span>
+        <span class="n">pop_size</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>
+        <span class="n">max_iter</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
+        <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+    
+    <span class="n">best_params</span><span class="p">,</span> <span class="n">best_score</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">optimizer</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">objective</span><span class="p">)</span>
+    
+    <span class="c1"># Print results</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Best parameters:&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;n_estimators: </span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">best_params</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;max_depth: </span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">best_params</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">best_params</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="kc">None</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;min_samples_split: </span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">best_params</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;min_samples_leaf: </span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">best_params</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Best accuracy: </span><span class="si">{</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">best_score</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">best_params</span><span class="p">,</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">best_score</span>
+</pre></div>
+</div>
+</section>
+<section id="tips-for-better-performance">
+<h2>Tips for Better Performance<a class="headerlink" href="#tips-for-better-performance" title="Permalink to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p><strong>Population Size</strong>:</p>
+<ul class="simple">
+<li><p>Start with 20-50 for simple problems</p></li>
+<li><p>Use 100-500 for complex or high-dimensional problems</p></li>
+<li><p>Larger populations explore more but are computationally expensive</p></li>
+</ul>
+</li>
+<li><p><strong>Iterations</strong>:</p>
+<ul class="simple">
+<li><p>Start with 100 iterations and increase if needed</p></li>
+<li><p>Monitor convergence to determine the optimal number</p></li>
+</ul>
+</li>
+<li><p><strong>Bounds</strong>:</p>
+<ul class="simple">
+<li><p>Set realistic bounds based on your problem domain</p></li>
+<li><p>Tighter bounds can significantly improve convergence</p></li>
+</ul>
+</li>
+<li><p><strong>Parallelization</strong>:</p>
+<ul class="simple">
+<li><p>Use the <code class="docutils literal notranslate"><span class="pre">pool</span></code> parameter for parallel evaluation</p></li>
+<li><p>Particularly useful for expensive objective functions</p></li>
+</ul>
+</li>
+<li><p><strong>GPU Acceleration</strong>:</p>
+<ul class="simple">
+<li><p>For high-dimensional problems, consider using <code class="docutils literal notranslate"><span class="pre">GPUCPO</span></code></p></li>
+<li><p>Ensure your problem size justifies the GPU overhead</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="next-steps">
+<h2>Next Steps<a class="headerlink" href="#next-steps" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p>Learn about <a class="reference internal" href="advanced_optimization.html"><span class="std std-doc">advanced optimization techniques</span></a></p></li>
+<li><p>Explore <a class="reference internal" href="#gpu_acceleration.md"><span class="xref myst">GPU acceleration</span></a> for large-scale problems</p></li>
+<li><p>Check out <a class="reference internal" href="real_world_applications.html"><span class="std std-doc">real-world applications</span></a> of Porcupy</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../getting_started/configuration.html" class="btn btn-neutral float-left" title="Configuration Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="advanced_optimization.html" class="btn btn-neutral float-right" title="Advanced Optimization Examples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Samman Sarkar.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

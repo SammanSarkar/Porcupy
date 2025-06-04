@@ -1,0 +1,58 @@
+porcupy.utils.helpers
+=====================
+
+.. py:module:: porcupy.utils.helpers
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   porcupy.utils.helpers.initialize_population
+   porcupy.utils.helpers.clip_to_bounds
+
+
+Module Contents
+---------------
+
+.. py:function:: initialize_population(pop_size, dim, lb, ub)
+
+   Initialize population within the specified bounds.
+
+   Generates random positions for the porcupine population using uniform distribution.
+   Supports both single bounds (same for all dimensions) and per-dimension bounds.
+
+   :param pop_size: Number of search agents (porcupines).
+   :type pop_size: int
+   :param dim: Number of dimensions in the search space.
+   :type dim: int
+   :param lb: Lower bounds for each dimension (or single value for all dimensions).
+   :type lb: ndarray
+   :param ub: Upper bounds for each dimension (or single value for all dimensions).
+   :type ub: ndarray
+
+   :returns: **positions** -- Initialized population of shape (pop_size, dim).
+   :rtype: ndarray
+
+   :raises ValueError: If `pop_size` or `dim` is non-positive, or `lb` and `ub` are incompatible.
+
+
+.. py:function:: clip_to_bounds(positions, lb, ub)
+
+   Clip positions to stay within the specified bounds.
+
+   Ensures all positions remain within the search space by clipping values that
+   exceed the lower or upper bounds.
+
+   :param positions: Population positions of shape (pop_size, dim).
+   :type positions: ndarray
+   :param lb: Lower bounds for each dimension (or single value).
+   :type lb: ndarray
+   :param ub: Upper bounds for each dimension (or single value).
+   :type ub: ndarray
+
+   :returns: **clipped_positions** -- Positions clipped to stay within bounds.
+   :rtype: ndarray
+
+

@@ -1,0 +1,123 @@
+porcupy.base
+============
+
+.. py:module:: porcupy.base
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   porcupy.base.Optimizer
+
+
+Module Contents
+---------------
+
+.. py:class:: Optimizer(dimensions: int, bounds: Tuple[numpy.ndarray, numpy.ndarray], pop_size: int = 30, max_iter: int = 100, options: Optional[Dict[str, Any]] = None, ftol: float = -np.inf, ftol_iter: int = 1)
+
+   Bases: :py:obj:`abc.ABC`
+
+
+   Base class for optimization algorithms in Porcupy.
+
+   This abstract base class provides the foundation for all optimization
+   algorithms in the Porcupy library. It defines the common interface and
+   functionality that all optimizers should implement.
+
+   :param dimensions: Number of dimensions in the search space.
+   :type dimensions: int
+   :param bounds: A tuple of size 2 where the first entry is the minimum bound while
+                  the second entry is the maximum bound. Each array must be of shape
+                  (dimensions,).
+   :type bounds: tuple of numpy.ndarray
+   :param pop_size: Number of search agents in the population (default: 30).
+   :type pop_size: int, optional
+   :param max_iter: Maximum number of iterations (default: 100).
+   :type max_iter: int, optional
+   :param options: A dictionary containing algorithm-specific parameters.
+   :type options: dict, optional
+   :param ftol: Relative error in objective_func(best_pos) acceptable for
+                convergence (default: -np.inf).
+   :type ftol: float, optional
+   :param ftol_iter: Number of iterations over which the relative error in
+                     objective_func(best_pos) is acceptable for convergence (default: 1).
+   :type ftol_iter: int, optional
+
+
+   .. py:attribute:: dimensions
+
+
+   .. py:attribute:: bounds
+
+
+   .. py:attribute:: pop_size
+      :value: 30
+
+
+
+   .. py:attribute:: max_iter
+      :value: 100
+
+
+
+   .. py:attribute:: options
+      :value: None
+
+
+
+   .. py:attribute:: ftol
+
+
+   .. py:attribute:: ftol_iter
+      :value: 1
+
+
+
+   .. py:class:: ToHistory
+
+      Bases: :py:obj:`tuple`
+
+
+      .. py:attribute:: best_cost
+
+
+      .. py:attribute:: mean_cost
+
+
+      .. py:attribute:: position
+
+
+      .. py:attribute:: population_size
+
+
+
+   .. py:method:: reset()
+
+      Reset the attributes of the optimizer
+
+      This method reinitializes all history tracking attributes and
+      prepares the optimizer for a new optimization run.
+
+
+
+   .. py:method:: optimize(objective_func: Callable, n_processes: Optional[int] = None, verbose: bool = False, **kwargs) -> Tuple[numpy.ndarray, float, numpy.ndarray]
+      :abstractmethod:
+
+
+      Optimize the objective function
+
+      :param objective_func: The objective function to be minimized
+      :type objective_func: callable
+      :param n_processes: Number of processes to use for parallel evaluation
+      :type n_processes: int, optional
+      :param verbose: Whether to display progress information
+      :type verbose: bool, optional
+      :param \*\*kwargs: Additional arguments to pass to the objective function
+
+      :returns: A tuple containing (best_position, best_cost, cost_history)
+      :rtype: tuple
+
+
+

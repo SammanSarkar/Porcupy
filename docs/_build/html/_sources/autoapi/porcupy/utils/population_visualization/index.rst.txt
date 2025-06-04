@@ -1,0 +1,156 @@
+porcupy.utils.population_visualization
+======================================
+
+.. py:module:: porcupy.utils.population_visualization
+
+.. autoapi-nested-parse::
+
+   Population dynamics visualization module for the Crested Porcupine Optimizer (CPO).
+
+   This module provides specialized visualization tools for the population dynamics
+   of the CPO algorithm, including cyclic population reduction and diversity visualization.
+
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   porcupy.utils.population_visualization.plot_population_reduction_strategies
+   porcupy.utils.population_visualization.plot_population_diversity_map
+   porcupy.utils.population_visualization.animate_population_cycle
+   porcupy.utils.population_visualization.plot_exploration_exploitation_balance
+   porcupy.utils.population_visualization.plot_diversity_vs_convergence
+   porcupy.utils.population_visualization.calculate_diversity
+
+
+Module Contents
+---------------
+
+.. py:function:: plot_population_reduction_strategies(max_iter: int, pop_size: int, cycles: int, strategies: List[str] = ['linear', 'cosine', 'exponential'], figsize: Tuple[int, int] = (12, 6), save_path: Optional[str] = None)
+
+   Plot and compare different population reduction strategies.
+
+   :param max_iter: Maximum number of iterations.
+   :type max_iter: int
+   :param pop_size: Initial population size.
+   :type pop_size: int
+   :param cycles: Number of cycles.
+   :type cycles: int
+   :param strategies: List of reduction strategies to compare (default: ['linear', 'cosine', 'exponential']).
+   :type strategies: list, optional
+   :param figsize: Figure size as (width, height) in inches (default: (12, 6)).
+   :type figsize: tuple, optional
+   :param save_path: Path to save the figure. If None, the figure is not saved (default: None).
+   :type save_path: str, optional
+
+   :returns: The created figure.
+   :rtype: matplotlib.figure.Figure
+
+
+.. py:function:: plot_population_diversity_map(positions_history: List[numpy.ndarray], bounds: Tuple[numpy.ndarray, numpy.ndarray], sample_iterations: List[int], figsize: Tuple[int, int] = (15, 10), cmap: str = 'viridis', save_path: Optional[str] = None)
+
+   Create a grid of plots showing population diversity at different iterations.
+
+   :param positions_history: List of position arrays at each iteration, each with shape (pop_size, 2).
+   :type positions_history: list
+   :param bounds: A tuple (lb, ub) containing the lower and upper bounds.
+   :type bounds: tuple
+   :param sample_iterations: List of iteration indices to visualize.
+   :type sample_iterations: list
+   :param figsize: Figure size as (width, height) in inches (default: (15, 10)).
+   :type figsize: tuple, optional
+   :param cmap: Colormap for the density plot (default: 'viridis').
+   :type cmap: str, optional
+   :param save_path: Path to save the figure. If None, the figure is not saved (default: None).
+   :type save_path: str, optional
+
+   :returns: The created figure.
+   :rtype: matplotlib.figure.Figure
+
+
+.. py:function:: animate_population_cycle(positions_history: List[numpy.ndarray], pop_size_history: List[int], bounds: Tuple[numpy.ndarray, numpy.ndarray], max_iter: int, cycles: int, interval: int = 200, figsize: Tuple[int, int] = (12, 8), cmap: str = 'viridis', save_path: Optional[str] = None, dpi: int = 100)
+
+   Create an animation showing population dynamics throughout cycles.
+
+   :param positions_history: List of position arrays at each iteration, each with shape (pop_size, 2).
+   :type positions_history: list
+   :param pop_size_history: List of population sizes at each iteration.
+   :type pop_size_history: list
+   :param bounds: A tuple (lb, ub) containing the lower and upper bounds.
+   :type bounds: tuple
+   :param max_iter: Maximum number of iterations.
+   :type max_iter: int
+   :param cycles: Number of cycles.
+   :type cycles: int
+   :param interval: Interval between frames in milliseconds (default: 200).
+   :type interval: int, optional
+   :param figsize: Figure size as (width, height) in inches (default: (12, 8)).
+   :type figsize: tuple, optional
+   :param cmap: Colormap for the density plot (default: 'viridis').
+   :type cmap: str, optional
+   :param save_path: Path to save the animation. If None, the animation is not saved (default: None).
+   :type save_path: str, optional
+   :param dpi: DPI for the saved animation (default: 100).
+   :type dpi: int, optional
+
+   :returns: The created animation.
+   :rtype: matplotlib.animation.FuncAnimation
+
+
+.. py:function:: plot_exploration_exploitation_balance(positions_history: List[numpy.ndarray], best_positions_history: List[numpy.ndarray], bounds: Tuple[numpy.ndarray, numpy.ndarray], sample_iterations: List[int], figsize: Tuple[int, int] = (15, 10), save_path: Optional[str] = None)
+
+   Plot the balance between exploration and exploitation at different iterations.
+
+   :param positions_history: List of position arrays at each iteration, each with shape (pop_size, 2).
+   :type positions_history: list
+   :param best_positions_history: List of best position arrays at each iteration, each with shape (2,).
+   :type best_positions_history: list
+   :param bounds: A tuple (lb, ub) containing the lower and upper bounds.
+   :type bounds: tuple
+   :param sample_iterations: List of iteration indices to visualize.
+   :type sample_iterations: list
+   :param figsize: Figure size as (width, height) in inches (default: (15, 10)).
+   :type figsize: tuple, optional
+   :param save_path: Path to save the figure. If None, the figure is not saved (default: None).
+   :type save_path: str, optional
+
+   :returns: The created figure.
+   :rtype: matplotlib.figure.Figure
+
+
+.. py:function:: plot_diversity_vs_convergence(diversity_history: List[float], fitness_history: List[float], cycles: int, max_iter: int, title: str = 'Diversity vs Convergence', figsize: Tuple[int, int] = (12, 6), save_path: Optional[str] = None)
+
+   Plot the relationship between population diversity and convergence.
+
+   :param diversity_history: List of diversity measures at each iteration.
+   :type diversity_history: list
+   :param fitness_history: List of best fitness values at each iteration.
+   :type fitness_history: list
+   :param cycles: Number of cycles.
+   :type cycles: int
+   :param max_iter: Maximum number of iterations.
+   :type max_iter: int
+   :param title: Title of the plot (default: "Diversity vs Convergence").
+   :type title: str, optional
+   :param figsize: Figure size as (width, height) in inches (default: (12, 6)).
+   :type figsize: tuple, optional
+   :param save_path: Path to save the figure. If None, the figure is not saved (default: None).
+   :type save_path: str, optional
+
+   :returns: The created figure.
+   :rtype: matplotlib.figure.Figure
+
+
+.. py:function:: calculate_diversity(positions: numpy.ndarray) -> float
+
+   Calculate the diversity of a population based on average pairwise distance.
+
+   :param positions: Positions of the porcupines, shape (pop_size, dimensions).
+   :type positions: ndarray
+
+   :returns: Diversity measure.
+   :rtype: float
+
+

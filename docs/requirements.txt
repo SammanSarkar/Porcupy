@@ -19,3 +19,5 @@ sphinxcontrib-katex>=0.8.6
 
 # For type hints support
 typing-extensions>=4.0.0
+
+sphinx-autoapi

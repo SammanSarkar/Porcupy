@@ -1,0 +1,218 @@
+porcupy.utils.enhanced_visualization
+====================================
+
+.. py:module:: porcupy.utils.enhanced_visualization
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   porcupy.utils.enhanced_visualization.plot_defense_mechanisms
+   porcupy.utils.enhanced_visualization.plot_population_cycles
+   porcupy.utils.enhanced_visualization.plot_diversity_history
+   porcupy.utils.enhanced_visualization.plot_2d_porcupines
+   porcupy.utils.enhanced_visualization.animate_porcupines_2d
+   porcupy.utils.enhanced_visualization.plot_3d_porcupines
+   porcupy.utils.enhanced_visualization.calculate_diversity
+   porcupy.utils.enhanced_visualization.track_defense_mechanisms
+
+
+Module Contents
+---------------
+
+.. py:function:: plot_defense_mechanisms(defense_history: Union[Dict[str, List[int]], List[List[str]]], title: str = 'Defense Mechanism Activation', figsize: Tuple[int, int] = (12, 6), colors: Dict[str, str] = None, save_path: Optional[str] = None)
+
+   Plot the activation frequency of each defense mechanism over iterations.
+
+   :param defense_history: Either:
+                           1. Dictionary with keys 'sight', 'sound', 'odor', 'physical' and values
+                              as lists of counts for each iteration, or
+                           2. List of lists containing defense mechanisms used by each porcupine at each iteration.
+   :type defense_history: dict or list
+   :param title: Title of the plot (default: "Defense Mechanism Activation").
+   :type title: str, optional
+   :param figsize: Figure size as (width, height) in inches (default: (12, 6)).
+   :type figsize: tuple, optional
+   :param colors: Dictionary mapping defense mechanisms to colors.
+                  Default: {'sight': 'blue', 'sound': 'green', 'odor': 'orange', 'physical': 'red'}.
+   :type colors: dict, optional
+   :param save_path: Path to save the figure. If None, the figure is not saved (default: None).
+   :type save_path: str, optional
+
+   :returns: The created figure.
+   :rtype: matplotlib.figure.Figure
+
+
+.. py:function:: plot_population_cycles(pop_size_history: List[int], cycles: int, max_iter: int, title: str = 'Population Size Cycles', figsize: Tuple[int, int] = (12, 6), save_path: Optional[str] = None)
+
+   Plot the population size history with cycle boundaries highlighted.
+
+   :param pop_size_history: List of population sizes at each iteration.
+   :type pop_size_history: list
+   :param cycles: Number of cycles used in the optimization.
+   :type cycles: int
+   :param max_iter: Maximum number of iterations.
+   :type max_iter: int
+   :param title: Title of the plot (default: "Population Size Cycles").
+   :type title: str, optional
+   :param figsize: Figure size as (width, height) in inches (default: (12, 6)).
+   :type figsize: tuple, optional
+   :param save_path: Path to save the figure. If None, the figure is not saved (default: None).
+   :type save_path: str, optional
+
+   :returns: The created figure.
+   :rtype: matplotlib.figure.Figure
+
+
+.. py:function:: plot_diversity_history(diversity_history: List[float], title: str = 'Population Diversity History', figsize: Tuple[int, int] = (10, 6), save_path: Optional[str] = None)
+
+   Plot the diversity history of the population.
+
+   :param diversity_history: List of diversity measures at each iteration.
+   :type diversity_history: list
+   :param title: Title of the plot (default: "Population Diversity History").
+   :type title: str, optional
+   :param figsize: Figure size as (width, height) in inches (default: (10, 6)).
+   :type figsize: tuple, optional
+   :param save_path: Path to save the figure. If None, the figure is not saved (default: None).
+   :type save_path: str, optional
+
+   :returns: The created figure.
+   :rtype: matplotlib.figure.Figure
+
+
+.. py:function:: plot_2d_porcupines(positions: numpy.ndarray, func: Callable, bounds: Tuple[numpy.ndarray, numpy.ndarray], best_pos: Optional[numpy.ndarray] = None, defense_types: Optional[List[str]] = None, title: str = 'Porcupine Positions', figsize: Tuple[int, int] = (10, 8), cmap: str = 'viridis', contour_levels: int = 20, quill_length: float = 0.5, save_path: Optional[str] = None)
+
+   Plot porcupines in 2D search space with quill-like directional indicators.
+
+   :param positions: Current positions of the porcupines, shape (pop_size, 2).
+   :type positions: ndarray
+   :param func: The objective function to visualize.
+   :type func: callable
+   :param bounds: A tuple (lb, ub) containing the lower and upper bounds.
+   :type bounds: tuple
+   :param best_pos: Global best position, shape (2,).
+   :type best_pos: ndarray, optional
+   :param defense_types: List of defense mechanisms used by each porcupine.
+                         Options: 'sight', 'sound', 'odor', 'physical'.
+   :type defense_types: list, optional
+   :param title: Title of the plot (default: "Porcupine Positions").
+   :type title: str, optional
+   :param figsize: Figure size as (width, height) in inches (default: (10, 8)).
+   :type figsize: tuple, optional
+   :param cmap: Colormap for the contour plot (default: 'viridis').
+   :type cmap: str, optional
+   :param contour_levels: Number of contour levels (default: 20).
+   :type contour_levels: int, optional
+   :param quill_length: Length of the directional quills (default: 0.5).
+   :type quill_length: float, optional
+   :param save_path: Path to save the figure. If None, the figure is not saved (default: None).
+   :type save_path: str, optional
+
+   :returns: The created figure.
+   :rtype: matplotlib.figure.Figure
+
+
+.. py:function:: animate_porcupines_2d(position_history: List[numpy.ndarray], func: Callable, bounds: Tuple[numpy.ndarray, numpy.ndarray], defense_history: Optional[List[List[str]]] = None, best_pos_history: Optional[List[numpy.ndarray]] = None, best_cost_history: Optional[List[float]] = None, interval: int = 200, figsize: Tuple[int, int] = (14, 10), cmap: str = 'viridis', contour_levels: int = 20, quill_length: float = 0.5, save_path: Optional[str] = None, dpi: int = 100, show_trail: bool = True, max_trail_length: int = 20, show_convergence: bool = True)
+
+   Create an enhanced animation of porcupines moving in 2D search space with additional visual feedback.
+
+   :param position_history: List of position arrays at each iteration, each with shape (pop_size, 2).
+   :type position_history: list
+   :param func: The objective function to visualize.
+   :type func: callable
+   :param bounds: A tuple (lb, ub) containing the lower and upper bounds.
+   :type bounds: tuple
+   :param defense_history: List of lists containing defense mechanisms used by each porcupine at each iteration.
+   :type defense_history: list, optional
+   :param best_pos_history: List of best positions at each iteration, each with shape (2,).
+   :type best_pos_history: list, optional
+   :param best_cost_history: List of best costs at each iteration.
+   :type best_cost_history: list, optional
+   :param interval: Interval between frames in milliseconds (default: 200).
+   :type interval: int, optional
+   :param figsize: Figure size as (width, height) in inches (default: (14, 10)).
+   :type figsize: tuple, optional
+   :param cmap: Colormap for the contour plot (default: 'viridis').
+   :type cmap: str, optional
+   :param contour_levels: Number of contour levels (default: 20).
+   :type contour_levels: int, optional
+   :param quill_length: Length of the directional quills (default: 0.5).
+   :type quill_length: float, optional
+   :param save_path: Path to save the animation. If None, the animation is not saved (default: None).
+   :type save_path: str, optional
+   :param dpi: DPI for the saved animation (default: 100).
+   :type dpi: int, optional
+   :param show_trail: Whether to show the trail of best positions (default: True).
+   :type show_trail: bool, optional
+   :param max_trail_length: Maximum number of positions to show in the trail (default: 20).
+   :type max_trail_length: int, optional
+   :param show_convergence: Whether to show the convergence plot (default: True).
+   :type show_convergence: bool, optional
+
+   :returns: The created animation.
+   :rtype: matplotlib.animation.FuncAnimation
+
+
+.. py:function:: plot_3d_porcupines(positions: numpy.ndarray, fitness: numpy.ndarray, func: Callable, bounds: Tuple[numpy.ndarray, numpy.ndarray], best_pos: Optional[numpy.ndarray] = None, defense_types: Optional[List[str]] = None, title: str = '3D Porcupine Positions', figsize: Tuple[int, int] = (12, 10), cmap: str = 'viridis', alpha: float = 0.7, save_path: Optional[str] = None)
+
+   Plot porcupines in 3D search space.
+
+   :param positions: Current positions of the porcupines, shape (pop_size, 2).
+   :type positions: ndarray
+   :param fitness: Fitness values of the porcupines, shape (pop_size,).
+   :type fitness: ndarray
+   :param func: The objective function to visualize.
+   :type func: callable
+   :param bounds: A tuple (lb, ub) containing the lower and upper bounds.
+   :type bounds: tuple
+   :param best_pos: Global best position, shape (2,).
+   :type best_pos: ndarray, optional
+   :param defense_types: List of defense mechanisms used by each porcupine.
+                         Options: 'sight', 'sound', 'odor', 'physical'.
+   :type defense_types: list, optional
+   :param title: Title of the plot (default: "3D Porcupine Positions").
+   :type title: str, optional
+   :param figsize: Figure size as (width, height) in inches (default: (12, 10)).
+   :type figsize: tuple, optional
+   :param cmap: Colormap for the surface plot (default: 'viridis').
+   :type cmap: str, optional
+   :param alpha: Transparency of the surface (default: 0.7).
+   :type alpha: float, optional
+   :param save_path: Path to save the figure. If None, the figure is not saved (default: None).
+   :type save_path: str, optional
+
+   :returns: The created figure.
+   :rtype: matplotlib.figure.Figure
+
+
+.. py:function:: calculate_diversity(positions: numpy.ndarray) -> float
+
+   Calculate the diversity of a population based on average pairwise distance.
+
+   :param positions: Positions of the porcupines, shape (pop_size, dimensions).
+   :type positions: ndarray
+
+   :returns: Diversity measure.
+   :rtype: float
+
+
+.. py:function:: track_defense_mechanisms(positions: numpy.ndarray, prev_positions: numpy.ndarray, best_pos: numpy.ndarray, tf: float = 0.8) -> List[str]
+
+   Determine which defense mechanism was likely used for each porcupine.
+
+   :param positions: Current positions of the porcupines, shape (pop_size, dimensions).
+   :type positions: ndarray
+   :param prev_positions: Previous positions of the porcupines, shape (pop_size, dimensions).
+   :type prev_positions: ndarray
+   :param best_pos: Global best position, shape (dimensions,).
+   :type best_pos: ndarray
+   :param tf: Tradeoff threshold between third and fourth mechanisms (default: 0.8).
+   :type tf: float, optional
+
+   :returns: List of defense mechanisms used by each porcupine.
+   :rtype: list
+
+

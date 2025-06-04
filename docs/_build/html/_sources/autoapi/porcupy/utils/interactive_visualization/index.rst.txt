@@ -1,0 +1,236 @@
+porcupy.utils.interactive_visualization
+=======================================
+
+.. py:module:: porcupy.utils.interactive_visualization
+
+.. autoapi-nested-parse::
+
+   Interactive visualization module for the Crested Porcupine Optimizer (CPO).
+
+   This module provides interactive visualization tools and dashboard components
+   for monitoring and analyzing the CPO algorithm's performance in real-time.
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   porcupy.utils.interactive_visualization.OptimizationDashboard
+   porcupy.utils.interactive_visualization.ParameterTuningDashboard
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   porcupy.utils.interactive_visualization.create_interactive_optimization_plot
+
+
+Module Contents
+---------------
+
+.. py:class:: OptimizationDashboard(objective_func: Callable, bounds: Tuple[numpy.ndarray, numpy.ndarray], dimensions: int = 2, update_interval: float = 0.5, figsize: Tuple[int, int] = (15, 10))
+
+   Interactive dashboard for monitoring CPO optimization in real-time.
+
+   This dashboard displays multiple visualizations simultaneously, including:
+   - Convergence history
+   - Population size history
+   - Diversity metrics
+   - Defense mechanism usage
+   - Current porcupine positions
+
+   The dashboard updates in real-time during optimization.
+
+
+   .. py:attribute:: objective_func
+
+
+   .. py:attribute:: bounds
+
+
+   .. py:attribute:: dimensions
+      :value: 2
+
+
+
+   .. py:attribute:: update_interval
+      :value: 0.5
+
+
+
+   .. py:attribute:: figsize
+      :value: (15, 10)
+
+
+
+   .. py:attribute:: iterations
+      :value: []
+
+
+
+   .. py:attribute:: best_costs
+      :value: []
+
+
+
+   .. py:attribute:: pop_sizes
+      :value: []
+
+
+
+   .. py:attribute:: diversity_history
+      :value: []
+
+
+
+   .. py:attribute:: defense_counts
+
+
+   .. py:attribute:: position_history
+      :value: []
+
+
+
+   .. py:attribute:: best_position_history
+      :value: []
+
+
+
+   .. py:attribute:: is_running
+      :value: False
+
+
+
+   .. py:attribute:: current_iteration
+      :value: 0
+
+
+
+   .. py:method:: update(iteration: int, best_cost: float, pop_size: int, positions: numpy.ndarray, best_position: numpy.ndarray, defense_types: List[str])
+
+      Update the dashboard with new optimization data.
+
+      :param iteration: Current iteration number.
+      :type iteration: int
+      :param best_cost: Current best cost value.
+      :type best_cost: float
+      :param pop_size: Current population size.
+      :type pop_size: int
+      :param positions: Current positions of the porcupines, shape (pop_size, dimensions).
+      :type positions: ndarray
+      :param best_position: Current global best position, shape (dimensions,).
+      :type best_position: ndarray
+      :param defense_types: List of defense mechanisms used by each porcupine.
+      :type defense_types: list
+
+
+
+   .. py:method:: start_monitoring()
+
+      Start the dashboard monitoring thread.
+
+
+
+   .. py:method:: stop_monitoring()
+
+      Stop the dashboard monitoring thread.
+
+
+
+   .. py:method:: save_dashboard(save_path: str, dpi: int = 300)
+
+      Save the current dashboard state as an image.
+
+      :param save_path: Path to save the dashboard image.
+      :type save_path: str
+      :param dpi: DPI for the saved image (default: 300).
+      :type dpi: int, optional
+
+
+
+   .. py:method:: close()
+
+      Close the dashboard and clean up resources.
+
+
+
+.. py:class:: ParameterTuningDashboard(parameter_name: str, parameter_range: List[float], result_metric: str = 'Best Cost', figsize: Tuple[int, int] = (12, 8))
+
+   Interactive dashboard for parameter tuning and sensitivity analysis.
+
+   This dashboard allows for real-time visualization of how different
+   parameter values affect the performance of the CPO algorithm.
+
+
+   .. py:attribute:: parameter_name
+
+
+   .. py:attribute:: parameter_range
+
+
+   .. py:attribute:: result_metric
+      :value: 'Best Cost'
+
+
+
+   .. py:attribute:: figsize
+      :value: (12, 8)
+
+
+
+   .. py:attribute:: results
+      :value: []
+
+
+
+   .. py:method:: update(parameter_value: float, result: float, convergence_history: Optional[List[float]] = None)
+
+      Update the dashboard with new parameter tuning results.
+
+      :param parameter_value: Value of the parameter being tested.
+      :type parameter_value: float
+      :param result: Result metric value (e.g., best cost).
+      :type result: float
+      :param convergence_history: Convergence history for this parameter value.
+      :type convergence_history: list, optional
+
+
+
+   .. py:method:: save_dashboard(save_path: str, dpi: int = 300)
+
+      Save the current dashboard state as an image.
+
+      :param save_path: Path to save the dashboard image.
+      :type save_path: str
+      :param dpi: DPI for the saved image (default: 300).
+      :type dpi: int, optional
+
+
+
+   .. py:method:: close()
+
+      Close the dashboard and clean up resources.
+
+
+
+.. py:function:: create_interactive_optimization_plot(objective_func: Callable, bounds: Tuple[numpy.ndarray, numpy.ndarray], initial_positions: numpy.ndarray, figsize: Tuple[int, int] = (10, 8))
+
+   Create an interactive plot for exploring the optimization landscape.
+
+   :param objective_func: The objective function to visualize.
+   :type objective_func: callable
+   :param bounds: A tuple (lb, ub) containing the lower and upper bounds.
+   :type bounds: tuple
+   :param initial_positions: Initial positions of the porcupines, shape (pop_size, 2).
+   :type initial_positions: ndarray
+   :param figsize: Figure size as (width, height) in inches (default: (10, 8)).
+   :type figsize: tuple, optional
+
+   :returns: A tuple containing (fig, ax, scatter) for further customization.
+   :rtype: tuple
+
+

@@ -1,0 +1,767 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Porcupy API Reference &mdash; Porcupy 0.2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+
+  
+      <script src="../_static/jquery.js"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+      <script src="../_static/doctools.js"></script>
+      <script src="../_static/sphinx_highlight.js"></script>
+      <script src="../_static/clipboard.min.js"></script>
+      <script src="../_static/copybutton.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="API Reference" href="../autoapi/index.html" />
+    <link rel="prev" title="Real-World Applications" href="../examples/real_world_applications.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Porcupy
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/quickstart.html">Quick Start Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started/quickstart.html#your-first-optimization">Your First Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started/quickstart.html#understanding-the-output">Understanding the Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started/quickstart.html#visualizing-the-results">Visualizing the Results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started/quickstart.html#using-gpu-acceleration">Using GPU Acceleration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started/quickstart.html#next-steps">Next Steps</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/installation.html">Installation Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started/installation.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started/installation.html#installing-porcupy">Installing Porcupy</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../getting_started/installation.html#basic-installation-cpu-only">Basic Installation (CPU only)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting_started/installation.html#installation-with-gpu-support">Installation with GPU Support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting_started/installation.html#development-installation">Development Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started/installation.html#verifying-installation">Verifying Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started/installation.html#troubleshooting">Troubleshooting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../getting_started/installation.html#common-issues">Common Issues</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/configuration.html">Configuration Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started/configuration.html#basic-configuration">Basic Configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../getting_started/configuration.html#algorithm-parameters">Algorithm Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting_started/configuration.html#defense-mechanism-parameters">Defense Mechanism Parameters</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started/configuration.html#advanced-configuration">Advanced Configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../getting_started/configuration.html#parallel-processing">Parallel Processing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting_started/configuration.html#custom-stopping-criteria">Custom Stopping Criteria</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started/configuration.html#gpu-configuration">GPU Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started/configuration.html#environment-variables">Environment Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started/configuration.html#performance-tuning">Performance Tuning</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../getting_started/configuration.html#for-cpu-optimization">For CPU Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting_started/configuration.html#for-gpu-optimization">For GPU Optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started/configuration.html#configuration-examples">Configuration Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../getting_started/configuration.html#constrained-optimization">Constrained Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting_started/configuration.html#custom-initial-population">Custom Initial Population</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../examples/basic_optimization.html">Basic Optimization Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../examples/basic_optimization.html#table-of-contents">Table of Contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/basic_optimization.html#minimizing-a-simple-function">Minimizing a Simple Function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/basic_optimization.html#optimizing-with-constraints">Optimizing with Constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/basic_optimization.html#using-different-benchmark-functions">Using Different Benchmark Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/basic_optimization.html#visualizing-the-optimization-process">Visualizing the Optimization Process</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/basic_optimization.html#saving-and-loading-results">Saving and Loading Results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/basic_optimization.html#real-world-example-hyperparameter-tuning">Real-world Example: Hyperparameter Tuning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/basic_optimization.html#tips-for-better-performance">Tips for Better Performance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/basic_optimization.html#next-steps">Next Steps</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/advanced_optimization.html">Advanced Optimization Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../examples/advanced_optimization.html#table-of-contents">Table of Contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/advanced_optimization.html#multi-objective-optimization">Multi-Objective Optimization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../examples/advanced_optimization.html#weighted-sum-approach">Weighted Sum Approach</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/advanced_optimization.html#constraint-based-multi-objective">Constraint-Based Multi-Objective</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/advanced_optimization.html#dynamic-optimization">Dynamic Optimization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../examples/advanced_optimization.html#time-varying-objective">Time-Varying Objective</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/advanced_optimization.html#hybrid-optimization">Hybrid Optimization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../examples/advanced_optimization.html#cpo-with-local-search">CPO with Local Search</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/advanced_optimization.html#surrogate-assisted-optimization">Surrogate-Assisted Optimization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../examples/advanced_optimization.html#using-gaussian-process-surrogate">Using Gaussian Process Surrogate</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/advanced_optimization.html#distributed-optimization">Distributed Optimization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../examples/advanced_optimization.html#parallel-evaluation-with-dask">Parallel Evaluation with Dask</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/advanced_optimization.html#custom-optimization-loop">Custom Optimization Loop</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../examples/advanced_optimization.html#manual-iteration-control">Manual Iteration Control</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/advanced_optimization.html#advanced-constraint-handling">Advanced Constraint Handling</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../examples/advanced_optimization.html#adaptive-constraint-handling">Adaptive Constraint Handling</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/advanced_optimization.html#performance-tips-for-advanced-usage">Performance Tips for Advanced Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/real_world_applications.html">Real-World Applications</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../examples/real_world_applications.html#table-of-contents">Table of Contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/real_world_applications.html#hyperparameter-tuning-for-machine-learning">Hyperparameter Tuning for Machine Learning</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../examples/real_world_applications.html#tuning-a-random-forest-classifier">Tuning a Random Forest Classifier</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/real_world_applications.html#neural-network-architecture-search">Neural Network Architecture Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/real_world_applications.html#portfolio-optimization">Portfolio Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/real_world_applications.html#engineering-design-optimization">Engineering Design Optimization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../examples/real_world_applications.html#truss-structure-optimization">Truss Structure Optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/real_world_applications.html#supply-chain-optimization">Supply Chain Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/real_world_applications.html#energy-system-optimization">Energy System Optimization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../examples/real_world_applications.html#microgrid-design-and-operation">Microgrid Design and Operation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/real_world_applications.html#tips-for-real-world-applications">Tips for Real-World Applications</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Porcupy API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#core-classes">Core Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#optimizer">Optimizer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cpo">CPO</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#backend-components">Backend Components</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#porcupinepopulation">PorcupinePopulation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#defensemechanisms">DefenseMechanisms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#populationmanager">PopulationManager</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#population-management">Population Management</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#populationcycle">PopulationCycle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#selectionstrategies">SelectionStrategies</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#visualization">Visualization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#functions">Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#benchmark-functions">Benchmark Functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#unimodal-functions">Unimodal Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#multimodal-functions">Multimodal Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#utility-functions">Utility Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#legacy-api">Legacy API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">cpo</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#utility-modules">Utility Modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#helpers-module-porcupy-utils-helpers">Helpers Module (<code class="docutils literal notranslate"><span class="pre">porcupy.utils.helpers</span></code>)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#initialize-population-pop-size-dim-lb-ub"><code class="docutils literal notranslate"><span class="pre">initialize_population(pop_size,</span> <span class="pre">dim,</span> <span class="pre">lb,</span> <span class="pre">ub)</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#clip-to-bounds-positions-lb-ub"><code class="docutils literal notranslate"><span class="pre">clip_to_bounds(positions,</span> <span class="pre">lb,</span> <span class="pre">ub)</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#plotting-module-porcupy-utils-plotting">Plotting Module (<code class="docutils literal notranslate"><span class="pre">porcupy.utils.plotting</span></code>)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#plot-convergence-cost-history-title-convergence-curve-save-path-none"><code class="docutils literal notranslate"><span class="pre">plot_convergence(cost_history,</span> <span class="pre">title='Convergence</span> <span class="pre">Curve',</span> <span class="pre">save_path=None)</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#visualization-module-porcupy-utils-visualization">Visualization Module (<code class="docutils literal notranslate"><span class="pre">porcupy.utils.visualization</span></code>)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#plot-2d-search-space-func-bounds-resolution-100-positions-none-best-pos-none-save-path-none"><code class="docutils literal notranslate"><span class="pre">plot_2d_search_space(func,</span> <span class="pre">bounds,</span> <span class="pre">resolution=100,</span> <span class="pre">positions=None,</span> <span class="pre">best_pos=None,</span> <span class="pre">save_path=None)</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#animate-optimization-2d-position-history-func-bounds-best-pos-history-none-interval-100-contour-levels-20-save-path-none-dpi-100"><code class="docutils literal notranslate"><span class="pre">animate_optimization_2d(position_history,</span> <span class="pre">func,</span> <span class="pre">bounds,</span> <span class="pre">best_pos_history=None,</span> <span class="pre">interval=100,</span> <span class="pre">contour_levels=20,</span> <span class="pre">save_path=None,</span> <span class="pre">dpi=100)</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#interactive-visualization-module-porcupy-utils-interactive-visualization">Interactive Visualization Module (<code class="docutils literal notranslate"><span class="pre">porcupy.utils.interactive_visualization</span></code>)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#optimizationdashboard"><code class="docutils literal notranslate"><span class="pre">OptimizationDashboard</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#parametertuningdashboard"><code class="docutils literal notranslate"><span class="pre">ParameterTuningDashboard</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#benchmark-functions-module-porcupy-functions">Benchmark Functions Module (<code class="docutils literal notranslate"><span class="pre">porcupy.functions</span></code>)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id2">Unimodal Functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">Multimodal Functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">Utility Functions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../autoapi/index.html">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../autoapi/porcupy/index.html">porcupy</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../autoapi/porcupy/index.html#submodules">Submodules</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/porcupy/base/index.html">porcupy.base</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/porcupy/cpo/index.html">porcupy.cpo</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/porcupy/cpo_class/index.html">porcupy.cpo_class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/porcupy/functions/index.html">porcupy.functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/porcupy/gpu_cpo/index.html">porcupy.gpu_cpo</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/porcupy/porcupines/index.html">porcupy.porcupines</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/porcupy/utils/index.html">porcupy.utils</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../autoapi/porcupy/index.html#attributes">Attributes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../autoapi/porcupy/index.html#classes">Classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../autoapi/porcupy/index.html#functions">Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../autoapi/porcupy/index.html#package-contents">Package Contents</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/porcupy/index.html#porcupy.cpo"><code class="docutils literal notranslate"><span class="pre">cpo()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/porcupy/index.html#porcupy.CPO"><code class="docutils literal notranslate"><span class="pre">CPO</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/porcupy/index.html#porcupy.Optimizer"><code class="docutils literal notranslate"><span class="pre">Optimizer</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/porcupy/index.html#porcupy.PorcupinePopulation"><code class="docutils literal notranslate"><span class="pre">PorcupinePopulation</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/porcupy/index.html#porcupy.DefenseMechanisms"><code class="docutils literal notranslate"><span class="pre">DefenseMechanisms</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/porcupy/index.html#porcupy.PopulationManager"><code class="docutils literal notranslate"><span class="pre">PopulationManager</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/porcupy/index.html#porcupy.PopulationCycle"><code class="docutils literal notranslate"><span class="pre">PopulationCycle</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/porcupy/index.html#porcupy.SelectionStrategies"><code class="docutils literal notranslate"><span class="pre">SelectionStrategies</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/porcupy/index.html#porcupy.sphere"><code class="docutils literal notranslate"><span class="pre">sphere()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/porcupy/index.html#porcupy.rosenbrock"><code class="docutils literal notranslate"><span class="pre">rosenbrock()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/porcupy/index.html#porcupy.schwefel_2_22"><code class="docutils literal notranslate"><span class="pre">schwefel_2_22()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/porcupy/index.html#porcupy.schwefel_1_2"><code class="docutils literal notranslate"><span class="pre">schwefel_1_2()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/porcupy/index.html#porcupy.schwefel_2_21"><code class="docutils literal notranslate"><span class="pre">schwefel_2_21()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/porcupy/index.html#porcupy.step"><code class="docutils literal notranslate"><span class="pre">step()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/porcupy/index.html#porcupy.quartic"><code class="docutils literal notranslate"><span class="pre">quartic()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/porcupy/index.html#porcupy.rastrigin"><code class="docutils literal notranslate"><span class="pre">rastrigin()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/porcupy/index.html#porcupy.ackley"><code class="docutils literal notranslate"><span class="pre">ackley()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/porcupy/index.html#porcupy.griewank"><code class="docutils literal notranslate"><span class="pre">griewank()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/porcupy/index.html#porcupy.schwefel"><code class="docutils literal notranslate"><span class="pre">schwefel()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/porcupy/index.html#porcupy.michalewicz"><code class="docutils literal notranslate"><span class="pre">michalewicz()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/porcupy/index.html#porcupy.get_function_by_name"><code class="docutils literal notranslate"><span class="pre">get_function_by_name()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/porcupy/index.html#porcupy.get_function_bounds"><code class="docutils literal notranslate"><span class="pre">get_function_bounds()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/porcupy/index.html#porcupy.get_function_optimum"><code class="docutils literal notranslate"><span class="pre">get_function_optimum()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/porcupy/index.html#porcupy.GPU_AVAILABLE"><code class="docutils literal notranslate"><span class="pre">GPU_AVAILABLE</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Porcupy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Porcupy API Reference</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api_reference/api_reference.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="porcupy-api-reference">
+<h1>Porcupy API Reference<a class="headerlink" href="#porcupy-api-reference" title="Permalink to this heading"></a></h1>
+<p>This document provides detailed information about the Porcupy library API. The library is thoroughly tested with comprehensive test coverage across all components.</p>
+<section id="core-classes">
+<h2>Core Classes<a class="headerlink" href="#core-classes" title="Permalink to this heading"></a></h2>
+<section id="optimizer">
+<h3>Optimizer<a class="headerlink" href="#optimizer" title="Permalink to this heading"></a></h3>
+<p>The base class for all optimization algorithms in Porcupy.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Optimizer</span><span class="p">(</span><span class="n">abc</span><span class="o">.</span><span class="n">ABC</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">dimensions</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">bounds</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span>
+        <span class="n">pop_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span>
+        <span class="n">max_iter</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+        <span class="n">options</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">ftol</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span>
+        <span class="n">ftol_iter</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Parameters:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">dimensions</span></code>: Number of dimensions in the search space.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bounds</span></code>: A tuple of size 2 where the first entry is the minimum bound while the second entry is the maximum bound. Each array must be of shape <code class="docutils literal notranslate"><span class="pre">(dimensions,)</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pop_size</span></code>: Number of search agents in the population (default: 30).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">max_iter</span></code>: Maximum number of iterations (default: 100).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">options</span></code>: A dictionary containing algorithm-specific parameters.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ftol</span></code>: Relative error in objective_func(best_pos) acceptable for convergence (default: -np.inf).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ftol_iter</span></code>: Number of iterations over which the relative error in objective_func(best_pos) is acceptable for convergence (default: 1).</p></li>
+</ul>
+<p><strong>Methods:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">optimize(objective_func,</span> <span class="pre">n_processes=None,</span> <span class="pre">verbose=False,</span> <span class="pre">**kwargs)</span></code>: Abstract method to optimize the objective function.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">reset()</span></code>: Reset the attributes of the optimizer.</p></li>
+</ul>
+</section>
+<section id="cpo">
+<h3>CPO<a class="headerlink" href="#cpo" title="Permalink to this heading"></a></h3>
+<p>The main implementation of the Crested Porcupine Optimizer algorithm.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">CPO</span><span class="p">(</span><span class="n">Optimizer</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">dimensions</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">bounds</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span>
+        <span class="n">pop_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span>
+        <span class="n">min_pop_size</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">max_iter</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+        <span class="n">cycles</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.2</span><span class="p">,</span>
+        <span class="n">tf</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.8</span><span class="p">,</span>
+        <span class="n">ftol</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span>
+        <span class="n">ftol_iter</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Parameters:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">dimensions</span></code>: Number of dimensions in the search space.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bounds</span></code>: A tuple of size 2 where the first entry is the minimum bound while the second entry is the maximum bound. Each array must be of shape <code class="docutils literal notranslate"><span class="pre">(dimensions,)</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pop_size</span></code>: Number of search agents (porcupines) in the initial population (default: 30).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">min_pop_size</span></code>: Minimum population size during reduction cycles (default: pop_size // 2).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">max_iter</span></code>: Maximum number of iterations (default: 100).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cycles</span></code>: Number of cycles for population reduction (default: 2).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">alpha</span></code>: Convergence rate for fourth defense mechanism (default: 0.2).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tf</span></code>: Tradeoff threshold between third and fourth mechanisms (default: 0.8).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ftol</span></code>: Relative error in objective_func(best_pos) acceptable for convergence (default: -np.inf).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ftol_iter</span></code>: Number of iterations over which the relative error in objective_func(best_pos) is acceptable for convergence (default: 1).</p></li>
+</ul>
+<p><strong>Methods:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">optimize(objective_func,</span> <span class="pre">f_ieqcons=None,</span> <span class="pre">n_processes=None,</span> <span class="pre">verbose=False,</span> <span class="pre">**kwargs)</span></code>: Optimize the objective function using Crested Porcupine Optimizer.</p></li>
+</ul>
+</section>
+</section>
+<section id="backend-components">
+<h2>Backend Components<a class="headerlink" href="#backend-components" title="Permalink to this heading"></a></h2>
+<section id="porcupinepopulation">
+<h3>PorcupinePopulation<a class="headerlink" href="#porcupinepopulation" title="Permalink to this heading"></a></h3>
+<p>Class representing a population of porcupines for the Crested Porcupine Optimizer.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">PorcupinePopulation</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">pop_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">dimensions</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">bounds</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span>
+        <span class="n">init_pos</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Parameters:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">pop_size</span></code>: Number of porcupines in the population.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dimensions</span></code>: Number of dimensions in the search space.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bounds</span></code>: A tuple of size 2 where the first entry is the minimum bound while the second entry is the maximum bound. Each array must be of shape <code class="docutils literal notranslate"><span class="pre">(dimensions,)</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">init_pos</span></code>: Initial positions for the porcupines. If None, random positions are generated.</p></li>
+</ul>
+<p><strong>Methods:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">evaluate(objective_func,</span> <span class="pre">**kwargs)</span></code>: Evaluate the fitness of all porcupines.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">resize(new_size)</span></code>: Resize the population to a new size.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">apply_bounds()</span></code>: Apply boundary constraints to all positions.</p></li>
+</ul>
+</section>
+<section id="defensemechanisms">
+<h3>DefenseMechanisms<a class="headerlink" href="#defensemechanisms" title="Permalink to this heading"></a></h3>
+<p>Class implementing the four defense mechanisms of the Crested Porcupine Optimizer.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">DefenseMechanisms</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">tf</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.8</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Parameters:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">alpha</span></code>: Convergence rate for the fourth defense mechanism.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tf</span></code>: Tradeoff threshold between third and fourth mechanisms.</p></li>
+</ul>
+<p><strong>Methods:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">sight_defense(position,</span> <span class="pre">other_position,</span> <span class="pre">best_position)</span></code>: Apply the first defense mechanism (sight).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sound_defense(position,</span> <span class="pre">other_position,</span> <span class="pre">rand_diff)</span></code>: Apply the second defense mechanism (sound).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">odor_defense(position,</span> <span class="pre">other_position,</span> <span class="pre">rand_diff,</span> <span class="pre">fitness,</span> <span class="pre">fitness_sum,</span> <span class="pre">t,</span> <span class="pre">max_iter)</span></code>: Apply the third defense mechanism (odor).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">physical_attack(position,</span> <span class="pre">other_position,</span> <span class="pre">best_position,</span> <span class="pre">fitness,</span> <span class="pre">fitness_sum,</span> <span class="pre">t,</span> <span class="pre">max_iter)</span></code>: Apply the fourth defense mechanism (physical attack).</p></li>
+</ul>
+</section>
+<section id="populationmanager">
+<h3>PopulationManager<a class="headerlink" href="#populationmanager" title="Permalink to this heading"></a></h3>
+<p>Class for managing the population dynamics in the Crested Porcupine Optimizer.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">PopulationManager</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">initial_pop_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">min_pop_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">max_iter</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">cycles</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Parameters:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">initial_pop_size</span></code>: Initial population size.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">min_pop_size</span></code>: Minimum population size during reduction.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">max_iter</span></code>: Maximum number of iterations.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cycles</span></code>: Number of cycles for population reduction.</p></li>
+</ul>
+<p><strong>Methods:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">calculate_pop_size(iteration)</span></code>: Calculate the population size for the current iteration.</p></li>
+</ul>
+</section>
+</section>
+<section id="population-management">
+<h2>Population Management<a class="headerlink" href="#population-management" title="Permalink to this heading"></a></h2>
+<section id="populationcycle">
+<h3>PopulationCycle<a class="headerlink" href="#populationcycle" title="Permalink to this heading"></a></h3>
+<p>Class for managing cyclic population reduction in the Crested Porcupine Optimizer.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">PopulationCycle</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">initial_pop_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">min_pop_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">max_iter</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">cycles</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="n">reduction_strategy</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;linear&#39;</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Parameters:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">initial_pop_size</span></code>: Initial population size.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">min_pop_size</span></code>: Minimum population size during reduction.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">max_iter</span></code>: Maximum number of iterations.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cycles</span></code>: Number of cycles for population reduction.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">reduction_strategy</span></code>: Strategy for population reduction (‘linear’, ‘cosine’, or ‘exponential’).</p></li>
+</ul>
+<p><strong>Methods:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">calculate_pop_size(iteration)</span></code>: Calculate the population size for the current iteration.</p></li>
+</ul>
+</section>
+<section id="selectionstrategies">
+<h3>SelectionStrategies<a class="headerlink" href="#selectionstrategies" title="Permalink to this heading"></a></h3>
+<p>Class implementing various selection strategies for population reduction.</p>
+<p><strong>Methods:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">best_selection(positions,</span> <span class="pre">fitness,</span> <span class="pre">new_size)</span></code>: Select the best individuals based on fitness.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tournament_selection(positions,</span> <span class="pre">fitness,</span> <span class="pre">new_size,</span> <span class="pre">tournament_size=3)</span></code>: Select individuals using tournament selection.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">roulette_wheel_selection(positions,</span> <span class="pre">fitness,</span> <span class="pre">new_size)</span></code>: Select individuals using roulette wheel selection.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">diversity_selection(positions,</span> <span class="pre">fitness,</span> <span class="pre">new_size,</span> <span class="pre">elite_fraction=0.2)</span></code>: Select individuals based on fitness and diversity.</p></li>
+</ul>
+</section>
+</section>
+<section id="visualization">
+<h2>Visualization<a class="headerlink" href="#visualization" title="Permalink to this heading"></a></h2>
+<section id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">plot_convergence(cost_history,</span> <span class="pre">title=&quot;Convergence</span> <span class="pre">Curve&quot;,</span> <span class="pre">xlabel=&quot;Iterations&quot;,</span> <span class="pre">ylabel=&quot;Cost&quot;,</span> <span class="pre">figsize=(10,</span> <span class="pre">6),</span> <span class="pre">log_scale=False,</span> <span class="pre">save_path=None)</span></code>: Plot the convergence history of the optimization process.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">plot_population_size(pop_size_history,</span> <span class="pre">title=&quot;Population</span> <span class="pre">Size</span> <span class="pre">History&quot;,</span> <span class="pre">xlabel=&quot;Iterations&quot;,</span> <span class="pre">ylabel=&quot;Population</span> <span class="pre">Size&quot;,</span> <span class="pre">figsize=(10,</span> <span class="pre">6),</span> <span class="pre">save_path=None)</span></code>: Plot the population size history of the optimization process.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">plot_2d_search_space(func,</span> <span class="pre">bounds,</span> <span class="pre">resolution=100,</span> <span class="pre">positions=None,</span> <span class="pre">best_pos=None,</span> <span class="pre">title=&quot;2D</span> <span class="pre">Search</span> <span class="pre">Space&quot;,</span> <span class="pre">figsize=(10,</span> <span class="pre">8),</span> <span class="pre">cmap='viridis',</span> <span class="pre">contour_levels=20,</span> <span class="pre">save_path=None)</span></code>: Plot a 2D search space with positions of the porcupines.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">animate_optimization_2d(position_history,</span> <span class="pre">func,</span> <span class="pre">bounds,</span> <span class="pre">best_pos_history=None,</span> <span class="pre">interval=200,</span> <span class="pre">figsize=(10,</span> <span class="pre">8),</span> <span class="pre">cmap='viridis',</span> <span class="pre">contour_levels=20,</span> <span class="pre">save_path=None,</span> <span class="pre">dpi=100)</span></code>: Create an animation of the optimization process in 2D.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">plot_multiple_runs(cost_histories,</span> <span class="pre">labels=None,</span> <span class="pre">title=&quot;Comparison</span> <span class="pre">of</span> <span class="pre">Multiple</span> <span class="pre">Runs&quot;,</span> <span class="pre">xlabel=&quot;Iterations&quot;,</span> <span class="pre">ylabel=&quot;Cost&quot;,</span> <span class="pre">figsize=(10,</span> <span class="pre">6),</span> <span class="pre">log_scale=False,</span> <span class="pre">save_path=None)</span></code>: Plot the convergence histories of multiple optimization runs.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">plot_parameter_sensitivity(parameter_values,</span> <span class="pre">results,</span> <span class="pre">parameter_name,</span> <span class="pre">result_name=&quot;Best</span> <span class="pre">Cost&quot;,</span> <span class="pre">title=None,</span> <span class="pre">figsize=(10,</span> <span class="pre">6),</span> <span class="pre">save_path=None)</span></code>: Plot the sensitivity of results to a parameter.</p></li>
+</ul>
+</section>
+</section>
+<section id="benchmark-functions">
+<h2>Benchmark Functions<a class="headerlink" href="#benchmark-functions" title="Permalink to this heading"></a></h2>
+<section id="unimodal-functions">
+<h3>Unimodal Functions<a class="headerlink" href="#unimodal-functions" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">sphere(x)</span></code>: Sphere function.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rosenbrock(x)</span></code>: Rosenbrock function.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">schwefel_2_22(x)</span></code>: Schwefel 2.22 function.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">schwefel_1_2(x)</span></code>: Schwefel 1.2 function.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">schwefel_2_21(x)</span></code>: Schwefel 2.21 function.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">step(x)</span></code>: Step function.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">quartic(x)</span></code>: Quartic function with noise.</p></li>
+</ul>
+</section>
+<section id="multimodal-functions">
+<h3>Multimodal Functions<a class="headerlink" href="#multimodal-functions" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">rastrigin(x)</span></code>: Rastrigin function.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ackley(x)</span></code>: Ackley function.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">griewank(x)</span></code>: Griewank function.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">schwefel(x)</span></code>: Schwefel function.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">michalewicz(x)</span></code>: Michalewicz function.</p></li>
+</ul>
+</section>
+<section id="utility-functions">
+<h3>Utility Functions<a class="headerlink" href="#utility-functions" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">get_function_by_name(name)</span></code>: Get a benchmark function by name.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">get_function_bounds(name,</span> <span class="pre">dimensions)</span></code>: Get the recommended bounds for a benchmark function.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">get_function_optimum(name,</span> <span class="pre">dimensions)</span></code>: Get the global optimum for a benchmark function.</p></li>
+</ul>
+</section>
+</section>
+<section id="legacy-api">
+<h2>Legacy API<a class="headerlink" href="#legacy-api" title="Permalink to this heading"></a></h2>
+<section id="id1">
+<h3>cpo<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h3>
+<p>The original procedural implementation of the Crested Porcupine Optimizer.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">cpo</span><span class="p">(</span><span class="n">fobj</span><span class="p">,</span> <span class="n">lb</span><span class="p">,</span> <span class="n">ub</span><span class="p">,</span> <span class="n">pop_size</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">f_ieqcons</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Parameters:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">fobj</span></code>: Objective function to minimize. Takes a 1D numpy array as input and returns a scalar.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lb</span></code>: Lower bounds for each dimension of the search space.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ub</span></code>: Upper bounds for each dimension of the search space.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pop_size</span></code>: Number of search agents (porcupines) in the initial population (default: 30).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">max_iter</span></code>: Maximum number of iterations (default: 100).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">f_ieqcons</span></code>: Constraint function returning a 1D array of inequality constraints (g(x) &gt;= 0). Infeasible solutions are assigned infinite fitness (default: None).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">verbose</span></code>: If True, print progress information for each iteration (default: False).</p></li>
+</ul>
+<p><strong>Returns:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">best_pos</span></code>: Best solution found (1D array of length <code class="docutils literal notranslate"><span class="pre">dim</span></code>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">best_cost</span></code>: Best fitness value found.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cost_history</span></code>: Best fitness value recorded at each iteration (1D array of length <code class="docutils literal notranslate"><span class="pre">max_iter</span></code>).</p></li>
+</ul>
+</section>
+</section>
+<section id="utility-modules">
+<h2>Utility Modules<a class="headerlink" href="#utility-modules" title="Permalink to this heading"></a></h2>
+<section id="helpers-module-porcupy-utils-helpers">
+<h3>Helpers Module (<code class="docutils literal notranslate"><span class="pre">porcupy.utils.helpers</span></code>)<a class="headerlink" href="#helpers-module-porcupy-utils-helpers" title="Permalink to this heading"></a></h3>
+<p>This module provides essential helper functions for population initialization, bounds handling, and other utility operations.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">porcupy.utils.helpers</span><span class="w"> </span><span class="kn">import</span> <span class="n">initialize_population</span><span class="p">,</span> <span class="n">clip_to_bounds</span>
+</pre></div>
+</div>
+<section id="initialize-population-pop-size-dim-lb-ub">
+<h4><code class="docutils literal notranslate"><span class="pre">initialize_population(pop_size,</span> <span class="pre">dim,</span> <span class="pre">lb,</span> <span class="pre">ub)</span></code><a class="headerlink" href="#initialize-population-pop-size-dim-lb-ub" title="Permalink to this heading"></a></h4>
+<p>Initializes a population of search agents within the specified bounds.</p>
+<p><strong>Parameters:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">pop_size</span></code>: Number of search agents in the population.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dim</span></code>: Number of dimensions in the search space.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lb</span></code>: Lower bounds for each dimension (scalar or 1D array of length <code class="docutils literal notranslate"><span class="pre">dim</span></code>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ub</span></code>: Upper bounds for each dimension (scalar or 1D array of length <code class="docutils literal notranslate"><span class="pre">dim</span></code>).</p></li>
+</ul>
+<p><strong>Returns:</strong></p>
+<ul class="simple">
+<li><p>A 2D array of shape (pop_size, dim) containing the initialized positions.</p></li>
+</ul>
+</section>
+<section id="clip-to-bounds-positions-lb-ub">
+<h4><code class="docutils literal notranslate"><span class="pre">clip_to_bounds(positions,</span> <span class="pre">lb,</span> <span class="pre">ub)</span></code><a class="headerlink" href="#clip-to-bounds-positions-lb-ub" title="Permalink to this heading"></a></h4>
+<p>Clips the positions to stay within the specified bounds.</p>
+<p><strong>Parameters:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">positions</span></code>: Positions to be clipped (1D or 2D array).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lb</span></code>: Lower bounds (scalar or array).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ub</span></code>: Upper bounds (scalar or array).</p></li>
+</ul>
+<p><strong>Returns:</strong></p>
+<ul class="simple">
+<li><p>Clipped positions with the same shape as the input.</p></li>
+</ul>
+</section>
+</section>
+<section id="plotting-module-porcupy-utils-plotting">
+<h3>Plotting Module (<code class="docutils literal notranslate"><span class="pre">porcupy.utils.plotting</span></code>)<a class="headerlink" href="#plotting-module-porcupy-utils-plotting" title="Permalink to this heading"></a></h3>
+<p>This module provides basic plotting functions for visualizing optimization results.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">porcupy.utils.plotting</span><span class="w"> </span><span class="kn">import</span> <span class="n">plot_convergence</span>
+</pre></div>
+</div>
+<section id="plot-convergence-cost-history-title-convergence-curve-save-path-none">
+<h4><code class="docutils literal notranslate"><span class="pre">plot_convergence(cost_history,</span> <span class="pre">title='Convergence</span> <span class="pre">Curve',</span> <span class="pre">save_path=None)</span></code><a class="headerlink" href="#plot-convergence-cost-history-title-convergence-curve-save-path-none" title="Permalink to this heading"></a></h4>
+<p>Plots the convergence history of an optimization run.</p>
+<p><strong>Parameters:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">cost_history</span></code>: List or array of cost values over iterations.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">title</span></code>: Title of the plot (default: ‘Convergence Curve’).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">save_path</span></code>: Path to save the plot (default: None, plot is not saved).</p></li>
+</ul>
+<p><strong>Returns:</strong></p>
+<ul class="simple">
+<li><p>A matplotlib Figure object.</p></li>
+</ul>
+</section>
+</section>
+<section id="visualization-module-porcupy-utils-visualization">
+<h3>Visualization Module (<code class="docutils literal notranslate"><span class="pre">porcupy.utils.visualization</span></code>)<a class="headerlink" href="#visualization-module-porcupy-utils-visualization" title="Permalink to this heading"></a></h3>
+<p>This module provides advanced visualization tools for the optimization process.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">porcupy.utils.visualization</span><span class="w"> </span><span class="kn">import</span> <span class="n">plot_2d_search_space</span><span class="p">,</span> <span class="n">animate_optimization_2d</span>
+</pre></div>
+</div>
+<section id="plot-2d-search-space-func-bounds-resolution-100-positions-none-best-pos-none-save-path-none">
+<h4><code class="docutils literal notranslate"><span class="pre">plot_2d_search_space(func,</span> <span class="pre">bounds,</span> <span class="pre">resolution=100,</span> <span class="pre">positions=None,</span> <span class="pre">best_pos=None,</span> <span class="pre">save_path=None)</span></code><a class="headerlink" href="#plot-2d-search-space-func-bounds-resolution-100-positions-none-best-pos-none-save-path-none" title="Permalink to this heading"></a></h4>
+<p>Plots a 2D contour of the objective function with optional positions and best position.</p>
+<p><strong>Parameters:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">func</span></code>: The objective function to visualize.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bounds</span></code>: A tuple (lb, ub) containing the lower and upper bounds.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">resolution</span></code>: Number of points in each dimension for the contour plot (default: 100).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">positions</span></code>: Current positions of the search agents (default: None).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">best_pos</span></code>: Best position found (default: None).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">save_path</span></code>: Path to save the plot (default: None, plot is not saved).</p></li>
+</ul>
+<p><strong>Returns:</strong></p>
+<ul class="simple">
+<li><p>A matplotlib Figure object.</p></li>
+</ul>
+</section>
+<section id="animate-optimization-2d-position-history-func-bounds-best-pos-history-none-interval-100-contour-levels-20-save-path-none-dpi-100">
+<h4><code class="docutils literal notranslate"><span class="pre">animate_optimization_2d(position_history,</span> <span class="pre">func,</span> <span class="pre">bounds,</span> <span class="pre">best_pos_history=None,</span> <span class="pre">interval=100,</span> <span class="pre">contour_levels=20,</span> <span class="pre">save_path=None,</span> <span class="pre">dpi=100)</span></code><a class="headerlink" href="#animate-optimization-2d-position-history-func-bounds-best-pos-history-none-interval-100-contour-levels-20-save-path-none-dpi-100" title="Permalink to this heading"></a></h4>
+<p>Creates an animation of the optimization process in 2D.</p>
+<p><strong>Parameters:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">position_history</span></code>: List of position arrays over iterations.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">func</span></code>: The objective function to visualize.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bounds</span></code>: A tuple (lb, ub) containing the lower and upper bounds.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">best_pos_history</span></code>: List of best positions over iterations (default: None).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">interval</span></code>: Delay between frames in milliseconds (default: 100).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">contour_levels</span></code>: Number of contour levels (default: 20).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">save_path</span></code>: Path to save the animation (default: None, animation is not saved).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dpi</span></code>: DPI for the saved animation (default: 100).</p></li>
+</ul>
+<p><strong>Returns:</strong></p>
+<ul class="simple">
+<li><p>A matplotlib FuncAnimation object.</p></li>
+</ul>
+</section>
+</section>
+<section id="interactive-visualization-module-porcupy-utils-interactive-visualization">
+<h3>Interactive Visualization Module (<code class="docutils literal notranslate"><span class="pre">porcupy.utils.interactive_visualization</span></code>)<a class="headerlink" href="#interactive-visualization-module-porcupy-utils-interactive-visualization" title="Permalink to this heading"></a></h3>
+<p>This module provides interactive dashboards for real-time monitoring and analysis of the optimization process.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">porcupy.utils.interactive_visualization</span><span class="w"> </span><span class="kn">import</span> <span class="n">OptimizationDashboard</span><span class="p">,</span> <span class="n">ParameterTuningDashboard</span>
+</pre></div>
+</div>
+<section id="optimizationdashboard">
+<h4><code class="docutils literal notranslate"><span class="pre">OptimizationDashboard</span></code><a class="headerlink" href="#optimizationdashboard" title="Permalink to this heading"></a></h4>
+<p>Interactive dashboard for monitoring CPO optimization in real-time.</p>
+<p><strong>Key Methods:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">__init__(objective_func,</span> <span class="pre">bounds,</span> <span class="pre">dimensions=2,</span> <span class="pre">update_interval=0.5,</span> <span class="pre">figsize=(15,</span> <span class="pre">10))</span></code>: Initialize the dashboard.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">update(iteration,</span> <span class="pre">best_cost,</span> <span class="pre">pop_size,</span> <span class="pre">positions,</span> <span class="pre">best_position,</span> <span class="pre">defense_types)</span></code>: Update the dashboard with new optimization data.</p></li>
+</ul>
+</section>
+<section id="parametertuningdashboard">
+<h4><code class="docutils literal notranslate"><span class="pre">ParameterTuningDashboard</span></code><a class="headerlink" href="#parametertuningdashboard" title="Permalink to this heading"></a></h4>
+<p>Interactive dashboard for parameter tuning and sensitivity analysis.</p>
+<p><strong>Key Methods:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">__init__(parameter_name,</span> <span class="pre">parameter_range,</span> <span class="pre">result_metric='Best</span> <span class="pre">Cost',</span> <span class="pre">figsize=(12,</span> <span class="pre">8))</span></code>: Initialize the dashboard.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">update(parameter_value,</span> <span class="pre">result,</span> <span class="pre">convergence_history=None)</span></code>: Update the dashboard with new parameter tuning results.</p></li>
+</ul>
+</section>
+</section>
+<section id="benchmark-functions-module-porcupy-functions">
+<h3>Benchmark Functions Module (<code class="docutils literal notranslate"><span class="pre">porcupy.functions</span></code>)<a class="headerlink" href="#benchmark-functions-module-porcupy-functions" title="Permalink to this heading"></a></h3>
+<p>This module provides a collection of benchmark functions for testing and comparing optimization algorithms.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">porcupy.functions</span><span class="w"> </span><span class="kn">import</span> <span class="n">sphere</span><span class="p">,</span> <span class="n">rastrigin</span><span class="p">,</span> <span class="n">get_function_by_name</span><span class="p">,</span> <span class="n">get_function_bounds</span>
+</pre></div>
+</div>
+<section id="id2">
+<h4>Unimodal Functions<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h4>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">sphere(x)</span></code>: Simple unimodal function with global minimum at origin.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rosenbrock(x)</span></code>: Classic banana-shaped function with global minimum at [1, 1, …, 1].</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">schwefel_2_22(x)</span></code>: Unimodal function defined as sum(|x_i|) + prod(|x_i|).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">schwefel_1_2(x)</span></code>: Unimodal function defined as sum(sum(x_j)^2) for j=1 to i, i=1 to n.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">schwefel_2_21(x)</span></code>: Unimodal function defined as max(|x_i|).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">step(x)</span></code>: Discontinuous step function.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">quartic(x)</span></code>: Quartic function with noise.</p></li>
+</ul>
+</section>
+<section id="id3">
+<h4>Multimodal Functions<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h4>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">rastrigin(x)</span></code>: Highly multimodal function with many local minima.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ackley(x)</span></code>: Multimodal function with many local minima.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">griewank(x)</span></code>: Multimodal function with many local minima.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">schwefel(x)</span></code>: Multimodal function with global minimum at [420.9687, …, 420.9687].</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">michalewicz(x)</span></code>: Multimodal function with steep ridges and valleys.</p></li>
+</ul>
+</section>
+<section id="id4">
+<h4>Utility Functions<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h4>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">get_function_by_name(name)</span></code>: Get a benchmark function by name.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">get_function_bounds(name,</span> <span class="pre">dimensions)</span></code>: Get recommended bounds for a benchmark function.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">get_function_optimum(name,</span> <span class="pre">dimensions)</span></code>: Get the global optimum for a benchmark function.</p></li>
+</ul>
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../examples/real_world_applications.html" class="btn btn-neutral float-left" title="Real-World Applications" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../autoapi/index.html" class="btn btn-neutral float-right" title="API Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Samman Sarkar.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,172 @@
+porcupy.utils.visualization
+===========================
+
+.. py:module:: porcupy.utils.visualization
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   porcupy.utils.visualization.plot_convergence
+   porcupy.utils.visualization.plot_population_size
+   porcupy.utils.visualization.plot_2d_search_space
+   porcupy.utils.visualization.animate_optimization_2d
+   porcupy.utils.visualization.plot_multiple_runs
+   porcupy.utils.visualization.plot_parameter_sensitivity
+
+
+Module Contents
+---------------
+
+.. py:function:: plot_convergence(cost_history: List[float], title: str = 'Convergence Curve', xlabel: str = 'Iterations', ylabel: str = 'Cost', figsize: Tuple[int, int] = (10, 6), log_scale: bool = False, save_path: Optional[str] = None)
+
+   Plot the convergence history of the optimization process.
+
+   :param cost_history: List of cost values at each iteration.
+   :type cost_history: list
+   :param title: Title of the plot (default: "Convergence Curve").
+   :type title: str, optional
+   :param xlabel: Label for the x-axis (default: "Iterations").
+   :type xlabel: str, optional
+   :param ylabel: Label for the y-axis (default: "Cost").
+   :type ylabel: str, optional
+   :param figsize: Figure size as (width, height) in inches (default: (10, 6)).
+   :type figsize: tuple, optional
+   :param log_scale: Whether to use logarithmic scale for the y-axis (default: False).
+   :type log_scale: bool, optional
+   :param save_path: Path to save the figure. If None, the figure is not saved (default: None).
+   :type save_path: str, optional
+
+   :returns: The created figure.
+   :rtype: matplotlib.figure.Figure
+
+
+.. py:function:: plot_population_size(pop_size_history: List[int], title: str = 'Population Size History', xlabel: str = 'Iterations', ylabel: str = 'Population Size', figsize: Tuple[int, int] = (10, 6), save_path: Optional[str] = None)
+
+   Plot the population size history of the optimization process.
+
+   :param pop_size_history: List of population sizes at each iteration.
+   :type pop_size_history: list
+   :param title: Title of the plot (default: "Population Size History").
+   :type title: str, optional
+   :param xlabel: Label for the x-axis (default: "Iterations").
+   :type xlabel: str, optional
+   :param ylabel: Label for the y-axis (default: "Population Size").
+   :type ylabel: str, optional
+   :param figsize: Figure size as (width, height) in inches (default: (10, 6)).
+   :type figsize: tuple, optional
+   :param save_path: Path to save the figure. If None, the figure is not saved (default: None).
+   :type save_path: str, optional
+
+   :returns: The created figure.
+   :rtype: matplotlib.figure.Figure
+
+
+.. py:function:: plot_2d_search_space(func: Callable, bounds: Tuple[numpy.ndarray, numpy.ndarray], resolution: int = 100, positions: Optional[numpy.ndarray] = None, best_pos: Optional[numpy.ndarray] = None, title: str = '2D Search Space', figsize: Tuple[int, int] = (10, 8), cmap: str = 'viridis', contour_levels: int = 20, save_path: Optional[str] = None)
+
+   Plot a 2D search space with positions of the porcupines.
+
+   :param func: The objective function to visualize.
+   :type func: callable
+   :param bounds: A tuple (lb, ub) containing the lower and upper bounds.
+   :type bounds: tuple
+   :param resolution: Resolution of the grid for visualization (default: 100).
+   :type resolution: int, optional
+   :param positions: Current positions of the porcupines, shape (pop_size, 2).
+   :type positions: ndarray, optional
+   :param best_pos: Global best position, shape (2,).
+   :type best_pos: ndarray, optional
+   :param title: Title of the plot (default: "2D Search Space").
+   :type title: str, optional
+   :param figsize: Figure size as (width, height) in inches (default: (10, 8)).
+   :type figsize: tuple, optional
+   :param cmap: Colormap for the contour plot (default: 'viridis').
+   :type cmap: str, optional
+   :param contour_levels: Number of contour levels (default: 20).
+   :type contour_levels: int, optional
+   :param save_path: Path to save the figure. If None, the figure is not saved (default: None).
+   :type save_path: str, optional
+
+   :returns: The created figure.
+   :rtype: matplotlib.figure.Figure
+
+
+.. py:function:: animate_optimization_2d(position_history: List[numpy.ndarray], func: Callable, bounds: Tuple[numpy.ndarray, numpy.ndarray], best_pos_history: Optional[List[numpy.ndarray]] = None, interval: int = 200, figsize: Tuple[int, int] = (10, 8), cmap: str = 'viridis', contour_levels: int = 20, save_path: Optional[str] = None, dpi: int = 100)
+
+   Create an animation of the optimization process in 2D.
+
+   :param position_history: List of position arrays at each iteration, each with shape (pop_size, 2).
+   :type position_history: list
+   :param func: The objective function to visualize.
+   :type func: callable
+   :param bounds: A tuple (lb, ub) containing the lower and upper bounds.
+   :type bounds: tuple
+   :param best_pos_history: List of best positions at each iteration, each with shape (2,).
+   :type best_pos_history: list, optional
+   :param interval: Interval between frames in milliseconds (default: 200).
+   :type interval: int, optional
+   :param figsize: Figure size as (width, height) in inches (default: (10, 8)).
+   :type figsize: tuple, optional
+   :param cmap: Colormap for the contour plot (default: 'viridis').
+   :type cmap: str, optional
+   :param contour_levels: Number of contour levels (default: 20).
+   :type contour_levels: int, optional
+   :param save_path: Path to save the animation. If None, the animation is not saved (default: None).
+   :type save_path: str, optional
+   :param dpi: DPI for the saved animation (default: 100).
+   :type dpi: int, optional
+
+   :returns: The created animation.
+   :rtype: matplotlib.animation.FuncAnimation
+
+
+.. py:function:: plot_multiple_runs(cost_histories: List[List[float]], labels: List[str] = None, title: str = 'Comparison of Multiple Runs', xlabel: str = 'Iterations', ylabel: str = 'Cost', figsize: Tuple[int, int] = (10, 6), log_scale: bool = False, save_path: Optional[str] = None)
+
+   Plot the convergence histories of multiple optimization runs.
+
+   :param cost_histories: List of cost history lists, each from a different run.
+   :type cost_histories: list
+   :param labels: Labels for each run. If None, runs are labeled as "Run 1", "Run 2", etc.
+   :type labels: list, optional
+   :param title: Title of the plot (default: "Comparison of Multiple Runs").
+   :type title: str, optional
+   :param xlabel: Label for the x-axis (default: "Iterations").
+   :type xlabel: str, optional
+   :param ylabel: Label for the y-axis (default: "Cost").
+   :type ylabel: str, optional
+   :param figsize: Figure size as (width, height) in inches (default: (10, 6)).
+   :type figsize: tuple, optional
+   :param log_scale: Whether to use logarithmic scale for the y-axis (default: False).
+   :type log_scale: bool, optional
+   :param save_path: Path to save the figure. If None, the figure is not saved (default: None).
+   :type save_path: str, optional
+
+   :returns: The created figure.
+   :rtype: matplotlib.figure.Figure
+
+
+.. py:function:: plot_parameter_sensitivity(parameter_values: List[float], results: List[float], parameter_name: str, result_name: str = 'Best Cost', title: str = None, figsize: Tuple[int, int] = (10, 6), save_path: Optional[str] = None)
+
+   Plot the sensitivity of results to a parameter.
+
+   :param parameter_values: List of parameter values tested.
+   :type parameter_values: list
+   :param results: List of corresponding results (e.g., best costs).
+   :type results: list
+   :param parameter_name: Name of the parameter.
+   :type parameter_name: str
+   :param result_name: Name of the result metric (default: "Best Cost").
+   :type result_name: str, optional
+   :param title: Title of the plot. If None, a default title is generated.
+   :type title: str, optional
+   :param figsize: Figure size as (width, height) in inches (default: (10, 6)).
+   :type figsize: tuple, optional
+   :param save_path: Path to save the figure. If None, the figure is not saved (default: None).
+   :type save_path: str, optional
+
+   :returns: The created figure.
+   :rtype: matplotlib.figure.Figure
+
+

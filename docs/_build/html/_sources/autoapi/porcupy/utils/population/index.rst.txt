@@ -1,0 +1,183 @@
+porcupy.utils.population
+========================
+
+.. py:module:: porcupy.utils.population
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   porcupy.utils.population.PopulationCycle
+   porcupy.utils.population.SelectionStrategies
+
+
+Module Contents
+---------------
+
+.. py:class:: PopulationCycle(initial_pop_size: int, min_pop_size: int, max_iter: int, cycles: int = 2, reduction_strategy: str = 'linear')
+
+   Class for managing cyclic population reduction in the Crested Porcupine Optimizer.
+
+   This class implements the cyclic population reduction strategy, which is a key
+   feature of the CPO algorithm. The population size varies cyclically throughout
+   the optimization process to balance exploration and exploitation.
+
+   :param initial_pop_size: Initial population size.
+   :type initial_pop_size: int
+   :param min_pop_size: Minimum population size during reduction.
+   :type min_pop_size: int
+   :param max_iter: Maximum number of iterations.
+   :type max_iter: int
+   :param cycles: Number of cycles for population reduction.
+   :type cycles: int
+   :param reduction_strategy: Strategy for population reduction ('linear', 'cosine', or 'exponential').
+   :type reduction_strategy: str
+
+   .. attribute:: initial_pop_size
+
+      Initial population size.
+
+      :type: int
+
+   .. attribute:: min_pop_size
+
+      Minimum population size during reduction.
+
+      :type: int
+
+   .. attribute:: max_iter
+
+      Maximum number of iterations.
+
+      :type: int
+
+   .. attribute:: cycles
+
+      Number of cycles for population reduction.
+
+      :type: int
+
+   .. attribute:: reduction_strategy
+
+      Strategy for population reduction.
+
+      :type: str
+
+
+   .. py:attribute:: initial_pop_size
+
+
+   .. py:attribute:: min_pop_size
+
+
+   .. py:attribute:: max_iter
+
+
+   .. py:attribute:: cycles
+      :value: 2
+
+
+
+   .. py:attribute:: reduction_strategy
+      :value: 'linear'
+
+
+
+   .. py:method:: calculate_pop_size(iteration: int) -> int
+
+      Calculate the population size for the current iteration
+
+      :param iteration: Current iteration number
+      :type iteration: int
+
+      :returns: Population size for the current iteration
+      :rtype: int
+
+
+
+.. py:class:: SelectionStrategies
+
+   Class implementing various selection strategies for population reduction.
+
+   This class provides methods for selecting which individuals to keep when
+   reducing the population size.
+
+
+   .. py:method:: best_selection(positions: numpy.ndarray, fitness: numpy.ndarray, new_size: int) -> Tuple[numpy.ndarray, numpy.ndarray]
+      :staticmethod:
+
+
+      Select the best individuals based on fitness
+
+      :param positions: Current positions of all individuals
+      :type positions: numpy.ndarray
+      :param fitness: Current fitness values of all individuals
+      :type fitness: numpy.ndarray
+      :param new_size: New population size
+      :type new_size: int
+
+      :returns: A tuple containing (selected_positions, selected_fitness)
+      :rtype: tuple
+
+
+
+   .. py:method:: tournament_selection(positions: numpy.ndarray, fitness: numpy.ndarray, new_size: int, tournament_size: int = 3) -> Tuple[numpy.ndarray, numpy.ndarray]
+      :staticmethod:
+
+
+      Select individuals using tournament selection
+
+      :param positions: Current positions of all individuals
+      :type positions: numpy.ndarray
+      :param fitness: Current fitness values of all individuals
+      :type fitness: numpy.ndarray
+      :param new_size: New population size
+      :type new_size: int
+      :param tournament_size: Size of each tournament
+      :type tournament_size: int
+
+      :returns: A tuple containing (selected_positions, selected_fitness)
+      :rtype: tuple
+
+
+
+   .. py:method:: roulette_wheel_selection(positions: numpy.ndarray, fitness: numpy.ndarray, new_size: int) -> Tuple[numpy.ndarray, numpy.ndarray]
+      :staticmethod:
+
+
+      Select individuals using roulette wheel selection
+
+      :param positions: Current positions of all individuals
+      :type positions: numpy.ndarray
+      :param fitness: Current fitness values of all individuals
+      :type fitness: numpy.ndarray
+      :param new_size: New population size
+      :type new_size: int
+
+      :returns: A tuple containing (selected_positions, selected_fitness)
+      :rtype: tuple
+
+
+
+   .. py:method:: diversity_selection(positions: numpy.ndarray, fitness: numpy.ndarray, new_size: int, elite_fraction: float = 0.2) -> Tuple[numpy.ndarray, numpy.ndarray]
+      :staticmethod:
+
+
+      Select individuals based on fitness and diversity
+
+      :param positions: Current positions of all individuals
+      :type positions: numpy.ndarray
+      :param fitness: Current fitness values of all individuals
+      :type fitness: numpy.ndarray
+      :param new_size: New population size
+      :type new_size: int
+      :param elite_fraction: Fraction of individuals to select based on fitness
+      :type elite_fraction: float
+
+      :returns: A tuple containing (selected_positions, selected_fitness)
+      :rtype: tuple
+
+
+

@@ -1,0 +1,55 @@
+porcupy.cpo
+===========
+
+.. py:module:: porcupy.cpo
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   porcupy.cpo.cpo
+
+
+Module Contents
+---------------
+
+.. py:function:: cpo(fobj, lb, ub, pop_size=30, max_iter=100, f_ieqcons=None, verbose=False)
+
+   Crested Porcupine Optimizer (CPO) for optimization problems.
+
+   This function implements the CPO algorithm, a nature-inspired metaheuristic that mimics
+   the defensive behaviors of crested porcupines (sight, sound, odor, physical attack) to
+   balance exploration and exploitation, with cyclic population reduction for convergence.
+
+   :param fobj: Objective function to minimize. Takes a 1D numpy array as input and returns a scalar.
+   :type fobj: callable
+   :param lb: Lower bounds for each dimension of the search space.
+   :type lb: list or array-like
+   :param ub: Upper bounds for each dimension of the search space.
+   :type ub: list or array-like
+   :param pop_size: Number of search agents (porcupines) in the initial population (default: 30).
+   :type pop_size: int, optional
+   :param max_iter: Maximum number of iterations (default: 100).
+   :type max_iter: int, optional
+   :param f_ieqcons: Constraint function returning a 1D array of inequality constraints (g(x) >= 0).
+                     Infeasible solutions are assigned infinite fitness (default: None).
+   :type f_ieqcons: callable, optional
+   :param verbose: If True, print progress information for each iteration (default: False).
+   :type verbose: bool, optional
+
+   :returns: * **best_pos** (*ndarray*) -- Best solution found (1D array of length `dim`).
+             * **best_cost** (*float*) -- Best fitness value found.
+             * **cost_history** (*ndarray*) -- Best fitness value recorded at each iteration (1D array of length `max_iter`).
+
+   :raises ValueError: If `lb` and `ub` have different lengths, `pop_size` or `max_iter` is non-positive,
+       or `fobj` is not callable.
+
+   .. rubric:: Notes
+
+   The CPO algorithm is based on the paper "Crested Porcupine Optimizer: A new
+   nature-inspired metaheuristic" by Mohamed Abdel-Basset et al. It uses four defensive
+   mechanisms and cyclic population reduction to optimize complex problems.
+
+

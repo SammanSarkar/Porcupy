@@ -1,0 +1,790 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>porcupy.porcupines &mdash; Porcupy 0.2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/custom.css" />
+
+  
+      <script src="../../../_static/jquery.js"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+      <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+      <script src="../../../_static/doctools.js"></script>
+      <script src="../../../_static/sphinx_highlight.js"></script>
+      <script src="../../../_static/clipboard.min.js"></script>
+      <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="porcupy.utils" href="../utils/index.html" />
+    <link rel="prev" title="porcupy.gpu_cpo" href="../gpu_cpo/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            Porcupy
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting_started/quickstart.html">Quick Start Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../getting_started/quickstart.html#your-first-optimization">Your First Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../getting_started/quickstart.html#understanding-the-output">Understanding the Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../getting_started/quickstart.html#visualizing-the-results">Visualizing the Results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../getting_started/quickstart.html#using-gpu-acceleration">Using GPU Acceleration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../getting_started/quickstart.html#next-steps">Next Steps</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting_started/installation.html">Installation Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../getting_started/installation.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../getting_started/installation.html#installing-porcupy">Installing Porcupy</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../getting_started/installation.html#basic-installation-cpu-only">Basic Installation (CPU only)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../getting_started/installation.html#installation-with-gpu-support">Installation with GPU Support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../getting_started/installation.html#development-installation">Development Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../getting_started/installation.html#verifying-installation">Verifying Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../getting_started/installation.html#troubleshooting">Troubleshooting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../getting_started/installation.html#common-issues">Common Issues</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting_started/configuration.html">Configuration Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../getting_started/configuration.html#basic-configuration">Basic Configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../getting_started/configuration.html#algorithm-parameters">Algorithm Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../getting_started/configuration.html#defense-mechanism-parameters">Defense Mechanism Parameters</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../getting_started/configuration.html#advanced-configuration">Advanced Configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../getting_started/configuration.html#parallel-processing">Parallel Processing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../getting_started/configuration.html#custom-stopping-criteria">Custom Stopping Criteria</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../getting_started/configuration.html#gpu-configuration">GPU Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../getting_started/configuration.html#environment-variables">Environment Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../getting_started/configuration.html#performance-tuning">Performance Tuning</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../getting_started/configuration.html#for-cpu-optimization">For CPU Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../getting_started/configuration.html#for-gpu-optimization">For GPU Optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../getting_started/configuration.html#configuration-examples">Configuration Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../getting_started/configuration.html#constrained-optimization">Constrained Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../getting_started/configuration.html#custom-initial-population">Custom Initial Population</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/basic_optimization.html">Basic Optimization Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/basic_optimization.html#table-of-contents">Table of Contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/basic_optimization.html#minimizing-a-simple-function">Minimizing a Simple Function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/basic_optimization.html#optimizing-with-constraints">Optimizing with Constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/basic_optimization.html#using-different-benchmark-functions">Using Different Benchmark Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/basic_optimization.html#visualizing-the-optimization-process">Visualizing the Optimization Process</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/basic_optimization.html#saving-and-loading-results">Saving and Loading Results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/basic_optimization.html#real-world-example-hyperparameter-tuning">Real-world Example: Hyperparameter Tuning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/basic_optimization.html#tips-for-better-performance">Tips for Better Performance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/basic_optimization.html#next-steps">Next Steps</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/advanced_optimization.html">Advanced Optimization Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/advanced_optimization.html#table-of-contents">Table of Contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/advanced_optimization.html#multi-objective-optimization">Multi-Objective Optimization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../examples/advanced_optimization.html#weighted-sum-approach">Weighted Sum Approach</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../examples/advanced_optimization.html#constraint-based-multi-objective">Constraint-Based Multi-Objective</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/advanced_optimization.html#dynamic-optimization">Dynamic Optimization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../examples/advanced_optimization.html#time-varying-objective">Time-Varying Objective</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/advanced_optimization.html#hybrid-optimization">Hybrid Optimization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../examples/advanced_optimization.html#cpo-with-local-search">CPO with Local Search</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/advanced_optimization.html#surrogate-assisted-optimization">Surrogate-Assisted Optimization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../examples/advanced_optimization.html#using-gaussian-process-surrogate">Using Gaussian Process Surrogate</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/advanced_optimization.html#distributed-optimization">Distributed Optimization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../examples/advanced_optimization.html#parallel-evaluation-with-dask">Parallel Evaluation with Dask</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/advanced_optimization.html#custom-optimization-loop">Custom Optimization Loop</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../examples/advanced_optimization.html#manual-iteration-control">Manual Iteration Control</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/advanced_optimization.html#advanced-constraint-handling">Advanced Constraint Handling</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../examples/advanced_optimization.html#adaptive-constraint-handling">Adaptive Constraint Handling</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/advanced_optimization.html#performance-tips-for-advanced-usage">Performance Tips for Advanced Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/real_world_applications.html">Real-World Applications</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/real_world_applications.html#table-of-contents">Table of Contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/real_world_applications.html#hyperparameter-tuning-for-machine-learning">Hyperparameter Tuning for Machine Learning</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../examples/real_world_applications.html#tuning-a-random-forest-classifier">Tuning a Random Forest Classifier</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/real_world_applications.html#neural-network-architecture-search">Neural Network Architecture Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/real_world_applications.html#portfolio-optimization">Portfolio Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/real_world_applications.html#engineering-design-optimization">Engineering Design Optimization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../examples/real_world_applications.html#truss-structure-optimization">Truss Structure Optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/real_world_applications.html#supply-chain-optimization">Supply Chain Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/real_world_applications.html#energy-system-optimization">Energy System Optimization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../examples/real_world_applications.html#microgrid-design-and-operation">Microgrid Design and Operation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/real_world_applications.html#tips-for-real-world-applications">Tips for Real-World Applications</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../api_reference/api_reference.html">Porcupy API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api_reference/api_reference.html#core-classes">Core Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../api_reference/api_reference.html#optimizer">Optimizer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api_reference/api_reference.html#cpo">CPO</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api_reference/api_reference.html#backend-components">Backend Components</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../api_reference/api_reference.html#porcupinepopulation">PorcupinePopulation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api_reference/api_reference.html#defensemechanisms">DefenseMechanisms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api_reference/api_reference.html#populationmanager">PopulationManager</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api_reference/api_reference.html#population-management">Population Management</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../api_reference/api_reference.html#populationcycle">PopulationCycle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api_reference/api_reference.html#selectionstrategies">SelectionStrategies</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api_reference/api_reference.html#visualization">Visualization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../api_reference/api_reference.html#functions">Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api_reference/api_reference.html#benchmark-functions">Benchmark Functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../api_reference/api_reference.html#unimodal-functions">Unimodal Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api_reference/api_reference.html#multimodal-functions">Multimodal Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api_reference/api_reference.html#utility-functions">Utility Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api_reference/api_reference.html#legacy-api">Legacy API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../api_reference/api_reference.html#id1">cpo</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api_reference/api_reference.html#utility-modules">Utility Modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../api_reference/api_reference.html#helpers-module-porcupy-utils-helpers">Helpers Module (<code class="docutils literal notranslate"><span class="pre">porcupy.utils.helpers</span></code>)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api_reference/api_reference.html#initialize-population-pop-size-dim-lb-ub"><code class="docutils literal notranslate"><span class="pre">initialize_population(pop_size,</span> <span class="pre">dim,</span> <span class="pre">lb,</span> <span class="pre">ub)</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api_reference/api_reference.html#clip-to-bounds-positions-lb-ub"><code class="docutils literal notranslate"><span class="pre">clip_to_bounds(positions,</span> <span class="pre">lb,</span> <span class="pre">ub)</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api_reference/api_reference.html#plotting-module-porcupy-utils-plotting">Plotting Module (<code class="docutils literal notranslate"><span class="pre">porcupy.utils.plotting</span></code>)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api_reference/api_reference.html#plot-convergence-cost-history-title-convergence-curve-save-path-none"><code class="docutils literal notranslate"><span class="pre">plot_convergence(cost_history,</span> <span class="pre">title='Convergence</span> <span class="pre">Curve',</span> <span class="pre">save_path=None)</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api_reference/api_reference.html#visualization-module-porcupy-utils-visualization">Visualization Module (<code class="docutils literal notranslate"><span class="pre">porcupy.utils.visualization</span></code>)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api_reference/api_reference.html#plot-2d-search-space-func-bounds-resolution-100-positions-none-best-pos-none-save-path-none"><code class="docutils literal notranslate"><span class="pre">plot_2d_search_space(func,</span> <span class="pre">bounds,</span> <span class="pre">resolution=100,</span> <span class="pre">positions=None,</span> <span class="pre">best_pos=None,</span> <span class="pre">save_path=None)</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api_reference/api_reference.html#animate-optimization-2d-position-history-func-bounds-best-pos-history-none-interval-100-contour-levels-20-save-path-none-dpi-100"><code class="docutils literal notranslate"><span class="pre">animate_optimization_2d(position_history,</span> <span class="pre">func,</span> <span class="pre">bounds,</span> <span class="pre">best_pos_history=None,</span> <span class="pre">interval=100,</span> <span class="pre">contour_levels=20,</span> <span class="pre">save_path=None,</span> <span class="pre">dpi=100)</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api_reference/api_reference.html#interactive-visualization-module-porcupy-utils-interactive-visualization">Interactive Visualization Module (<code class="docutils literal notranslate"><span class="pre">porcupy.utils.interactive_visualization</span></code>)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api_reference/api_reference.html#optimizationdashboard"><code class="docutils literal notranslate"><span class="pre">OptimizationDashboard</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api_reference/api_reference.html#parametertuningdashboard"><code class="docutils literal notranslate"><span class="pre">ParameterTuningDashboard</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api_reference/api_reference.html#benchmark-functions-module-porcupy-functions">Benchmark Functions Module (<code class="docutils literal notranslate"><span class="pre">porcupy.functions</span></code>)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api_reference/api_reference.html#id2">Unimodal Functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api_reference/api_reference.html#id3">Multimodal Functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api_reference/api_reference.html#id4">Utility Functions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">porcupy</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../base/index.html">porcupy.base</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../cpo/index.html">porcupy.cpo</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../cpo_class/index.html">porcupy.cpo_class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../functions/index.html">porcupy.functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gpu_cpo/index.html">porcupy.gpu_cpo</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">porcupy.porcupines</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../utils/index.html">porcupy.utils</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#attributes">Attributes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#classes">Classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#functions">Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#package-contents">Package Contents</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../index.html#porcupy.cpo"><code class="docutils literal notranslate"><span class="pre">cpo()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../index.html#porcupy.CPO"><code class="docutils literal notranslate"><span class="pre">CPO</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../index.html#porcupy.Optimizer"><code class="docutils literal notranslate"><span class="pre">Optimizer</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../index.html#porcupy.PorcupinePopulation"><code class="docutils literal notranslate"><span class="pre">PorcupinePopulation</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../index.html#porcupy.DefenseMechanisms"><code class="docutils literal notranslate"><span class="pre">DefenseMechanisms</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../index.html#porcupy.PopulationManager"><code class="docutils literal notranslate"><span class="pre">PopulationManager</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../index.html#porcupy.PopulationCycle"><code class="docutils literal notranslate"><span class="pre">PopulationCycle</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../index.html#porcupy.SelectionStrategies"><code class="docutils literal notranslate"><span class="pre">SelectionStrategies</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../index.html#porcupy.sphere"><code class="docutils literal notranslate"><span class="pre">sphere()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../index.html#porcupy.rosenbrock"><code class="docutils literal notranslate"><span class="pre">rosenbrock()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../index.html#porcupy.schwefel_2_22"><code class="docutils literal notranslate"><span class="pre">schwefel_2_22()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../index.html#porcupy.schwefel_1_2"><code class="docutils literal notranslate"><span class="pre">schwefel_1_2()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../index.html#porcupy.schwefel_2_21"><code class="docutils literal notranslate"><span class="pre">schwefel_2_21()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../index.html#porcupy.step"><code class="docutils literal notranslate"><span class="pre">step()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../index.html#porcupy.quartic"><code class="docutils literal notranslate"><span class="pre">quartic()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../index.html#porcupy.rastrigin"><code class="docutils literal notranslate"><span class="pre">rastrigin()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../index.html#porcupy.ackley"><code class="docutils literal notranslate"><span class="pre">ackley()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../index.html#porcupy.griewank"><code class="docutils literal notranslate"><span class="pre">griewank()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../index.html#porcupy.schwefel"><code class="docutils literal notranslate"><span class="pre">schwefel()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../index.html#porcupy.michalewicz"><code class="docutils literal notranslate"><span class="pre">michalewicz()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../index.html#porcupy.get_function_by_name"><code class="docutils literal notranslate"><span class="pre">get_function_by_name()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../index.html#porcupy.get_function_bounds"><code class="docutils literal notranslate"><span class="pre">get_function_bounds()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../index.html#porcupy.get_function_optimum"><code class="docutils literal notranslate"><span class="pre">get_function_optimum()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../index.html#porcupy.GPU_AVAILABLE"><code class="docutils literal notranslate"><span class="pre">GPU_AVAILABLE</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Porcupy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">API Reference</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">porcupy</a></li>
+      <li class="breadcrumb-item active">porcupy.porcupines</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/autoapi/porcupy/porcupines/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-porcupy.porcupines">
+<span id="porcupy-porcupines"></span><h1>porcupy.porcupines<a class="headerlink" href="#module-porcupy.porcupines" title="Permalink to this heading"></a></h1>
+<section id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#porcupy.porcupines.PorcupinePopulation" title="porcupy.porcupines.PorcupinePopulation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PorcupinePopulation</span></code></a></p></td>
+<td><p>Class representing a population of porcupines for the Crested Porcupine Optimizer.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#porcupy.porcupines.DefenseMechanisms" title="porcupy.porcupines.DefenseMechanisms"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DefenseMechanisms</span></code></a></p></td>
+<td><p>Class implementing the four defense mechanisms of the Crested Porcupine Optimizer.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#porcupy.porcupines.PopulationManager" title="porcupy.porcupines.PopulationManager"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PopulationManager</span></code></a></p></td>
+<td><p>Class for managing the population dynamics in the Crested Porcupine Optimizer.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="porcupy.porcupines.PorcupinePopulation">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">porcupy.porcupines.</span></span><span class="sig-name descname"><span class="pre">PorcupinePopulation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pop_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">dimensions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">bounds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">numpy.ndarray</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">numpy.ndarray</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">init_pos</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">numpy.ndarray</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/porcupy/porcupines.html#PorcupinePopulation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#porcupy.porcupines.PorcupinePopulation" title="Permalink to this definition"></a></dt>
+<dd><p>Class representing a population of porcupines for the Crested Porcupine Optimizer.</p>
+<p>This class handles the population structure, initialization, and provides methods
+for population management and dynamics.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pop_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Number of porcupines in the population.</p></li>
+<li><p><strong>dimensions</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Number of dimensions in the search space.</p></li>
+<li><p><strong>bounds</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><em>tuple</em></a><em> of </em><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><em>numpy.ndarray</em></a>) – A tuple of size 2 where the first entry is the minimum bound while
+the second entry is the maximum bound. Each array must be of shape
+(dimensions,).</p></li>
+<li><p><strong>init_pos</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><em>numpy.ndarray</em></a><em>, </em><em>optional</em>) – Initial positions for the porcupines. If None, random positions are generated.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="porcupy.porcupines.PorcupinePopulation.pop_size">
+<span class="sig-name descname"><span class="pre">pop_size</span></span><a class="reference internal" href="../../../_modules/porcupy/porcupines.html#PorcupinePopulation.pop_size"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#porcupy.porcupines.PorcupinePopulation.pop_size" title="Permalink to this definition"></a></dt>
+<dd><p>Current number of porcupines in the population.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="porcupy.porcupines.PorcupinePopulation.dimensions">
+<span class="sig-name descname"><span class="pre">dimensions</span></span><a class="reference internal" href="../../../_modules/porcupy/porcupines.html#PorcupinePopulation.dimensions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#porcupy.porcupines.PorcupinePopulation.dimensions" title="Permalink to this definition"></a></dt>
+<dd><p>Number of dimensions in the search space.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="porcupy.porcupines.PorcupinePopulation.bounds">
+<span class="sig-name descname"><span class="pre">bounds</span></span><a class="reference internal" href="../../../_modules/porcupy/porcupines.html#PorcupinePopulation.bounds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#porcupy.porcupines.PorcupinePopulation.bounds" title="Permalink to this definition"></a></dt>
+<dd><p>Bounds for the search space.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)">tuple</a> of <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)">numpy.ndarray</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="porcupy.porcupines.PorcupinePopulation.positions">
+<span class="sig-name descname"><span class="pre">positions</span></span><a class="headerlink" href="#porcupy.porcupines.PorcupinePopulation.positions" title="Permalink to this definition"></a></dt>
+<dd><p>Current positions of all porcupines, shape (pop_size, dimensions).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)">numpy.ndarray</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="porcupy.porcupines.PorcupinePopulation.fitness">
+<span class="sig-name descname"><span class="pre">fitness</span></span><a class="reference internal" href="../../../_modules/porcupy/porcupines.html#PorcupinePopulation.fitness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#porcupy.porcupines.PorcupinePopulation.fitness" title="Permalink to this definition"></a></dt>
+<dd><p>Current fitness values of all porcupines, shape (pop_size,).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)">numpy.ndarray</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="porcupy.porcupines.PorcupinePopulation.personal_best_pos">
+<span class="sig-name descname"><span class="pre">personal_best_pos</span></span><a class="reference internal" href="../../../_modules/porcupy/porcupines.html#PorcupinePopulation.personal_best_pos"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#porcupy.porcupines.PorcupinePopulation.personal_best_pos" title="Permalink to this definition"></a></dt>
+<dd><p>Personal best positions found by each porcupine, shape (pop_size, dimensions).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)">numpy.ndarray</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="porcupy.porcupines.PorcupinePopulation.personal_best_fitness">
+<span class="sig-name descname"><span class="pre">personal_best_fitness</span></span><a class="reference internal" href="../../../_modules/porcupy/porcupines.html#PorcupinePopulation.personal_best_fitness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#porcupy.porcupines.PorcupinePopulation.personal_best_fitness" title="Permalink to this definition"></a></dt>
+<dd><p>Personal best fitness values for each porcupine, shape (pop_size,).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)">numpy.ndarray</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="porcupy.porcupines.PorcupinePopulation.best_pos">
+<span class="sig-name descname"><span class="pre">best_pos</span></span><a class="reference internal" href="../../../_modules/porcupy/porcupines.html#PorcupinePopulation.best_pos"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#porcupy.porcupines.PorcupinePopulation.best_pos" title="Permalink to this definition"></a></dt>
+<dd><p>Global best position found so far, shape (dimensions,).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)">numpy.ndarray</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="porcupy.porcupines.PorcupinePopulation.best_fitness">
+<span class="sig-name descname"><span class="pre">best_fitness</span></span><a class="reference internal" href="../../../_modules/porcupy/porcupines.html#PorcupinePopulation.best_fitness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#porcupy.porcupines.PorcupinePopulation.best_fitness" title="Permalink to this definition"></a></dt>
+<dd><p>Global best fitness value found so far.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">pop_size</span></span><a class="reference internal" href="../../../_modules/porcupy/porcupines.html#PorcupinePopulation.pop_size"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id0" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-name descname"><span class="pre">dimensions</span></span><a class="reference internal" href="../../../_modules/porcupy/porcupines.html#PorcupinePopulation.dimensions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id1" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id2">
+<span class="sig-name descname"><span class="pre">bounds</span></span><a class="reference internal" href="../../../_modules/porcupy/porcupines.html#PorcupinePopulation.bounds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id2" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id3">
+<span class="sig-name descname"><span class="pre">fitness</span></span><a class="reference internal" href="../../../_modules/porcupy/porcupines.html#PorcupinePopulation.fitness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id3" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id4">
+<span class="sig-name descname"><span class="pre">personal_best_pos</span></span><a class="reference internal" href="../../../_modules/porcupy/porcupines.html#PorcupinePopulation.personal_best_pos"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id4" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id5">
+<span class="sig-name descname"><span class="pre">personal_best_fitness</span></span><a class="reference internal" href="../../../_modules/porcupy/porcupines.html#PorcupinePopulation.personal_best_fitness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id5" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id6">
+<span class="sig-name descname"><span class="pre">best_pos</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="reference internal" href="../../../_modules/porcupy/porcupines.html#PorcupinePopulation.best_pos"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id6" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id7">
+<span class="sig-name descname"><span class="pre">best_fitness</span></span><a class="reference internal" href="../../../_modules/porcupy/porcupines.html#PorcupinePopulation.best_fitness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id7" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="porcupy.porcupines.PorcupinePopulation.evaluate">
+<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">objective_func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../../_modules/porcupy/porcupines.html#PorcupinePopulation.evaluate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#porcupy.porcupines.PorcupinePopulation.evaluate" title="Permalink to this definition"></a></dt>
+<dd><p>Evaluate the fitness of all porcupines</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>objective_func</strong> (<em>callable</em>) – The objective function to minimize</p></li>
+<li><p><strong>**kwargs</strong> – Additional arguments for the objective function</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="porcupy.porcupines.PorcupinePopulation.resize">
+<span class="sig-name descname"><span class="pre">resize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../../_modules/porcupy/porcupines.html#PorcupinePopulation.resize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#porcupy.porcupines.PorcupinePopulation.resize" title="Permalink to this definition"></a></dt>
+<dd><p>Resize the population to a new size</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>new_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – New population size</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="porcupy.porcupines.PorcupinePopulation.apply_bounds">
+<span class="sig-name descname"><span class="pre">apply_bounds</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../../_modules/porcupy/porcupines.html#PorcupinePopulation.apply_bounds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#porcupy.porcupines.PorcupinePopulation.apply_bounds" title="Permalink to this definition"></a></dt>
+<dd><p>Apply boundary constraints to all positions</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="porcupy.porcupines.DefenseMechanisms">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">porcupy.porcupines.</span></span><span class="sig-name descname"><span class="pre">DefenseMechanisms</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tf</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.8</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/porcupy/porcupines.html#DefenseMechanisms"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#porcupy.porcupines.DefenseMechanisms" title="Permalink to this definition"></a></dt>
+<dd><p>Class implementing the four defense mechanisms of the Crested Porcupine Optimizer.</p>
+<p>This class provides methods for the four defense mechanisms: sight, sound, odor,
+and physical attack, which are used to update the positions of porcupines.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>alpha</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – Convergence rate for the fourth defense mechanism.</p></li>
+<li><p><strong>tf</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – Tradeoff threshold between third and fourth mechanisms.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="porcupy.porcupines.DefenseMechanisms.alpha">
+<span class="sig-name descname"><span class="pre">alpha</span></span><a class="reference internal" href="../../../_modules/porcupy/porcupines.html#DefenseMechanisms.alpha"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#porcupy.porcupines.DefenseMechanisms.alpha" title="Permalink to this definition"></a></dt>
+<dd><p>Convergence rate for the fourth defense mechanism.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="porcupy.porcupines.DefenseMechanisms.tf">
+<span class="sig-name descname"><span class="pre">tf</span></span><a class="reference internal" href="../../../_modules/porcupy/porcupines.html#DefenseMechanisms.tf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#porcupy.porcupines.DefenseMechanisms.tf" title="Permalink to this definition"></a></dt>
+<dd><p>Tradeoff threshold between third and fourth mechanisms.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id8">
+<span class="sig-name descname"><span class="pre">alpha</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.2</span></em><a class="reference internal" href="../../../_modules/porcupy/porcupines.html#DefenseMechanisms.alpha"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id8" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id9">
+<span class="sig-name descname"><span class="pre">tf</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.8</span></em><a class="reference internal" href="../../../_modules/porcupy/porcupines.html#DefenseMechanisms.tf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id9" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="porcupy.porcupines.DefenseMechanisms.sight_defense">
+<span class="sig-name descname"><span class="pre">sight_defense</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">position</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">numpy.ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">other_position</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">numpy.ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">best_position</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">numpy.ndarray</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">numpy.ndarray</span></a></span></span><a class="reference internal" href="../../../_modules/porcupy/porcupines.html#DefenseMechanisms.sight_defense"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#porcupy.porcupines.DefenseMechanisms.sight_defense" title="Permalink to this definition"></a></dt>
+<dd><p>Apply the first defense mechanism (sight)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>position</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><em>numpy.ndarray</em></a>) – Current position of the porcupine</p></li>
+<li><p><strong>other_position</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><em>numpy.ndarray</em></a>) – Position of another random porcupine</p></li>
+<li><p><strong>best_position</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><em>numpy.ndarray</em></a>) – Global best position</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Updated position</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)">numpy.ndarray</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="porcupy.porcupines.DefenseMechanisms.sound_defense">
+<span class="sig-name descname"><span class="pre">sound_defense</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">position</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">numpy.ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">other_position</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">numpy.ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">rand_diff</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">numpy.ndarray</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">numpy.ndarray</span></a></span></span><a class="reference internal" href="../../../_modules/porcupy/porcupines.html#DefenseMechanisms.sound_defense"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#porcupy.porcupines.DefenseMechanisms.sound_defense" title="Permalink to this definition"></a></dt>
+<dd><p>Apply the second defense mechanism (sound)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>position</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><em>numpy.ndarray</em></a>) – Current position of the porcupine</p></li>
+<li><p><strong>other_position</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><em>numpy.ndarray</em></a>) – Position of another random porcupine</p></li>
+<li><p><strong>rand_diff</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><em>numpy.ndarray</em></a>) – Random difference vector</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Updated position</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)">numpy.ndarray</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="porcupy.porcupines.DefenseMechanisms.odor_defense">
+<span class="sig-name descname"><span class="pre">odor_defense</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">position</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">numpy.ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">other_position</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">numpy.ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">rand_diff</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">numpy.ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">fitness</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">fitness_sum</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">numpy.ndarray</span></a></span></span><a class="reference internal" href="../../../_modules/porcupy/porcupines.html#DefenseMechanisms.odor_defense"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#porcupy.porcupines.DefenseMechanisms.odor_defense" title="Permalink to this definition"></a></dt>
+<dd><p>Apply the third defense mechanism (odor)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>position</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><em>numpy.ndarray</em></a>) – Current position of the porcupine</p></li>
+<li><p><strong>other_position</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><em>numpy.ndarray</em></a>) – Position of another random porcupine</p></li>
+<li><p><strong>rand_diff</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><em>numpy.ndarray</em></a>) – Random difference vector</p></li>
+<li><p><strong>fitness</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – Current fitness of the porcupine</p></li>
+<li><p><strong>fitness_sum</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – Sum of all fitness values in the population</p></li>
+<li><p><strong>t</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Current iteration</p></li>
+<li><p><strong>max_iter</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Maximum number of iterations</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Updated position</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)">numpy.ndarray</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="porcupy.porcupines.DefenseMechanisms.physical_attack">
+<span class="sig-name descname"><span class="pre">physical_attack</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">position</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">numpy.ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">other_position</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">numpy.ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">best_position</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">numpy.ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">fitness</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">fitness_sum</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">numpy.ndarray</span></a></span></span><a class="reference internal" href="../../../_modules/porcupy/porcupines.html#DefenseMechanisms.physical_attack"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#porcupy.porcupines.DefenseMechanisms.physical_attack" title="Permalink to this definition"></a></dt>
+<dd><p>Apply the fourth defense mechanism (physical attack)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>position</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><em>numpy.ndarray</em></a>) – Current position of the porcupine</p></li>
+<li><p><strong>other_position</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><em>numpy.ndarray</em></a>) – Position of another random porcupine</p></li>
+<li><p><strong>best_position</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><em>numpy.ndarray</em></a>) – Global best position</p></li>
+<li><p><strong>fitness</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – Current fitness of the porcupine</p></li>
+<li><p><strong>fitness_sum</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – Sum of all fitness values in the population</p></li>
+<li><p><strong>t</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Current iteration</p></li>
+<li><p><strong>max_iter</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Maximum number of iterations</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Updated position</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)">numpy.ndarray</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="porcupy.porcupines.PopulationManager">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">porcupy.porcupines.</span></span><span class="sig-name descname"><span class="pre">PopulationManager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">initial_pop_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_pop_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">cycles</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/porcupy/porcupines.html#PopulationManager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#porcupy.porcupines.PopulationManager" title="Permalink to this definition"></a></dt>
+<dd><p>Class for managing the population dynamics in the Crested Porcupine Optimizer.</p>
+<p>This class handles the cyclic population reduction strategy and other
+population management tasks.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>initial_pop_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Initial population size.</p></li>
+<li><p><strong>min_pop_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Minimum population size during reduction.</p></li>
+<li><p><strong>max_iter</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Maximum number of iterations.</p></li>
+<li><p><strong>cycles</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Number of cycles for population reduction.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="porcupy.porcupines.PopulationManager.initial_pop_size">
+<span class="sig-name descname"><span class="pre">initial_pop_size</span></span><a class="reference internal" href="../../../_modules/porcupy/porcupines.html#PopulationManager.initial_pop_size"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#porcupy.porcupines.PopulationManager.initial_pop_size" title="Permalink to this definition"></a></dt>
+<dd><p>Initial population size.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="porcupy.porcupines.PopulationManager.min_pop_size">
+<span class="sig-name descname"><span class="pre">min_pop_size</span></span><a class="reference internal" href="../../../_modules/porcupy/porcupines.html#PopulationManager.min_pop_size"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#porcupy.porcupines.PopulationManager.min_pop_size" title="Permalink to this definition"></a></dt>
+<dd><p>Minimum population size during reduction.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="porcupy.porcupines.PopulationManager.max_iter">
+<span class="sig-name descname"><span class="pre">max_iter</span></span><a class="reference internal" href="../../../_modules/porcupy/porcupines.html#PopulationManager.max_iter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#porcupy.porcupines.PopulationManager.max_iter" title="Permalink to this definition"></a></dt>
+<dd><p>Maximum number of iterations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="porcupy.porcupines.PopulationManager.cycles">
+<span class="sig-name descname"><span class="pre">cycles</span></span><a class="reference internal" href="../../../_modules/porcupy/porcupines.html#PopulationManager.cycles"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#porcupy.porcupines.PopulationManager.cycles" title="Permalink to this definition"></a></dt>
+<dd><p>Number of cycles for population reduction.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id10">
+<span class="sig-name descname"><span class="pre">initial_pop_size</span></span><a class="reference internal" href="../../../_modules/porcupy/porcupines.html#PopulationManager.initial_pop_size"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id10" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id11">
+<span class="sig-name descname"><span class="pre">min_pop_size</span></span><a class="reference internal" href="../../../_modules/porcupy/porcupines.html#PopulationManager.min_pop_size"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id11" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id12">
+<span class="sig-name descname"><span class="pre">max_iter</span></span><a class="reference internal" href="../../../_modules/porcupy/porcupines.html#PopulationManager.max_iter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id12" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id13">
+<span class="sig-name descname"><span class="pre">cycles</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="reference internal" href="../../../_modules/porcupy/porcupines.html#PopulationManager.cycles"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id13" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="porcupy.porcupines.PopulationManager.calculate_pop_size">
+<span class="sig-name descname"><span class="pre">calculate_pop_size</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iteration</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></span><a class="reference internal" href="../../../_modules/porcupy/porcupines.html#PopulationManager.calculate_pop_size"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#porcupy.porcupines.PopulationManager.calculate_pop_size" title="Permalink to this definition"></a></dt>
+<dd><p>Calculate the population size for the current iteration</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>iteration</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Current iteration number</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Population size for the current iteration</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../gpu_cpo/index.html" class="btn btn-neutral float-left" title="porcupy.gpu_cpo" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../utils/index.html" class="btn btn-neutral float-right" title="porcupy.utils" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Samman Sarkar.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

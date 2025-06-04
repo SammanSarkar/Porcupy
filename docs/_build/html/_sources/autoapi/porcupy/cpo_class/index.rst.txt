@@ -1,0 +1,175 @@
+porcupy.cpo_class
+=================
+
+.. py:module:: porcupy.cpo_class
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   porcupy.cpo_class.CPO
+
+
+Module Contents
+---------------
+
+.. py:class:: CPO(dimensions: int, bounds: Tuple[numpy.ndarray, numpy.ndarray], pop_size: int = 30, min_pop_size: Optional[int] = None, max_iter: int = 100, cycles: int = 2, alpha: float = 0.2, tf: float = 0.8, ftol: float = -np.inf, ftol_iter: int = 1)
+
+   Bases: :py:obj:`porcupy.base.Optimizer`
+
+
+   CPO (Crested Porcupine Optimizer) for optimization problems.
+
+   This class implements the CPO algorithm, a nature-inspired metaheuristic that mimics
+   the defensive behaviors of crested porcupines (sight, sound, odor, physical attack) to
+   balance exploration and exploitation, with cyclic population reduction for convergence.
+
+   :param dimensions: Number of dimensions in the search space.
+   :type dimensions: int
+   :param bounds: A tuple of size 2 where the first entry is the minimum bound while
+                  the second entry is the maximum bound. Each array must be of shape
+                  (dimensions,).
+   :type bounds: tuple of numpy.ndarray
+   :param pop_size: Number of search agents (porcupines) in the initial population (default: 30).
+   :type pop_size: int, optional
+   :param min_pop_size: Minimum population size during reduction cycles (default: pop_size // 2).
+   :type min_pop_size: int, optional
+   :param max_iter: Maximum number of iterations (default: 100).
+   :type max_iter: int, optional
+   :param cycles: Number of cycles for population reduction (default: 2).
+   :type cycles: int, optional
+   :param alpha: Convergence rate for fourth defense mechanism (default: 0.2).
+   :type alpha: float, optional
+   :param tf: Tradeoff threshold between third and fourth mechanisms (default: 0.8).
+   :type tf: float, optional
+   :param ftol: Relative error in objective_func(best_pos) acceptable for
+                convergence (default: -np.inf).
+   :type ftol: float, optional
+   :param ftol_iter: Number of iterations over which the relative error in
+                     objective_func(best_pos) is acceptable for convergence (default: 1).
+   :type ftol_iter: int, optional
+
+   .. attribute:: min_pop_size
+
+      Minimum population size during reduction cycles.
+
+      :type: int
+
+   .. attribute:: cycles
+
+      Number of cycles for population reduction.
+
+      :type: int
+
+   .. attribute:: alpha
+
+      Convergence rate for fourth defense mechanism.
+
+      :type: float
+
+   .. attribute:: tf
+
+      Tradeoff threshold between third and fourth mechanisms.
+
+      :type: float
+
+   .. attribute:: positions
+
+      Current positions of all porcupines in the population.
+
+      :type: ndarray
+
+   .. attribute:: fitness
+
+      Current fitness values of all porcupines.
+
+      :type: ndarray
+
+   .. attribute:: personal_best_pos
+
+      Personal best positions found by each porcupine.
+
+      :type: ndarray
+
+
+   .. py:attribute:: min_pop_size
+      :value: None
+
+
+
+   .. py:attribute:: cycles
+      :value: 2
+
+
+
+   .. py:attribute:: alpha
+      :value: 0.2
+
+
+
+   .. py:attribute:: tf
+      :value: 0.8
+
+
+
+   .. py:attribute:: positions
+      :value: None
+
+
+
+   .. py:attribute:: fitness
+      :value: None
+
+
+
+   .. py:attribute:: personal_best_pos
+      :value: None
+
+
+
+   .. py:attribute:: positions_history
+      :value: []
+
+
+
+   .. py:attribute:: defense_types_history
+      :value: []
+
+
+
+   .. py:attribute:: pop_size_history
+      :value: []
+
+
+
+   .. py:attribute:: best_positions_history
+      :value: []
+
+
+
+   .. py:attribute:: fitness_history
+      :value: []
+
+
+
+   .. py:method:: optimize(objective_func: Callable, f_ieqcons: Optional[Callable] = None, n_processes: Optional[int] = None, verbose: bool = False, track_history: bool = True, **kwargs) -> Tuple[numpy.ndarray, float, numpy.ndarray]
+
+      Optimize the objective function using Crested Porcupine Optimizer
+
+      :param objective_func: The objective function to be minimized
+      :type objective_func: callable
+      :param f_ieqcons: Constraint function returning a 1D array of inequality constraints (g(x) >= 0)
+      :type f_ieqcons: callable, optional
+      :param n_processes: Number of processes to use for parallel evaluation
+      :type n_processes: int, optional
+      :param verbose: Whether to display progress information
+      :type verbose: bool, optional
+      :param \*\*kwargs: Additional arguments to pass to the objective function
+
+      :returns: A tuple containing (best_position, best_cost, cost_history)
+      :rtype: tuple
+
+
+

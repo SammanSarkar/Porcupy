@@ -1,0 +1,325 @@
+porcupy.porcupines
+==================
+
+.. py:module:: porcupy.porcupines
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   porcupy.porcupines.PorcupinePopulation
+   porcupy.porcupines.DefenseMechanisms
+   porcupy.porcupines.PopulationManager
+
+
+Module Contents
+---------------
+
+.. py:class:: PorcupinePopulation(pop_size: int, dimensions: int, bounds: Tuple[numpy.ndarray, numpy.ndarray], init_pos: Optional[numpy.ndarray] = None)
+
+   Class representing a population of porcupines for the Crested Porcupine Optimizer.
+
+   This class handles the population structure, initialization, and provides methods
+   for population management and dynamics.
+
+   :param pop_size: Number of porcupines in the population.
+   :type pop_size: int
+   :param dimensions: Number of dimensions in the search space.
+   :type dimensions: int
+   :param bounds: A tuple of size 2 where the first entry is the minimum bound while
+                  the second entry is the maximum bound. Each array must be of shape
+                  (dimensions,).
+   :type bounds: tuple of numpy.ndarray
+   :param init_pos: Initial positions for the porcupines. If None, random positions are generated.
+   :type init_pos: numpy.ndarray, optional
+
+   .. attribute:: pop_size
+
+      Current number of porcupines in the population.
+
+      :type: int
+
+   .. attribute:: dimensions
+
+      Number of dimensions in the search space.
+
+      :type: int
+
+   .. attribute:: bounds
+
+      Bounds for the search space.
+
+      :type: tuple of numpy.ndarray
+
+   .. attribute:: positions
+
+      Current positions of all porcupines, shape (pop_size, dimensions).
+
+      :type: numpy.ndarray
+
+   .. attribute:: fitness
+
+      Current fitness values of all porcupines, shape (pop_size,).
+
+      :type: numpy.ndarray
+
+   .. attribute:: personal_best_pos
+
+      Personal best positions found by each porcupine, shape (pop_size, dimensions).
+
+      :type: numpy.ndarray
+
+   .. attribute:: personal_best_fitness
+
+      Personal best fitness values for each porcupine, shape (pop_size,).
+
+      :type: numpy.ndarray
+
+   .. attribute:: best_pos
+
+      Global best position found so far, shape (dimensions,).
+
+      :type: numpy.ndarray
+
+   .. attribute:: best_fitness
+
+      Global best fitness value found so far.
+
+      :type: float
+
+
+   .. py:attribute:: pop_size
+
+
+   .. py:attribute:: dimensions
+
+
+   .. py:attribute:: bounds
+
+
+   .. py:attribute:: fitness
+
+
+   .. py:attribute:: personal_best_pos
+
+
+   .. py:attribute:: personal_best_fitness
+
+
+   .. py:attribute:: best_pos
+      :value: None
+
+
+
+   .. py:attribute:: best_fitness
+
+
+   .. py:method:: evaluate(objective_func: Callable, **kwargs) -> None
+
+      Evaluate the fitness of all porcupines
+
+      :param objective_func: The objective function to minimize
+      :type objective_func: callable
+      :param \*\*kwargs: Additional arguments for the objective function
+
+
+
+   .. py:method:: resize(new_size: int) -> None
+
+      Resize the population to a new size
+
+      :param new_size: New population size
+      :type new_size: int
+
+
+
+   .. py:method:: apply_bounds() -> None
+
+      Apply boundary constraints to all positions
+
+
+
+.. py:class:: DefenseMechanisms(alpha: float = 0.2, tf: float = 0.8)
+
+   Class implementing the four defense mechanisms of the Crested Porcupine Optimizer.
+
+   This class provides methods for the four defense mechanisms: sight, sound, odor,
+   and physical attack, which are used to update the positions of porcupines.
+
+   :param alpha: Convergence rate for the fourth defense mechanism.
+   :type alpha: float
+   :param tf: Tradeoff threshold between third and fourth mechanisms.
+   :type tf: float
+
+   .. attribute:: alpha
+
+      Convergence rate for the fourth defense mechanism.
+
+      :type: float
+
+   .. attribute:: tf
+
+      Tradeoff threshold between third and fourth mechanisms.
+
+      :type: float
+
+
+   .. py:attribute:: alpha
+      :value: 0.2
+
+
+
+   .. py:attribute:: tf
+      :value: 0.8
+
+
+
+   .. py:method:: sight_defense(position: numpy.ndarray, other_position: numpy.ndarray, best_position: numpy.ndarray) -> numpy.ndarray
+
+      Apply the first defense mechanism (sight)
+
+      :param position: Current position of the porcupine
+      :type position: numpy.ndarray
+      :param other_position: Position of another random porcupine
+      :type other_position: numpy.ndarray
+      :param best_position: Global best position
+      :type best_position: numpy.ndarray
+
+      :returns: Updated position
+      :rtype: numpy.ndarray
+
+
+
+   .. py:method:: sound_defense(position: numpy.ndarray, other_position: numpy.ndarray, rand_diff: numpy.ndarray) -> numpy.ndarray
+
+      Apply the second defense mechanism (sound)
+
+      :param position: Current position of the porcupine
+      :type position: numpy.ndarray
+      :param other_position: Position of another random porcupine
+      :type other_position: numpy.ndarray
+      :param rand_diff: Random difference vector
+      :type rand_diff: numpy.ndarray
+
+      :returns: Updated position
+      :rtype: numpy.ndarray
+
+
+
+   .. py:method:: odor_defense(position: numpy.ndarray, other_position: numpy.ndarray, rand_diff: numpy.ndarray, fitness: float, fitness_sum: float, t: int, max_iter: int) -> numpy.ndarray
+
+      Apply the third defense mechanism (odor)
+
+      :param position: Current position of the porcupine
+      :type position: numpy.ndarray
+      :param other_position: Position of another random porcupine
+      :type other_position: numpy.ndarray
+      :param rand_diff: Random difference vector
+      :type rand_diff: numpy.ndarray
+      :param fitness: Current fitness of the porcupine
+      :type fitness: float
+      :param fitness_sum: Sum of all fitness values in the population
+      :type fitness_sum: float
+      :param t: Current iteration
+      :type t: int
+      :param max_iter: Maximum number of iterations
+      :type max_iter: int
+
+      :returns: Updated position
+      :rtype: numpy.ndarray
+
+
+
+   .. py:method:: physical_attack(position: numpy.ndarray, other_position: numpy.ndarray, best_position: numpy.ndarray, fitness: float, fitness_sum: float, t: int, max_iter: int) -> numpy.ndarray
+
+      Apply the fourth defense mechanism (physical attack)
+
+      :param position: Current position of the porcupine
+      :type position: numpy.ndarray
+      :param other_position: Position of another random porcupine
+      :type other_position: numpy.ndarray
+      :param best_position: Global best position
+      :type best_position: numpy.ndarray
+      :param fitness: Current fitness of the porcupine
+      :type fitness: float
+      :param fitness_sum: Sum of all fitness values in the population
+      :type fitness_sum: float
+      :param t: Current iteration
+      :type t: int
+      :param max_iter: Maximum number of iterations
+      :type max_iter: int
+
+      :returns: Updated position
+      :rtype: numpy.ndarray
+
+
+
+.. py:class:: PopulationManager(initial_pop_size: int, min_pop_size: int, max_iter: int, cycles: int = 2)
+
+   Class for managing the population dynamics in the Crested Porcupine Optimizer.
+
+   This class handles the cyclic population reduction strategy and other
+   population management tasks.
+
+   :param initial_pop_size: Initial population size.
+   :type initial_pop_size: int
+   :param min_pop_size: Minimum population size during reduction.
+   :type min_pop_size: int
+   :param max_iter: Maximum number of iterations.
+   :type max_iter: int
+   :param cycles: Number of cycles for population reduction.
+   :type cycles: int
+
+   .. attribute:: initial_pop_size
+
+      Initial population size.
+
+      :type: int
+
+   .. attribute:: min_pop_size
+
+      Minimum population size during reduction.
+
+      :type: int
+
+   .. attribute:: max_iter
+
+      Maximum number of iterations.
+
+      :type: int
+
+   .. attribute:: cycles
+
+      Number of cycles for population reduction.
+
+      :type: int
+
+
+   .. py:attribute:: initial_pop_size
+
+
+   .. py:attribute:: min_pop_size
+
+
+   .. py:attribute:: max_iter
+
+
+   .. py:attribute:: cycles
+      :value: 2
+
+
+
+   .. py:method:: calculate_pop_size(iteration: int) -> int
+
+      Calculate the population size for the current iteration
+
+      :param iteration: Current iteration number
+      :type iteration: int
+
+      :returns: Population size for the current iteration
+      :rtype: int
+
+
+

@@ -1,0 +1,31 @@
+porcupy.utils.plotting
+======================
+
+.. py:module:: porcupy.utils.plotting
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   porcupy.utils.plotting.plot_convergence
+
+
+Module Contents
+---------------
+
+.. py:function:: plot_convergence(cost_history, title='Convergence Curve', save_path=None)
+
+   Plot the convergence curve of the optimization process.
+
+   :param cost_history: Array of best fitness values over iterations.
+   :type cost_history: ndarray
+   :param title: Title of the plot (default: "Convergence Curve").
+   :type title: str, optional
+   :param save_path: Path to save the plot (e.g., "convergence.png"). If None, displays the plot.
+   :type save_path: str, optional
+
+   :rtype: None
+
+

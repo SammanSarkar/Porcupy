@@ -1,0 +1,122 @@
+porcupy.gpu_cpo
+===============
+
+.. py:module:: porcupy.gpu_cpo
+
+.. autoapi-nested-parse::
+
+   GPU-accelerated Crested Porcupine Optimizer (CPO).
+
+   This module provides a GPU-accelerated implementation of the CPO algorithm
+   using CuPy for numerical computations on NVIDIA GPUs. It's designed to
+   automatically fall back to CPU computation if CUDA is not available.
+
+   .. rubric:: Example
+
+   >>> from porcupy.gpu_cpo import GPUCPO
+   >>> from porcupy.functions import sphere
+   >>>
+   >>> # Initialize the optimizer
+   >>> optimizer = GPUCPO(
+   ...     dimensions=10,
+   ...     bounds=([-5.12] * 10, [5.12] * 10),
+   ...     pop_size=100,
+   ...     max_iter=50
+   ... )
+   >>>
+   >>> # Run optimization
+   >>> best_pos, best_cost, _ = optimizer.optimize(sphere)
+   >>> print(f"Best solution: {best_pos}")
+   >>> print(f"Best cost: {best_cost}")
+
+   .. note::
+
+      For optimal performance, install CuPy with CUDA support:
+      ```bash
+      pip install cupy-cuda11x  # Choose the right CUDA version
+      ```
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   porcupy.gpu_cpo.CUDA_AVAILABLE
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   porcupy.gpu_cpo.GPUCPO
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   porcupy.gpu_cpo.gpu_cpo
+
+
+Module Contents
+---------------
+
+.. py:data:: CUDA_AVAILABLE
+   :value: True
+
+
+.. py:class:: GPUCPO(*args, **kwargs)
+
+   Bases: :py:obj:`porcupy.cpo_class.CPO`
+
+
+   GPU-accelerated Crested Porcupine Optimizer.
+
+   This class extends the standard CPO with GPU acceleration using CuPy.
+   It's a drop-in replacement for CPO with the same interface but runs
+   computations on GPU when available.
+
+   :param dimensions: Number of dimensions of the search space.
+   :type dimensions: int
+   :param bounds: Tuple of (lower_bounds, upper_bounds) for each dimension.
+   :type bounds: tuple
+   :param pop_size: Initial population size.
+   :type pop_size: int
+   :param max_iter: Maximum number of iterations.
+   :type max_iter: int
+   :param min_pop_size: Minimum population size. Defaults to 5.
+   :type min_pop_size: int, optional
+   :param cycles: Number of cycles for population reduction. Defaults to 5.
+   :type cycles: int, optional
+   :param alpha: Reduction rate. Defaults to 0.95.
+   :type alpha: float, optional
+   :param tf: Transfer factor. Defaults to 0.8.
+   :type tf: float, optional
+   :param ftol: Absolute error for convergence. Defaults to 1e-10.
+   :type ftol: float, optional
+   :param ftol_iter: Number of iterations to check for convergence. Defaults to 10.
+   :type ftol_iter: int, optional
+
+   .. note::
+
+      The optimizer will automatically detect and use GPU if CuPy with CUDA support
+      is installed. Otherwise, it will fall back to CPU computation.
+
+
+   .. py:method:: optimize(objective_func: Callable, f_ieqcons: Optional[Callable] = None, n_processes: Optional[int] = None, verbose: bool = False, track_history: bool = True, **kwargs) -> Tuple[numpy.ndarray, float, numpy.ndarray]
+
+      Run the optimization on GPU.
+
+
+
+.. py:function:: gpu_cpo(fobj, lb, ub, pop_size=30, max_iter=100, **kwargs)
+
+   GPU-accelerated CPO function interface.
+
+   Parameters are the same as the standard cpo() function.
+
+

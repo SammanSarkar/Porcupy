@@ -1,0 +1,247 @@
+porcupy.functions
+=================
+
+.. py:module:: porcupy.functions
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   porcupy.functions.sphere
+   porcupy.functions.rosenbrock
+   porcupy.functions.schwefel_2_22
+   porcupy.functions.schwefel_1_2
+   porcupy.functions.schwefel_2_21
+   porcupy.functions.step
+   porcupy.functions.quartic
+   porcupy.functions.rastrigin
+   porcupy.functions.ackley
+   porcupy.functions.griewank
+   porcupy.functions.schwefel
+   porcupy.functions.michalewicz
+   porcupy.functions.get_function_by_name
+   porcupy.functions.get_function_bounds
+   porcupy.functions.get_function_optimum
+
+
+Module Contents
+---------------
+
+.. py:function:: sphere(x)
+
+   Sphere function for optimization benchmarking.
+
+   The sphere function is a simple, unimodal function defined as f(x) = sum(x_i^2).
+   Its global minimum is 0 at x = [0, 0, ..., 0].
+
+   :param x: Input vector (1D array) of shape (dim,).
+   :type x: ndarray
+
+   :returns: The computed function value.
+   :rtype: float
+
+
+.. py:function:: rosenbrock(x)
+
+   Rosenbrock function for optimization benchmarking.
+
+   The Rosenbrock function is a non-convex function defined as
+   f(x) = sum(100 * (x_{i+1} - x_i^2)^2 + (1 - x_i)^2).
+   Its global minimum is 0 at x = [1, 1, ..., 1].
+
+   :param x: Input vector (1D array) of shape (dim,).
+   :type x: ndarray
+
+   :returns: The computed function value.
+   :rtype: float
+
+
+.. py:function:: schwefel_2_22(x)
+
+   Schwefel 2.22 function for optimization benchmarking.
+
+   This is a unimodal function defined as f(x) = sum(|x_i|) + prod(|x_i|).
+   Its global minimum is 0 at x = [0, 0, ..., 0].
+
+   :param x: Input vector (1D array) of shape (dim,).
+   :type x: ndarray
+
+   :returns: The computed function value.
+   :rtype: float
+
+
+.. py:function:: schwefel_1_2(x)
+
+   Schwefel 1.2 function for optimization benchmarking.
+
+   This is a unimodal function defined as f(x) = sum(sum(x_j)^2) for j=1 to i, i=1 to n.
+   Its global minimum is 0 at x = [0, 0, ..., 0].
+
+   :param x: Input vector (1D array) of shape (dim,).
+   :type x: ndarray
+
+   :returns: The computed function value.
+   :rtype: float
+
+
+.. py:function:: schwefel_2_21(x)
+
+   Schwefel 2.21 function for optimization benchmarking.
+
+   This is a unimodal function defined as f(x) = max(|x_i|).
+   Its global minimum is 0 at x = [0, 0, ..., 0].
+
+   :param x: Input vector (1D array) of shape (dim,).
+   :type x: ndarray
+
+   :returns: The computed function value.
+   :rtype: float
+
+
+.. py:function:: step(x)
+
+   Step function for optimization benchmarking.
+
+   This is a discontinuous function defined as f(x) = sum(floor(x_i + 0.5)^2).
+   Its global minimum is 0 at x in [-0.5, 0.5]^n.
+
+   :param x: Input vector (1D array) of shape (dim,).
+   :type x: ndarray
+
+   :returns: The computed function value.
+   :rtype: float
+
+
+.. py:function:: quartic(x)
+
+   Quartic function with noise for optimization benchmarking.
+
+   This is a function defined as f(x) = sum(i * x_i^4) + random[0, 1).
+   Its global minimum is close to 0 at x = [0, 0, ..., 0].
+
+   :param x: Input vector (1D array) of shape (dim,).
+   :type x: ndarray
+
+   :returns: The computed function value.
+   :rtype: float
+
+
+.. py:function:: rastrigin(x)
+
+   Rastrigin function for optimization benchmarking.
+
+   The Rastrigin function is a multimodal function defined as
+   f(x) = 10 * dim + sum(x_i^2 - 10 * cos(2 * pi * x_i)).
+   Its global minimum is 0 at x = [0, 0, ..., 0].
+
+   :param x: Input vector (1D array) of shape (dim,).
+   :type x: ndarray
+
+   :returns: The computed function value.
+   :rtype: float
+
+
+.. py:function:: ackley(x)
+
+   Ackley function for optimization benchmarking.
+
+   The Ackley function is a multimodal function defined as
+   f(x) = -20 * exp(-0.2 * sqrt(sum(x_i^2) / n)) - exp(sum(cos(2 * pi * x_i)) / n) + 20 + e.
+   Its global minimum is 0 at x = [0, 0, ..., 0].
+
+   :param x: Input vector (1D array) of shape (dim,).
+   :type x: ndarray
+
+   :returns: The computed function value.
+   :rtype: float
+
+
+.. py:function:: griewank(x)
+
+   Griewank function for optimization benchmarking.
+
+   The Griewank function is a multimodal function defined as
+   f(x) = 1 + sum(x_i^2 / 4000) - prod(cos(x_i / sqrt(i))).
+   Its global minimum is 0 at x = [0, 0, ..., 0].
+
+   :param x: Input vector (1D array) of shape (dim,).
+   :type x: ndarray
+
+   :returns: The computed function value.
+   :rtype: float
+
+
+.. py:function:: schwefel(x)
+
+   Schwefel function for optimization benchmarking.
+
+   The Schwefel function is a multimodal function defined as
+   f(x) = 418.9829 * n - sum(x_i * sin(sqrt(|x_i|))).
+   Its global minimum is 0 at x = [420.9687, ..., 420.9687].
+
+   :param x: Input vector (1D array) of shape (dim,).
+   :type x: ndarray
+
+   :returns: The computed function value.
+   :rtype: float
+
+
+.. py:function:: michalewicz(x)
+
+   Michalewicz function for optimization benchmarking.
+
+   The Michalewicz function is a multimodal function with steep ridges and valleys.
+   It has n! local minima, and the global minimum value depends on the dimension.
+
+   :param x: Input vector (1D array) of shape (dim,).
+   :type x: ndarray
+
+   :returns: The computed function value.
+   :rtype: float
+
+
+.. py:function:: get_function_by_name(name: str) -> Callable
+
+   Get a benchmark function by name.
+
+   :param name: Name of the function.
+   :type name: str
+
+   :returns: The benchmark function.
+   :rtype: callable
+
+   :raises ValueError: If the function name is not recognized.
+
+
+.. py:function:: get_function_bounds(name: str, dimensions: int) -> Tuple[numpy.ndarray, numpy.ndarray]
+
+   Get the recommended bounds for a benchmark function.
+
+   :param name: Name of the function.
+   :type name: str
+   :param dimensions: Number of dimensions.
+   :type dimensions: int
+
+   :returns: A tuple (lb, ub) containing the lower and upper bounds.
+   :rtype: tuple
+
+   :raises ValueError: If the function name is not recognized.
+
+
+.. py:function:: get_function_optimum(name: str, dimensions: int) -> Tuple[numpy.ndarray, float]
+
+   Get the global optimum for a benchmark function.
+
+   :param name: Name of the function.
+   :type name: str
+   :param dimensions: Number of dimensions.
+   :type dimensions: int
+
+   :returns: A tuple (x_opt, f_opt) containing the optimal position and value.
+   :rtype: tuple
+
+   :raises ValueError: If the function name is not recognized.
+
+
