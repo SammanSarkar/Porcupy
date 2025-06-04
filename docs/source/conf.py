@@ -45,9 +45,8 @@ autoapi_options = [
     'show-inheritance',
     'show-module-summary',
     'special-members',
-    'imported-members',
 ]
-autoapi_ignore = ['*test*', '*setup*']
+autoapi_ignore = ['*__pycache__*']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
