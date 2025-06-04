@@ -65,7 +65,7 @@ best_pos, best_cost, _ = optimizer.optimize(sphere)
 
 ## Documentation
 
-Full documentation is available at [porcupy.readthedocs.io](https://porcupy.readthedocs.io/).
+Full documentation is available at [https://porcupy-cpo.readthedocs.io/en/latest/](https://porcupy-cpo.readthedocs.io/en/latest/).
 
 ## Contributing
 
