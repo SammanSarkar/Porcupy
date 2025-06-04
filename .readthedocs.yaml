@@ -1,0 +1,84 @@
+# .readthedocs.yaml
+# Read the Docs configuration file
+# See https://docs.readthedocs.io/en/stable/config-file/v2.html for details
+
+# Required
+version: 2
+
+# Build documentation in the docs/ directory with Sphinx
+sphinx:
+  configuration: docs/conf.py
+  fail_on_warning: true
+
+# Optionally set the version of Python and requirements required to build your docs
+python:
+  version: "3.10"
+  install:
+    - requirements: docs/requirements.txt
+    - method: pip
+      path: .
+      extra_requirements:
+        - docs
+
+# Build documentation with MkDocs
+# mkdocs:
+#   configuration: mkdocs.yml
+#   fail_on_warning: true
+
+# Optionally build your docs in additional formats such as PDF
+formats:
+  - pdf
+  - epub
+
+# Optionally set the version of Python and other tools you might need
+build:
+  os: ubuntu-22.04
+  tools:
+    python: "3.10"
+  apt_packages:
+    - graphviz
+    - texlive-latex-recommended
+    - texlive-latex-extra
+    - texlive-fonts-recommended
+    - latexmk
+
+# Optionally include additional paths in your build
+# include_import_path: true
+
+# Optionally set the default version
+# default_version: latest
+
+# Optionally hide the build date to avoid uncommitted file changes
+# See https://docs.readthedocs.io/en/stable/guides/reproducible-builds.html
+# build:
+#   os: ubuntu-20.04
+#   tools:
+#     python: "3.9"
+#   jobs:
+#     post_create_environment:
+#       - python -m pip install --upgrade pip setuptools wheel
+#       - pip install -r docs/requirements.txt
+#       - pip install -e .[docs]
+
+# Optionally customize the build process
+# build:
+#   os: ubuntu-22.04
+#   tools:
+#     python: "3.10"
+#   jobs:
+#     post_install:
+#       - python -m pip install --upgrade pip
+#       - pip install -r docs/requirements.txt
+#       - pip install -e .[docs]
+
+# Optionally set environment variables
+# build:
+#   environment:
+#     READTHEDOCS: "True"
+
+# Optionally customize the conda environment
+# conda:
+#   environment: docs/environment.yml
+
+# Optionally customize the requirements file location
+# python.install.requirements: docs/requirements.txt
