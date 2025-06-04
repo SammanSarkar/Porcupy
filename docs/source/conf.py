@@ -18,9 +18,7 @@ source_suffix = {
     '.md': 'markdown',
 }
 
-templates_path = ['_templates']
 exclude_patterns = []
 
 # -- Options for HTML output -------------------------------------------------
 html_theme = 'alabaster'
-html_static_path = ['_static']
