@@ -45,8 +45,8 @@ setup(
     name="porcupy",
     version="0.2.0",
     author="Samman Sarkar",
-    author_email="samman.sarkar@example.com",  # Update this with your email
-    description="Crested Porcupine Optimizer (CPO) - A nature-inspired optimization algorithm",
+    author_email="sarkar.samman4231@gmail.com", 
+    description="A Python library for the Crested Porcupine Optimizer for research and optimization tasks",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/SammanSarkar/Porcupy",
