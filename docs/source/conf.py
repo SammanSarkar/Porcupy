@@ -38,7 +38,7 @@ extensions = [
 
 # AutoAPI configuration
 autoapi_type = 'python'
-autoapi_dirs = ['../../porcupy']
+autoapi_dirs = [os.path.abspath(os.path.join(os.path.dirname(__file__), '../../porcupy'))]
 autoapi_options = [
     'members',
     'undoc-members',
