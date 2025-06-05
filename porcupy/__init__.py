@@ -34,7 +34,7 @@ except ImportError:
             "Install with: pip install cupy-cuda11x"
         )
 
-__version__ = "0.1.1"  # Updated for GPU support
+__version__ = "0.2.0"
 __author__ = "Samman Sarkar"
 __all__ = [
     'CPO', 'GPUCPO', 'Optimizer', 'PorcupinePopulation', 'DefenseMechanisms',

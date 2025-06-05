@@ -1,6 +1,6 @@
 [project]
 name = "porcupy"
-version = "0.1.2"
+version = "0.2.0"
 description = "Crested Porcupine Optimizer (CPO) with GPU acceleration for optimization problems"
 authors = [
     {name = "Samman Sarkar", email = "sarkar.samman4231@gmail.com"}

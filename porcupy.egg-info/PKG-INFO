@@ -1,6 +1,6 @@
 Metadata-Version: 2.4
 Name: porcupy
-Version: 0.1.2
+Version: 0.2.0
 Summary: Crested Porcupine Optimizer (CPO) with GPU acceleration for optimization problems
 Home-page: https://github.com/SammanSarkar/Porcupy
 Author: Samman Sarkar
@@ -153,7 +153,7 @@ best_pos, best_cost, _ = optimizer.optimize(sphere)
 
 ## Documentation
 
-Full documentation is available at [porcupy.readthedocs.io](https://porcupy.readthedocs.io/).
+Full documentation is available at [https://porcupy-cpo.readthedocs.io](https://porcupy-cpo.readthedocs.io).
 
 ## Contributing
 
