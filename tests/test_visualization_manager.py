@@ -6,6 +6,8 @@ This module contains tests for the visualization manager in the Porcupy library.
 
 import pytest
 import numpy as np
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
 from matplotlib.animation import FuncAnimation
@@ -512,3 +514,71 @@ def test_create_parameter_tuning_dashboard(visualizer_with_data):
     
     # Clean up
     dashboard.close()
+
+
+def test_create_animation(visualizer_with_data):
+    """Test the create_animation method."""
+    # Test with default parameters
+    anim = visualizer_with_data.create_animation(
+        positions_history=visualizer_with_data.position_history,
+        best_position_history=visualizer_with_data.best_position_history
+    )
+    
+    assert isinstance(anim, FuncAnimation)
+    
+    # Test with custom parameters and defense types
+    anim = visualizer_with_data.create_animation(
+        positions_history=visualizer_with_data.position_history,
+        best_position_history=visualizer_with_data.best_position_history,
+        defense_types_history=visualizer_with_data.defense_types_history,
+        figsize=(15, 12),
+        fps=10
+    )
+    
+    assert isinstance(anim, FuncAnimation)
+    
+    # Test with empty data
+    visualizer = CPOVisualizer()
+    
+    with pytest.raises(ValueError):
+        visualizer.create_animation(
+            positions_history=[],
+            best_position_history=[]
+        )
+    
+    # Test without bounds
+    visualizer = CPOVisualizer()
+    visualizer.position_history = [np.random.random((10, 2))]
+    
+    with pytest.raises(ValueError):
+        visualizer.create_animation(
+            positions_history=visualizer.position_history,
+            best_position_history=[np.random.random(2)]
+        )
+    
+    plt.close('all')
+
+
+def test_record_from_optimizer(visualizer_with_data):
+    """Test the record_from_optimizer method."""
+    # Create a mock optimizer with data
+    class MockOptimizer:
+        def __init__(self):
+            self.positions_history = visualizer_with_data.position_history
+            self.best_positions_history = visualizer_with_data.best_position_history
+            self.fitness_history = visualizer_with_data.fitness_history
+            self.pop_size_history = visualizer_with_data.pop_size_history
+            self.defense_types_history = visualizer_with_data.defense_types_history
+    
+    optimizer = MockOptimizer()
+    visualizer = CPOVisualizer()
+    
+    # Record data from optimizer
+    visualizer.record_from_optimizer(optimizer)
+    
+    assert len(visualizer.position_history) == len(optimizer.positions_history)
+    assert len(visualizer.best_position_history) == len(optimizer.best_positions_history)
+    assert len(visualizer.fitness_history) == len(optimizer.fitness_history)
+    assert len(visualizer.pop_size_history) == len(optimizer.pop_size_history)
+    assert len(visualizer.defense_types_history) == len(optimizer.defense_types_history)
+    assert visualizer.defense_history['defense_types'] == optimizer.defense_types_history
